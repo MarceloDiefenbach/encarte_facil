@@ -1,0 +1,10 @@
+Target dependency graph (4 targets)
+Flutter in Pods, no dependencies
+image_gallery_saver in Pods, depends on:
+Flutter in Pods (explicit)
+path_provider in Pods, depends on:
+Flutter in Pods (explicit)
+Pods-Runner in Pods, depends on:
+Flutter in Pods (explicit)
+image_gallery_saver in Pods (explicit)
+path_provider in Pods (explicit)
