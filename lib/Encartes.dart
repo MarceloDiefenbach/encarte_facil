@@ -1,4 +1,6 @@
 import 'dart:convert';
+import './Functions.dart';
+
 
 import 'package:encarte_facil_2/Components/Button.dart';
 import 'package:flutter/material.dart';
@@ -23,46 +25,6 @@ class _EncartesState extends State<Encartes> {
   List _listaEncartes = [];
   List<Produto> listaTodosProdutos = [];
 
-  Future<File> _getFile() async {
-
-    final diretorio = await getApplicationDocumentsDirectory();
-    return File( "${diretorio.path}/encartes4.json" );
-  }
-
-  _pegaProdutosAirTable() async {
-
-    Uri url = Uri.https("api.airtable.com", "v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa");
-    http.Response response;
-
-    response = await http.get(
-      Uri.parse('https://api.airtable.com/v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa'),
-      // Send authorization headers to the backend.
-      // headers: {
-      //   HttpHeaders.authorizationHeader: "Bearer keySFSIYnvACQhHAa",
-      // },
-    );
-
-    Map<String, dynamic> retorno = json.decode(response.body);
-
-    List records = retorno["records"];
-
-    listaTodosProdutos.clear();
-    for (int i=0; i<records.length; i++ ) {
-      // print(i);
-      listaTodosProdutos.add(Produto(records[i]["fields"]["primeira"], records[i]["fields"]["segunda"], "", records[i]["fields"]["imagem"]));
-    }
-  }
-
-  _salvarArquivo() async {
-
-    var arquivo = await _getFile();
-
-    String dados = json.encode( _listaEncartes );
-    arquivo.writeAsString( dados );
-    print("salvou");
-
-  }
-
   Future<File> _getEncarteToDelete(String nome) async {
 
     final diretorio = await getApplicationDocumentsDirectory();
@@ -75,22 +37,21 @@ class _EncartesState extends State<Encartes> {
     var arquivo = await _getEncarteToDelete(nome);
 
     _listaEncartes.removeAt(indice);
-    _salvarArquivo();
+    salvarArquivo(_listaEncartes);
     arquivo.delete();
     _lerArquivo();
   }
 
   _lerArquivo() async {
 
-    _pegaProdutosAirTable();
+    listaTodosProdutos = await AirtableGet() as List<Produto>;
 
     try{
-      final arquivo = await _getFile();
+      final arquivo = await getFile();
       return arquivo.readAsString();
     }catch(e){
       return null;
     }
-
   }
 
   TextEditingController _textController;
@@ -101,13 +62,11 @@ class _EncartesState extends State<Encartes> {
     // TODO: implement initState
     super.initState();
     _textController = TextEditingController(text: '');
-    // print("INIT");
+    _textControllerValidade = TextEditingController(text: '');
 
-    _lerArquivo().then( (dados){
+    _lerArquivo().then((dados){
       setState(() {
-
         _listaEncartes = json.decode(dados);
-
       });
     } );
   }
@@ -128,10 +87,10 @@ class _EncartesState extends State<Encartes> {
 
             return CupertinoAlertDialog(
               title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text("Qual é o nome do encarte?",
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         height: 1,
                         fontWeight: FontWeight.normal,
@@ -150,78 +109,6 @@ class _EncartesState extends State<Encartes> {
                           width: 2,
                         ),
                       ),
-                    ),
-                  ),
-                  Text("Qual é a validade das ofertas:",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        height: 1,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black,
-                        fontSize: 16),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 16.0, horizontal: 0.0),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 60.0,
-                          child: FlatButton(
-                            shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    color: Colors.white
-                                ),
-                                borderRadius: BorderRadius.circular(5.0)),
-                            onPressed: () {
-                              DatePicker.showDatePicker(context,
-                                  showTitleActions: true,
-                                  minTime: DateTime.now(),
-                                  maxTime: DateTime(2030, 12, 31),
-                                  onConfirm: (date) {
-                                    print('confirm $date');
-                                    _date = '  ${date.day}/${date.month}/${date.year}';
-                                    setState(() {
-                                      _date = '  ${date.day}/${date.month}/${date.year}';
-                                    });
-                                  },
-                                  currentTime: DateTime.now());
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 50.0,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Container(
-                                        child: Row(
-                                          children: <Widget>[
-                                            Icon(
-                                              Icons.calendar_month,
-                                              color: Colors.black54,
-                                            ),
-                                            Text(
-                                              "$_date",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 17.0,
-                                                  fontStyle: FontStyle.normal),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            color: Colors.white,
-                          ),
-                        ),
-                        // datetime()
-                      ],
                     ),
                   ),
                 ],
@@ -247,9 +134,8 @@ class _EncartesState extends State<Encartes> {
                   onPressed: () {
                     Map<String, dynamic> criarPraSalvar = Map();
                     criarPraSalvar["nomeEncarte"] = _textController.text;
-                    criarPraSalvar["validade"] = _textControllerValidade.text;
                     _listaEncartes.add( criarPraSalvar );
-                    _salvarArquivo();
+                    salvarArquivo(_listaEncartes);
                     Navigator.of(context).pop();
                     Navigator.push(
                       context,
