@@ -249,7 +249,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(20, 0, 0, 0),
                                               child: Text(
-                                                'Valor do produto',
+                                                'Valor do produto:',
                                               ),
                                             ),
                                           ),
@@ -261,18 +261,18 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(0, 0, 20, 0),
                                                 child: CupertinoTextField(
-                                                  onChanged: (String e) {
-                                                    produto["valor"] =
-                                                        _textController[indice]
-                                                            .text;
-                                                    _salvarArquivo();
-                                                  },
                                                   placeholder: "Digite o valor",
                                                   controller:
                                                       _textController[indice],
                                                   obscureText: false,
                                                   textAlign: TextAlign.end,
-                                                  keyboardType: TextInputType.number
+                                                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                                  onChanged: (String e) {
+                                                    produto["valor"] =
+                                                        _textController[indice]
+                                                            .text;
+                                                    _salvarArquivo();
+                                                  }
                                                 ),
                                               ),
                                             ),
