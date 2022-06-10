@@ -161,20 +161,20 @@ class _EncartesState extends State<Encartes> {
             children: <Widget>[
               Row(
                 children: [
-                  Text("Lista de \nencartes",
+                  Text("Lista de encartes",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         height: 0.9,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        fontSize: 40),
+                        fontSize: 24),
                   ),
                   Spacer(),
                   TextButton(
                       onPressed: () {
                         addEncarte();
                       },
-                      child: ButtonWidget()
+                      child: ButtonWidget("Novo encarte")
                   )
                 ],
               ),
