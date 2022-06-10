@@ -48,7 +48,7 @@ class _EncartesState extends State<Encartes> {
 
     listaTodosProdutos.clear();
     for (int i=0; i<records.length; i++ ) {
-      print(i);
+      // print(i);
       listaTodosProdutos.add(Produto(records[i]["fields"]["primeira"], records[i]["fields"]["segunda"], "", records[i]["fields"]["imagem"]));
     }
   }
@@ -101,7 +101,7 @@ class _EncartesState extends State<Encartes> {
     // TODO: implement initState
     super.initState();
     _textController = TextEditingController(text: '');
-    print("INIT");
+    // print("INIT");
 
     _lerArquivo().then( (dados){
       setState(() {
