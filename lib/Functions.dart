@@ -51,3 +51,10 @@ salvarArquivo(List listaEncartes) async {
   arquivo.writeAsString( dados );
 
 }
+
+Future<File> getEncarteToDelete(String nome) async {
+
+  final diretorio = await getApplicationDocumentsDirectory();
+  return File( "${diretorio.path}/${nome}.json" );
+
+}

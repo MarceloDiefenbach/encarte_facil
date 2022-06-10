@@ -25,16 +25,9 @@ class _EncartesState extends State<Encartes> {
   List _listaEncartes = [];
   List<Produto> listaTodosProdutos = [];
 
-  Future<File> _getEncarteToDelete(String nome) async {
-
-    final diretorio = await getApplicationDocumentsDirectory();
-    return File( "${diretorio.path}/${nome}.json" );
-
-  }
-
   _deletarArquivo(String nome, int indice) async {
 
-    var arquivo = await _getEncarteToDelete(nome);
+    var arquivo = await getEncarteToDelete(nome);
 
     _listaEncartes.removeAt(indice);
     salvarArquivo(_listaEncartes);
@@ -43,9 +36,7 @@ class _EncartesState extends State<Encartes> {
   }
 
   _lerArquivo() async {
-
     listaTodosProdutos = await AirtableGet() as List<Produto>;
-
     try{
       final arquivo = await getFile();
       return arquivo.readAsString();
@@ -71,7 +62,6 @@ class _EncartesState extends State<Encartes> {
     } );
   }
 
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -84,7 +74,6 @@ class _EncartesState extends State<Encartes> {
           context: context,
           builder: (context) {
             int selectedRadio = 0;
-
             return CupertinoAlertDialog(
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
