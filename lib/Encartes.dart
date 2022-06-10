@@ -197,7 +197,7 @@ class _EncartesState extends State<Encartes> {
                           child: Container(
                             height: 50,
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 00, 0),
+                              padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -230,7 +230,7 @@ class _EncartesState extends State<Encartes> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         IconButton(
-                                          icon: Icon(Icons.arrow_forward_ios_rounded, color: Colors.black),
+                                          icon: Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey),
                                           onPressed: () {
                                             setState(() {
                                               _lerArquivo();
