@@ -96,7 +96,10 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () {
+              _salvarArquivo();
+              Navigator.of(context).pop();
+            },
           ),
           actions: <Widget>[
             TextButton(
@@ -163,129 +166,133 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: _listaProdutos.length,
-                        itemBuilder: (context, indice) {
-                          _textController.add(new TextEditingController());
-                          var produto = _listaProdutos[indice];
-                          _textController[indice].text = produto["valor"];
-                          return Column(
-                            children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 8),
-                                      child: Text(
-                                        'Produto ${indice + 1}',
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                            fontSize: 16),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(0),
-                                          bottomRight: Radius.circular(0),
-                                          topLeft: Radius.circular(10),
-                                          topRight: Radius.circular(10),
+                    Container(
+                      height: height,
+                      child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: _listaProdutos.length,
+                          itemBuilder: (context, indice) {
+                            _textController.add(new TextEditingController());
+                            var produto = _listaProdutos[indice];
+                            _textController[indice].text = produto["valor"];
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 8),
+                                        child: Text(
+                                          'Produto ${indice + 1}',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                              fontSize: 16),
                                         ),
                                       ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 8, 0, 0),
-                                              child: Text(
-                                                produto["nomeProduto"],
-                                              ),
-                                            ),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(0),
+                                            bottomRight: Radius.circular(0),
+                                            topLeft: Radius.circular(10),
+                                            topRight: Radius.circular(10),
                                           ),
-                                          IconButton(
-                                            icon: Icon(Icons.delete,
-                                                color: Colors.black, size: 20,),
-                                            onPressed: () {
-                                              _removerItem(indice);
-                                              setState(() {
-                                                _lerArquivo();
-                                              });
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10),
-                                          topLeft: Radius.circular(0),
-                                          topRight: Radius.circular(0),
                                         ),
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0, 0, 0),
-                                              child: Text(
-                                                'Valor do produto:',
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Align(
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 20, 0),
-                                                child: CupertinoTextField(
-                                                  placeholder: "Digite o valor",
-                                                  controller:
-                                                      _textController[indice],
-                                                  obscureText: false,
-                                                  textAlign: TextAlign.end,
-                                                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                                                  onChanged: (String e) {
-                                                    produto["valor"] =
-                                                        _textController[indice]
-                                                            .text;
-                                                    _salvarArquivo();
-                                                  }
+                                                    .fromSTEB(20, 8, 0, 0),
+                                                child: Text(
+                                                  produto["nomeProduto"],
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                            IconButton(
+                                              icon: Icon(Icons.delete,
+                                                color: Colors.black, size: 20,),
+                                              onPressed: () {
+                                                _removerItem(indice);
+                                                setState(() {
+                                                  _lerArquivo();
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      Container(
+                                        width: MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(10),
+                                            bottomRight: Radius.circular(10),
+                                            topLeft: Radius.circular(0),
+                                            topRight: Radius.circular(0),
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(20, 0, 0, 0),
+                                                child: Text(
+                                                  'Valor do produto:',
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment:
+                                                AlignmentDirectional(0, 0),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 20, 0),
+                                                  child: CupertinoTextField(
+                                                      placeholder: "Digite o valor",
+                                                      controller:
+                                                      _textController[indice],
+                                                      obscureText: false,
+                                                      textAlign: TextAlign.end,
+                                                      keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                                      onChanged: (String e) {
+                                                        produto["valor"] =
+                                                            _textController[indice]
+                                                                .text;
+                                                        _salvarArquivo();
+                                                      }
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          );
-                        })
+                              ],
+                            );
+                          }
+                      ),
+                    )
                   ],
                 ),
               ),

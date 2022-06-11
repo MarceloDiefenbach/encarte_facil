@@ -52,7 +52,7 @@ Future<File> getFile() async {
 
 
 
-//essa função salva o arquivo na memoria do celular
+//essa função salva o a lista de encartes na memoria do celular
 salvarArquivo(List listaEncartes) async {
 
   var arquivo = await getFile();
