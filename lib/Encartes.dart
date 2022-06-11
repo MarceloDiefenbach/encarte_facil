@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:encarte_facil_2/Components/Cell%20Encarte.dart';
+
 import './Functions.dart';
 
 
@@ -188,48 +190,7 @@ class _EncartesState extends State<Encartes> {
                     itemBuilder: (context, indice) {
                       var encarte = _listaEncartes[indice];
                       return GestureDetector(
-                        child: Card(
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.white70, width: 1),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Container(
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(20, 20, 0, 20),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        width: width*0.71,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                                              child: Text(
-                                                encarte["nomeEncarte"],
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20),
-                                              ),
-                                            ),
-                                            ButtonWidget("Abrir encarte")
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                        child: CellEncarte(encarte["nomeEncarte"]),
                         onTap: () {
                           Navigator.push(
                             context,
