@@ -25,16 +25,9 @@ class _EncartesState extends State<Encartes> {
   List _listaEncartes = [];
   List<Produto> listaTodosProdutos = [];
 
-  Future<File> _getEncarteToDelete(String nome) async {
-
-    final diretorio = await getApplicationDocumentsDirectory();
-    return File( "${diretorio.path}/${nome}.json" );
-
-  }
-
   _deletarArquivo(String nome, int indice) async {
 
-    var arquivo = await _getEncarteToDelete(nome);
+    var arquivo = await getEncarteToDelete(nome);
 
     _listaEncartes.removeAt(indice);
     salvarArquivo(_listaEncartes);
@@ -43,9 +36,7 @@ class _EncartesState extends State<Encartes> {
   }
 
   _lerArquivo() async {
-
     listaTodosProdutos = await AirtableGet() as List<Produto>;
-
     try{
       final arquivo = await getFile();
       return arquivo.readAsString();
@@ -71,7 +62,6 @@ class _EncartesState extends State<Encartes> {
     } );
   }
 
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -84,7 +74,6 @@ class _EncartesState extends State<Encartes> {
           context: context,
           builder: (context) {
             int selectedRadio = 0;
-
             return CupertinoAlertDialog(
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -172,20 +161,20 @@ class _EncartesState extends State<Encartes> {
             children: <Widget>[
               Row(
                 children: [
-                  Text("Lista de \nencartes",
+                  Text("Lista de encartes",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         height: 0.9,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        fontSize: 40),
+                        fontSize: 24),
                   ),
                   Spacer(),
                   TextButton(
                       onPressed: () {
                         addEncarte();
                       },
-                      child: ButtonWidget()
+                      child: ButtonWidget("Novo encarte")
                   )
                 ],
               ),
@@ -206,9 +195,8 @@ class _EncartesState extends State<Encartes> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Container(
-                            height: 50,
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 00, 0),
+                              padding: EdgeInsets.fromLTRB(20, 20, 0, 20),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -223,7 +211,7 @@ class _EncartesState extends State<Encartes> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                              padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                                               child: Text(
                                                 encarte["nomeEncarte"],
                                                 style: TextStyle(
@@ -231,69 +219,12 @@ class _EncartesState extends State<Encartes> {
                                                     fontSize: 20),
                                               ),
                                             ),
+                                            ButtonWidget("Abrir encarte")
                                           ],
                                         ),
                                       )
                                     ],
                                   ),
-                                  GestureDetector(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        IconButton(
-                                          icon: Icon(Icons.arrow_forward_ios_rounded, color: Colors.black),
-                                          onPressed: () {
-                                            setState(() {
-                                              _lerArquivo();
-                                            });
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => ProdutosEncarte(encarte["nomeEncarte"], listaTodosProdutos, encarte["validade"])
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return CupertinoAlertDialog(
-                                            title: Text("Deseja remover este encarte?"),
-                                            actions: <Widget>[
-                                              CupertinoDialogAction(
-                                                isDefaultAction: true,
-                                                child: Text(
-                                                  "Cancelar",
-                                                  style: TextStyle(
-                                                    color: Colors.red,
-                                                    fontWeight: FontWeight.w200,
-                                                  ),
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                  _lerArquivo();
-                                                },
-                                              ),
-                                              CupertinoDialogAction(
-                                                isDefaultAction: true,
-                                                child: Text("Apagar"),
-                                                onPressed: () {
-                                                  _deletarArquivo(encarte["nomeEncarte"], indice);
-                                                  Navigator.of(context).pop();
-                                                  setState(() {
-                                                    _lerArquivo();
-                                                  });
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                  )
                                 ],
                               ),
                             ),

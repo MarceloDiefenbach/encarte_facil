@@ -210,7 +210,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0, 0, 0),
+                                                  .fromSTEB(20, 8, 0, 0),
                                               child: Text(
                                                 produto["nomeProduto"],
                                               ),
@@ -218,7 +218,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                           ),
                                           IconButton(
                                             icon: Icon(Icons.delete,
-                                                color: Colors.black),
+                                                color: Colors.black, size: 20,),
                                             onPressed: () {
                                               _removerItem(indice);
                                               setState(() {
