@@ -195,9 +195,8 @@ class _EncartesState extends State<Encartes> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Container(
-                            height: 50,
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                              padding: EdgeInsets.fromLTRB(20, 20, 0, 20),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -212,7 +211,7 @@ class _EncartesState extends State<Encartes> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                              padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                                               child: Text(
                                                 encarte["nomeEncarte"],
                                                 style: TextStyle(
@@ -220,69 +219,12 @@ class _EncartesState extends State<Encartes> {
                                                     fontSize: 20),
                                               ),
                                             ),
+                                            ButtonWidget("Abrir encarte")
                                           ],
                                         ),
                                       )
                                     ],
                                   ),
-                                  GestureDetector(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        IconButton(
-                                          icon: Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey),
-                                          onPressed: () {
-                                            setState(() {
-                                              _lerArquivo();
-                                            });
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => ProdutosEncarte(encarte["nomeEncarte"], listaTodosProdutos, encarte["validade"])
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return CupertinoAlertDialog(
-                                            title: Text("Deseja remover este encarte?"),
-                                            actions: <Widget>[
-                                              CupertinoDialogAction(
-                                                isDefaultAction: true,
-                                                child: Text(
-                                                  "Cancelar",
-                                                  style: TextStyle(
-                                                    color: Colors.red,
-                                                    fontWeight: FontWeight.w200,
-                                                  ),
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                  _lerArquivo();
-                                                },
-                                              ),
-                                              CupertinoDialogAction(
-                                                isDefaultAction: true,
-                                                child: Text("Apagar"),
-                                                onPressed: () {
-                                                  _deletarArquivo(encarte["nomeEncarte"], indice);
-                                                  Navigator.of(context).pop();
-                                                  setState(() {
-                                                    _lerArquivo();
-                                                  });
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                  )
                                 ],
                               ),
                             ),

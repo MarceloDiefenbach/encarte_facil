@@ -6,6 +6,9 @@ import 'package:path_provider/path_provider.dart';
 
 import 'Model/Produto.dart';
 
+
+
+
 //essa função pega os produtos no airtable
 Future<List> AirtableGet() async {
   List<Produto> listaTodosProdutos = [];
@@ -35,6 +38,9 @@ Future<List> AirtableGet() async {
   return listaTodosProdutos;
 }
 
+
+
+
 //essa função pega o diretorio onde ficam salvas as cisas
 Future<File> getFile() async {
 
@@ -42,6 +48,9 @@ Future<File> getFile() async {
   return File( "${diretorio.path}/encartes4.json" );
 
 }
+
+
+
 
 //essa função salva o arquivo na memoria do celular
 salvarArquivo(List listaEncartes) async {
@@ -51,6 +60,9 @@ salvarArquivo(List listaEncartes) async {
   arquivo.writeAsString( dados );
 
 }
+
+
+
 
 Future<File> getEncarteToDelete(String nome) async {
 
