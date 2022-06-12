@@ -45,14 +45,14 @@ Future<List> AirtableGet() async {
 Future<File> getFile() async {
 
   final diretorio = await getApplicationDocumentsDirectory();
-  return File( "${diretorio.path}/encartes4.json" );
+  return File( "${diretorio.path}/encartes5.json" );
 
 }
 
 
 
 
-//essa função salva o arquivo na memoria do celular
+//essa função salva o a lista de encartes na memoria do celular
 salvarArquivo(List listaEncartes) async {
 
   var arquivo = await getFile();
@@ -68,5 +68,16 @@ Future<File> getEncarteToDelete(String nome) async {
 
   final diretorio = await getApplicationDocumentsDirectory();
   return File( "${diretorio.path}/${nome}.json" );
+
+}
+
+
+deletarEncarte(String nome, int indice, List listaEncartes) async {
+
+  var arquivo = await getEncarteToDelete(nome);
+
+  listaEncartes.removeAt(indice);
+  salvarArquivo(listaEncartes);
+  arquivo.delete();
 
 }

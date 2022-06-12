@@ -13,8 +13,9 @@ import 'Model/Tema.dart';
 class SelecionarTema extends StatefulWidget {
 
   List listaProdutos;
+  String validade;
 
-  SelecionarTema(this.listaProdutos);
+  SelecionarTema(this.listaProdutos, this.validade);
 
   @override
   _SelecionarTemaState createState() => _SelecionarTemaState();
@@ -144,13 +145,13 @@ class _SelecionarTemaState extends State<SelecionarTema> {
                                 ),
                                 onTap: () {
                                   if (widget.listaProdutos.length == 1) {
-                                    Navigator.push( context, MaterialPageRoute( builder: (context) => EncarteGerado1Produto(widget.listaProdutos, tema.tema, tema.topo)));
+                                    Navigator.push( context, MaterialPageRoute( builder: (context) => EncarteGerado1Produto(widget.listaProdutos, tema.tema, tema.topo, widget.validade)));
                                   } else if (widget.listaProdutos.length == 2) {
-                                    Navigator.push( context, MaterialPageRoute( builder: (context) => EncarteGerado2Produtos(widget.listaProdutos, tema.tema, tema.topo)));
+                                    Navigator.push( context, MaterialPageRoute( builder: (context) => EncarteGerado2Produtos(widget.listaProdutos, tema.tema, tema.topo, widget.validade)));
                                   } else if (widget.listaProdutos.length == 3) {
-                                    Navigator.push( context, MaterialPageRoute( builder: (context) => EncarteGerado3Produtos(widget.listaProdutos, tema.tema, tema.topo)));
+                                    Navigator.push( context, MaterialPageRoute( builder: (context) => EncarteGerado3Produtos(widget.listaProdutos, tema.tema, tema.topo, widget.validade)));
                                   } else if (widget.listaProdutos.length == 4) {
-                                    Navigator.push( context, MaterialPageRoute( builder: (context) => EncarteGerado4Produtos(widget.listaProdutos, tema.tema, tema.topo)));
+                                    Navigator.push( context, MaterialPageRoute( builder: (context) => EncarteGerado4Produtos(widget.listaProdutos, tema.tema, tema.topo, widget.validade)));
                                   }
                                 },
                               ),
