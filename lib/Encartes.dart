@@ -64,84 +64,7 @@ class _EncartesState extends State<Encartes> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    String _date = "  Validade";
-
-    void addEncarte() {
-      setState(() {
-        showDialog<void>(
-          context: context,
-          builder: (context) {
-            int selectedRadio = 0;
-            return CupertinoAlertDialog(
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Qual é o nome do encarte?",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        height: 1,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black,
-                        fontSize: 16),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
-                    child: CupertinoTextField(
-                      controller: _textController,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              actions: <Widget>[
-                CupertinoDialogAction(
-                  isDefaultAction: true,
-                  child: Text(
-                    "Cancelar",
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    _lerArquivo();
-                  },
-                ),
-                CupertinoDialogAction(
-                  isDefaultAction: true,
-                  child: Text("Criar"),
-                  onPressed: () {
-                    Map<String, dynamic> criarPraSalvar = Map();
-                    criarPraSalvar["nomeEncarte"] = _textController.text;
-                    _listaEncartes.add( criarPraSalvar );
-                    salvarArquivo(_listaEncartes);
-                    Navigator.of(context).pop();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProdutosEncarte(_textController.text, listaTodosProdutos, _textControllerValidade.text)
-                      ),
-                    );
-                    _textController.text = "";
-                    setState(() {
-                      _lerArquivo();
-                    });
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      });
-    }
+    String date = "";
 
     return Scaffold(
       appBar: AppBar(
@@ -173,6 +96,7 @@ class _EncartesState extends State<Encartes> {
                   Spacer(),
                   TextButton(
                       onPressed: () {
+                        Navigator.of(context).pop();
                         Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarte()));
                       },
                       child: ButtonWidget("Novo encarte")
@@ -189,8 +113,9 @@ class _EncartesState extends State<Encartes> {
                     itemBuilder: (context, indice) {
                       var encarte = _listaEncartes[indice];
                       return GestureDetector(
-                        child: CellEncarte(encarte["nomeEncarte"]),
+                        child: CellEncarte(encarte["nomeEncarte"], indice, _listaEncartes),
                         onTap: () {
+                          Navigator.of(context).pop();
                           Navigator.push(
                             context,
                             MaterialPageRoute(

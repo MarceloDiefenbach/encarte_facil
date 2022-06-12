@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:encarte_facil_2/Components/Button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -12,7 +13,9 @@ class EncarteGerado1Produto extends StatefulWidget {
 
   String temaEncarte;
 
-  EncarteGerado1Produto(this.listaProdutos, this.fundoEncarte, this.temaEncarte);
+  String validade;
+
+  EncarteGerado1Produto(this.listaProdutos, this.fundoEncarte, this.temaEncarte, this.validade);
   @override
   _EncarteGerado1ProdutoState createState() => _EncarteGerado1ProdutoState();
 }
@@ -63,7 +66,7 @@ class _EncarteGerado1ProdutoState extends State<EncarteGerado1Produto> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Row(
+                              Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
@@ -71,7 +74,7 @@ class _EncarteGerado1ProdutoState extends State<EncarteGerado1Produto> {
                                     height: width*0.4,
                                     color: Colors.transparent,
                                     child: Image.network(widget.temaEncarte),
-                                  )
+                                  ),
                                 ],
                               ),
                               Row(
@@ -161,7 +164,15 @@ class _EncarteGerado1ProdutoState extends State<EncarteGerado1Produto> {
                                       )
                                   )
                                 ],
-                              )
+                              ),
+                              Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
+                              Text("Ofertas válidas até: ${widget.validade}",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.white,
+                                      fontSize: 12)
+                              ),
                             ],
                           )
                         ],

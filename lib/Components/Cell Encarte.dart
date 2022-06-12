@@ -1,3 +1,4 @@
+import 'package:encarte_facil_2/Functions.dart';
 import 'package:flutter/material.dart';
 import 'package:encarte_facil_2/Components/Button.dart';
 
@@ -5,7 +6,10 @@ import 'package:encarte_facil_2/Components/Button.dart';
 class CellEncarte extends StatefulWidget {
 
   String title;
-  CellEncarte(this.title);
+  int indice;
+  List listaEncartes;
+
+  CellEncarte(this.title, this.indice, this.listaEncartes);
 
   @override
   _CellEncarteState createState() => _CellEncarteState();
@@ -35,7 +39,7 @@ class _CellEncarteState extends State<CellEncarte> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    width: width*0.71,
+                    width: width*0.6,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,6 +58,17 @@ class _CellEncarteState extends State<CellEncarte> {
                     ),
                   )
                 ],
+              ),
+              Spacer(),
+              IconButton(
+                icon: Icon(Icons.delete,
+                  color: Colors.black, size: 20,),
+                onPressed: () {
+                  deletarEncarte(widget.title, widget.indice, widget.listaEncartes);
+                  setState(() {
+                    // _lerArquivo();
+                  });
+                },
               ),
             ],
           ),

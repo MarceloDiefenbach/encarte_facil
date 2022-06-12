@@ -13,7 +13,9 @@ class EncarteGerado4Produtos extends StatefulWidget {
 
   String temaEncarte;
 
-  EncarteGerado4Produtos(this.listaProdutos, this.fundoEncarte, this.temaEncarte);
+  String validade;
+
+  EncarteGerado4Produtos(this.listaProdutos, this.fundoEncarte, this.temaEncarte, this.validade);
   @override
   _EncarteGerado4ProdutosState createState() => _EncarteGerado4ProdutosState();
 }
@@ -62,7 +64,7 @@ class _EncarteGerado4ProdutosState extends State<EncarteGerado4Produtos> {
                             fit: BoxFit.fill, // I thought this would fill up my Container but it doesn't
                           ),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
+                            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -427,7 +429,15 @@ class _EncarteGerado4ProdutosState extends State<EncarteGerado4Produtos> {
                                       )
                                     ],
                                   ),
-                                )
+                                ),
+                                Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
+                                Text("Ofertas válidas até: ${widget.validade}",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        color: Colors.white,
+                                        fontSize: 12)
+                                ),
                               ],
                             ),
                           )
