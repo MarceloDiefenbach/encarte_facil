@@ -26,7 +26,7 @@ class _CellEncarteState extends State<CellEncarte> {
       ),
       child: Container(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(20, 20, 0, 20),
+          padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

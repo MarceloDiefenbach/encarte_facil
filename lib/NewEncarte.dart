@@ -1,30 +1,28 @@
 import 'dart:convert';
-import 'package:encarte_facil_2/Components/Cell%20Encarte.dart';
-import 'package:encarte_facil_2/NewEncarte.dart';
+import 'package:numberpicker/numberpicker.dart';
+
 
 import './Functions.dart';
 
-import 'package:encarte_facil_2/Components/Button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'Model/Produto.dart';
 import 'ProdutosEncarte.dart';
 
-
-class Encartes extends StatefulWidget {
-  const Encartes({key}) : super(key: key);
+class NewEncarte extends StatefulWidget {
+  const NewEncarte({key}) : super(key: key);
 
   @override
-  _EncartesState createState() => _EncartesState();
+  _NewEncarteState createState() => _NewEncarteState();
 }
 
-class _EncartesState extends State<Encartes> {
-
+class _NewEncarteState extends State<NewEncarte> {
   List _listaEncartes = [];
   List<Produto> listaTodosProdutos = [];
 
-  _deletarArquivo(String nome, int indice) async {
+  DateTime _selectedDate = DateTime.now();
 
+  _deletarArquivo(String nome, int indice) async {
     var arquivo = await getEncarteToDelete(nome);
 
     _listaEncartes.removeAt(indice);
@@ -35,10 +33,10 @@ class _EncartesState extends State<Encartes> {
 
   _lerArquivo() async {
     listaTodosProdutos = await AirtableGet() as List<Produto>;
-    try{
+    try {
       final arquivo = await getFile();
       return arquivo.readAsString();
-    }catch(e){
+    } catch (e) {
       return null;
     }
   }
@@ -53,11 +51,11 @@ class _EncartesState extends State<Encartes> {
     _textController = TextEditingController(text: '');
     _textControllerValidade = TextEditingController(text: '');
 
-    _lerArquivo().then((dados){
+    _lerArquivo().then((dados) {
       setState(() {
         _listaEncartes = json.decode(dados);
       });
-    } );
+    });
   }
 
   @override
@@ -76,7 +74,8 @@ class _EncartesState extends State<Encartes> {
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("Qual é o nome do encarte?",
+                  Text(
+                    "Qual é o nome do encarte?",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         height: 1,
@@ -85,7 +84,7 @@ class _EncartesState extends State<Encartes> {
                         fontSize: 16),
                   ),
                   Padding(
-                      padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
+                    padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
                     child: CupertinoTextField(
                       controller: _textController,
                       decoration: BoxDecoration(
@@ -121,14 +120,16 @@ class _EncartesState extends State<Encartes> {
                   onPressed: () {
                     Map<String, dynamic> criarPraSalvar = Map();
                     criarPraSalvar["nomeEncarte"] = _textController.text;
-                    _listaEncartes.add( criarPraSalvar );
+                    _listaEncartes.add(criarPraSalvar);
                     salvarArquivo(_listaEncartes);
                     Navigator.of(context).pop();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ProdutosEncarte(_textController.text, listaTodosProdutos, _textControllerValidade.text)
-                      ),
+                          builder: (context) => ProdutosEncarte(
+                              _textController.text,
+                              listaTodosProdutos,
+                              _textControllerValidade.text)),
                     );
                     _textController.text = "";
                     setState(() {
@@ -151,56 +152,75 @@ class _EncartesState extends State<Encartes> {
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-        alignment: Alignment.topLeft,
+        alignment: Alignment.bottomCenter,
         color: Colors.grey[300],
+        height: height,
         child: SingleChildScrollView(
+
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Row(
-                children: [
-                  Container(
-                    width: width*0.55,
-                    child: Text("Lista de encartes",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          height: 0.9,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 24),
-                    ),
-                  ),
-                  Spacer(),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarte()));
-                      },
-                      child: ButtonWidget("Novo encarte")
-                  )
-                ],
-              ),
+              Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0)),
+              Text("Escolhe o nome do encarte",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                      fontSize: 24)),
               Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
               Container(
-                height: height,
-                child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: _listaEncartes.length,
-                    itemBuilder: (context, indice) {
-                      var encarte = _listaEncartes[indice];
-                      return GestureDetector(
-                        child: CellEncarte(encarte["nomeEncarte"]),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProdutosEncarte(encarte["nomeEncarte"], listaTodosProdutos, encarte["validade"])
-                            ),
-                          );
-                        },
-                      );
-                    }
+                width: width * 0.85,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(16),
+                  ),
                 ),
+                padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                child: TextField(
+                  controller: _textController,
+                  keyboardType: TextInputType.text,
+                  minLines: 1,
+                  maxLines: 6,
+                  autofocus: true,
+                  onChanged: (String e) {},
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Digite o nome do encarte',
+                  ),
+                ),
+              ),
+              Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 20)),
+              Text("Defina a validade das ofertas",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                      fontSize: 24)),
+              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+
+              Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
+              TextButton(
+                onPressed: () async {},
+                child: Container(
+                  height: 50,
+                  width: width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.blue,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Criar encarte',
+                          style: TextStyle(color: Colors.white, fontSize: 16)),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                height: 50,
               )
             ],
           ),

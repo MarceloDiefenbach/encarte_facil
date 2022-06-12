@@ -42,10 +42,9 @@ dependencies:
   timeago: 3.1.0
   url_launcher: 6.0.15
   flutter_email_sender: ^5.1.0
-  flutter_datetime_picker:
-    git:
-      url: https://github.com/AlexHartford/flutter_datetime_picker.git
-      ref: master
+  numberpicker: ^2.1.1
+  firebase_core: ^1.14.1
+  firebase_messaging: ^11.2.13
 
 
   # The following adds the Cupertino Icons font to your application.
