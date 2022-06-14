@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:encarte_facil_2/Components/Cell%20Encarte.dart';
 import 'package:encarte_facil_2/NewEncarte.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 import './Functions.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'package:encarte_facil_2/Components/Button.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +26,7 @@ class _EncartesState extends State<Encartes> {
   List _listaEncartes = [];
   List<Produto> listaTodosProdutos = [];
 
+
   _deletarArquivo(String nome, int indice) async {
 
     var arquivo = await getEncarteToDelete(nome);
@@ -35,6 +39,7 @@ class _EncartesState extends State<Encartes> {
 
   _lerArquivo() async {
     listaTodosProdutos = await AirtableGet() as List<Produto>;
+
     try{
       final arquivo = await getFile();
       return arquivo.readAsString();
