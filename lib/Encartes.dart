@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:encarte_facil_2/Components/Cell%20Encarte.dart';
 import 'package:encarte_facil_2/NewEncarte.dart';
+import 'package:encarte_facil_2/NewEncarteComTema.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import './Functions.dart';
@@ -105,7 +106,7 @@ class _EncartesState extends State<Encartes> {
                 child:  TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarte()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarteComTema()));
                       FirebaseAnalytics.instance.logEvent(name: "criar_encarte");
                     },
                     child: Container(
