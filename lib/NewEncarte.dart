@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:encarte_facil_2/Encartes.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 
@@ -20,6 +21,8 @@ class NewEncarte extends StatefulWidget {
 class _NewEncarteState extends State<NewEncarte> {
   List _listaEncartes = [];
   List<Produto> listaTodosProdutos = [];
+
+  FirebaseAnalytics analyticsEvents = FirebaseAnalytics.instance;
 
   int dia = 1;
   int mes = 1;
@@ -68,14 +71,15 @@ class _NewEncarteState extends State<NewEncarte> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(padding: EdgeInsets.fromLTRB(0, 50, 0, 0)),
+              Padding(padding: EdgeInsets.fromLTRB(0, 30, 0, 0)),
               Text("Escolhe o nome do encarte",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.black,
-                      fontSize: 24)),
-              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                      fontSize: 20)
+              ),
+              Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
               Container(
                 width: width * 0.85,
                 decoration: BoxDecoration(
@@ -99,14 +103,14 @@ class _NewEncarteState extends State<NewEncarte> {
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 20)),
+              Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 8)),
               Text("Defina a validade das ofertas",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.black,
-                      fontSize: 24)),
-              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                      fontSize: 20)),
+              Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
               Container(
                 width: width*0.85,
                 decoration: BoxDecoration(
@@ -188,6 +192,12 @@ class _NewEncarteState extends State<NewEncarte> {
                     _listaEncartes.add( criarPraSalvar );
                     salvarArquivo(_listaEncartes);
                     Navigator.of(context).pop();
+                    analyticsEvents.logEvent(
+                        name: "criou_encarte",
+                      parameters: {
+                        "nome": "${_textController.text}",
+                      },
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -198,6 +208,7 @@ class _NewEncarteState extends State<NewEncarte> {
                     setState(() {
                       _lerArquivo();
                     });
+                  FirebaseAnalytics.instance.logEvent(name: "criou_encarte");
                 },
                 child: Container(
                   height: 50,

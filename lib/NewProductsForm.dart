@@ -87,6 +87,7 @@ class _NewProductsForm extends State<NewProductsForm> {
                             isHTML: false,
                         )
                       );
+                    Navigator.of(context).pop();
                     },
                   child: Container(
                     height: 50,

@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:encarte_facil_2/Components/Cell%20Encarte.dart';
 import 'package:encarte_facil_2/NewEncarte.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 import './Functions.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'package:encarte_facil_2/Components/Button.dart';
 import 'package:flutter/material.dart';
@@ -23,18 +26,9 @@ class _EncartesState extends State<Encartes> {
   List _listaEncartes = [];
   List<Produto> listaTodosProdutos = [];
 
-  _deletarArquivo(String nome, int indice) async {
-
-    var arquivo = await getEncarteToDelete(nome);
-
-    _listaEncartes.removeAt(indice);
-    salvarArquivo(_listaEncartes);
-    arquivo.delete();
-    _lerArquivo();
-  }
-
   _lerArquivo() async {
     listaTodosProdutos = await AirtableGet() as List<Produto>;
+
     try{
       final arquivo = await getFile();
       return arquivo.readAsString();
@@ -94,16 +88,48 @@ class _EncartesState extends State<Encartes> {
                     ),
                   ),
                   Spacer(),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarte()));
-                      },
-                      child: ButtonWidget("Novo encarte")
-                  )
+                  // TextButton(
+                  //     onPressed: () {
+                  //       Navigator.of(context).pop();
+                  //       Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarte()));
+                  //       analyticsEvents.logEvent(name: "criar_encarte");
+                  //       analyticsEvents.logTutorialComplete();
+                  //       print("criar encarte");
+                  //     },
+                  //     child: ButtonWidget("Novo encarte")
+                  // )
                 ],
               ),
-              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                child:  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarte()));
+                      FirebaseAnalytics.instance.logEvent(name: "criar_encarte");
+                    },
+                    child: Container(
+                        width: width,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Criar novo encarte',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: width*0.055,
+                                    fontWeight: FontWeight.bold
+                                )
+                            ),
+                          ],
+                        )
+                    ),
+                ),
+              ),
               Container(
                 height: height,
                 child: ListView.builder(

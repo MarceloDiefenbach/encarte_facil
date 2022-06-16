@@ -1,5 +1,6 @@
 
 import 'dart:typed_data';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -308,7 +309,9 @@ class _EncarteGerado2ProdutosState extends State<EncarteGerado2Produtos> {
                   }).catchError((onError) {
                     print(onError);
                   });
-
+                  FirebaseAnalytics.instance.logEvent(
+                    name: "salvou_encarte_na_galeria",
+                  );
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {

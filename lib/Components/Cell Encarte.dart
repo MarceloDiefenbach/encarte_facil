@@ -25,7 +25,6 @@ class _CellEncarteState extends State<CellEncarte> {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: Colors.white70, width: 1),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Container(
