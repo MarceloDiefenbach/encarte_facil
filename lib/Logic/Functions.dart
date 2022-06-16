@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
-import 'Model/Produto.dart';
-import 'Model/Tema.dart';
+import '../Model/Produto.dart';
+import '../Model/Tema.dart';
 
 
 
@@ -46,7 +46,7 @@ Future<List> AirtableGet() async {
 Future<File> getFile() async {
 
   final diretorio = await getApplicationDocumentsDirectory();
-  return File( "${diretorio.path}/encartes4.json" );
+  return File( "${diretorio.path}/encartes7.json" );
 
 }
 

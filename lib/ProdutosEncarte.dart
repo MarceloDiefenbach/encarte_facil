@@ -10,6 +10,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'Components/Cell Tema.dart';
 import 'ListaProdutos.dart';
 import 'Model/Produto.dart';
 import 'SelecionarTema.dart';
@@ -103,6 +104,26 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
+                    //do something
+                  },
+                  child: Container(
+                      height: 30,
+                      width: 110,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.blueAccent),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Editar encarte',
+                              style: TextStyle(color: Colors.blueAccent)),
+                        ],
+                      )
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
                     FirebaseAnalytics.instance
                         .logEvent(name: "adicionar_produto_lista");
                     if (_listaProdutos.length == 4) {
@@ -111,7 +132,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                         builder: (BuildContext context) {
                           return CupertinoAlertDialog(
                             title:
-                                Text("Número máximo de produtos neste encarte"),
+                            Text("Número máximo de produtos neste encarte"),
                             actions: <Widget>[
                               CupertinoDialogAction(
                                 isDefaultAction: true,
@@ -132,13 +153,13 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                 widget.listaTodosProdutos,
                                 widget.encarte["nomeEncarte"])),
                       ).then((value) => setState(() {
-                            _lerArquivo().then((dados) {
-                              setState(() {
-                                _listaProdutos = json.decode(dados);
-                                print("atualizou");
-                              });
-                            });
-                          }));
+                        _lerArquivo().then((dados) {
+                          setState(() {
+                            _listaProdutos = json.decode(dados);
+                            print("atualizou");
+                          });
+                        });
+                      }));
                     }
                   },
                   child: Container(
@@ -154,7 +175,8 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                           Text('Adicionar',
                               style: TextStyle(color: Colors.white)),
                         ],
-                      )),
+                      )
+                  ),
                 ),
               ],
               elevation: 0,
@@ -183,7 +205,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                     color: Colors.black,
                                     fontSize: 20),
                               ),
-                              Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
+                              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
                               Text(
                                 'Validade: ${widget.encarte["validade"]}',
                                 textAlign: TextAlign.start,
@@ -192,22 +214,27 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                     color: Colors.black,
                                     fontSize: 20),
                               ),
-                              Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
-                              Text(
-                                'Validade: ${widget.encarte["topo"]}',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 20),
+                              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Tema:',
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 20),
+                                  ),
+                                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 16, 0)),
+                                  CellTema(widget.encarte["tema"], widget.encarte["topo"], false),
+                                ],
                               ),
                               ListView.builder(
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
                                   itemCount: _listaProdutos.length,
                                   itemBuilder: (context, indice) {
-                                    _textController
-                                        .add(new TextEditingController());
+                                    _textController.add(new TextEditingController());
                                     var produto = _listaProdutos[indice];
                                     _textController[indice].text =
                                         produto["valor"];
@@ -215,8 +242,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                       children: [
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 20, 0, 0),
+                                              EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             crossAxisAlignment:

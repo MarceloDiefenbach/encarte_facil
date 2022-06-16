@@ -4,9 +4,9 @@ import 'package:encarte_facil_2/NewEncarte.dart';
 import 'package:encarte_facil_2/NewEncarteComTema.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-import './Functions.dart';
+import 'Logic/Functions.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'Logic/firebase_options.dart';
 
 import 'package:encarte_facil_2/Components/Button.dart';
 import 'package:flutter/material.dart';
@@ -63,90 +63,81 @@ class _EncartesState extends State<Encartes> {
     String date = "";
 
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.grey[300],
-        foregroundColor: Colors.black,
-      ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-        alignment: Alignment.topLeft,
+        height: height,
+        width: width,
         color: Colors.grey[300],
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: [
-                  Container(
-                    width: width*0.55,
-                    child: Text("Lista de encartes",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          height: 0.9,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 24),
-                    ),
-                  ),
-                  Spacer(),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                child:  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarteComTema()));
-                      FirebaseAnalytics.instance.logEvent(name: "criar_encarte");
-                    },
-                    child: Container(
-                        width: width,
-                        height: 70,
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(15),
+        child: ListView.builder(
+            padding: EdgeInsets.fromLTRB(20, 60, 20, 0),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: _listaEncartes.length+1,
+            itemBuilder: (context, indice) {
+              if (indice == 0) {
+                return Column(
+                  children: [
+                    Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                    Row(
+                      children: [
+                        Container(
+                          width: width*0.55,
+                          child: Text("Lista de encartes",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                height: 0.9,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 24),
+                          ),
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Criar novo encarte',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: width*0.055,
-                                    fontWeight: FontWeight.bold
-                                )
-                            ),
-                          ],
-                        )
+                        Spacer(),
+                      ],
                     ),
-                ),
-              ),
-              Container(
-                height: height,
-                child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: _listaEncartes.length,
-                    itemBuilder: (context, indice) {
-                      var encarte = _listaEncartes[indice];
-                      return GestureDetector(
-                        child: CellEncarte(encarte["nomeEncarte"], indice, _listaEncartes),
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProdutosEncarte(encarte, listaTodosProdutos)
-                            ),
-                          );
-                        },
-                      );
-                    }
-                ),
-              )
-            ],
-          ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarteComTema()));
+                        FirebaseAnalytics.instance.logEvent(name: "criar_encarte");
+                      },
+                      child: Container(
+                          width: width,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Criar novo encarte',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: width*0.055,
+                                      fontWeight: FontWeight.bold
+                                  )
+                              ),
+                            ],
+                          )
+                      ),
+                    ),
+                  ],
+                );
+              } else {
+                var encarte = _listaEncartes[indice-1];
+                return GestureDetector(
+                  child: CellEncarte(encarte["nomeEncarte"], indice-1, _listaEncartes),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProdutosEncarte(encarte, listaTodosProdutos)
+                      ),
+                    );
+                  },
+                );
+              }
+            }
         ),
       ),
     );

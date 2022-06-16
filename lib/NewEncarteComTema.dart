@@ -6,7 +6,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:http/http.dart' as http;
 
-import './Functions.dart';
+import 'Logic/Functions.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,6 +25,7 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
   List _listaEncartes = [];
   List<Produto> listaTodosProdutos = [];
   TextEditingController _textController;
+  TextEditingController _textControllerValidade;
   List<Tema> temas = [];
   FirebaseAnalytics analyticsEvents = FirebaseAnalytics.instance;
   List<bool> selecionado = [false, false, false];
@@ -79,6 +80,7 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
     // TODO: implement initState
     super.initState();
     _textController = TextEditingController(text: '');
+    _textControllerValidade = TextEditingController(text: '');
 
     _lerArquivo().then((dados) {
       setState(() {
@@ -111,7 +113,7 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                       fontSize: 20)
               ),
               Padding(
-                  padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                  padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
                 child: Container(
                   width: width * 0.9,
                   height: height*0.08,
@@ -139,14 +141,15 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                   ),
                 ),
               ),
-              Text("Defina a validade das ofertas",
+              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+              Text("Validade das ofertas",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.black,
                       fontSize: 20)),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
                 child: Container(
                   width: width * 0.9,
                   height: height*0.08,
@@ -156,27 +159,25 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                       Radius.circular(16),
                     ),
                   ),
-                  padding: EdgeInsets.fromLTRB(24, height*0.01, 24, 8),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text("Escolha a data",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                              fontSize: 20),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.edit_rounded, color: Colors.black),
-                        onPressed: () {
-                          //do something
-                        },
-                      ),
-                    ],
+                  padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                  child: TextField(
+                    controller: _textControllerValidade,
+                    keyboardType: TextInputType.text,
+                    autofocus: true,
+                    onChanged: (String e) {},
+                    textInputAction: TextInputAction.done,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                        fontSize: 20),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Digite a validade das ofertas',
+                    ),
                   ),
                 ),
               ),
+              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
               Text("Tema do encarte",
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -242,7 +243,7 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                   date = "${dia}/${mes}/${ano}";
                     Map<String, dynamic> criarPraSalvar = Map();
                     criarPraSalvar["nomeEncarte"] = _textController.text;
-                    criarPraSalvar["validade"] = date;
+                    criarPraSalvar["validade"] = _textControllerValidade.text;
                     criarPraSalvar["topo"] = topoSelecionado;
                     criarPraSalvar["tema"] = temaSelecionado;
                     print("encarte criado ${criarPraSalvar}");
@@ -255,13 +256,13 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                         "nome": "${_textController.text}",
                       },
                     );
-                  // Navigator.of(context).pop();
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => ProdutosEncarte(_textController.text, listaTodosProdutos, date)
-                    //   ),
-                    // );
+                  Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Encartes()
+                      ),
+                    );
                     _textController.text = "";
                     setState(() {
                       _lerArquivo();
