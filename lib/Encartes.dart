@@ -51,6 +51,7 @@ class _EncartesState extends State<Encartes> {
     _lerArquivo().then((dados){
       setState(() {
         _listaEncartes = json.decode(dados);
+        print(_listaEncartes);
       });
     } );
   }
@@ -89,16 +90,6 @@ class _EncartesState extends State<Encartes> {
                     ),
                   ),
                   Spacer(),
-                  // TextButton(
-                  //     onPressed: () {
-                  //       Navigator.of(context).pop();
-                  //       Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarte()));
-                  //       analyticsEvents.logEvent(name: "criar_encarte");
-                  //       analyticsEvents.logTutorialComplete();
-                  //       print("criar encarte");
-                  //     },
-                  //     child: ButtonWidget("Novo encarte")
-                  // )
                 ],
               ),
               Padding(
@@ -106,7 +97,7 @@ class _EncartesState extends State<Encartes> {
                 child:  TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarteComTema()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarte()));
                       FirebaseAnalytics.instance.logEvent(name: "criar_encarte");
                     },
                     child: Container(

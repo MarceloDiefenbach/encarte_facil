@@ -1,14 +1,17 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:encarte_facil_2/Components/Cell%20Tema.dart';
 import 'package:encarte_facil_2/Encartes.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:numberpicker/numberpicker.dart';
-
+import 'package:http/http.dart' as http;
 
 import './Functions.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'Model/Produto.dart';
+import 'Model/Tema.dart';
 import 'ProdutosEncarte.dart';
 
 class NewEncarteComTema extends StatefulWidget {
@@ -21,8 +24,12 @@ class NewEncarteComTema extends StatefulWidget {
 class _NewEncarteComTemaState extends State<NewEncarteComTema> {
   List _listaEncartes = [];
   List<Produto> listaTodosProdutos = [];
-
+  TextEditingController _textController;
+  List<Tema> temas = [];
   FirebaseAnalytics analyticsEvents = FirebaseAnalytics.instance;
+  List<bool> selecionado = [false, false, false];
+  String temaSelecionado = "";
+  String topoSelecionado = "";
 
   int dia = 1;
   int mes = 1;
@@ -40,7 +47,32 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
     }
   }
 
-  TextEditingController _textController;
+  _deixaTudoFalse() {
+    for (int i = 0; i < selecionado.length; i++) {
+      selecionado[i] = false;
+    }
+  }
+
+  _pegaTemasAirtable() async {
+
+    http.Response response;
+    response = await http.get(
+      Uri.parse('https://api.airtable.com/v0/app3yQeCe4U0NEM6H/Table%201'),
+      // Send authorization headers to the backend.
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer keySFSIYnvACQhHAa",
+      },
+    );
+
+    Map<String, dynamic> retorno = json.decode(response.body);
+    List records = retorno["records"];
+    temas.clear();
+
+    for (int i=0; i<records.length; i++ ) {
+      temas.add(Tema(records[i]["fields"]["Nome"], records[i]["fields"]["Fundo"], records[i]["fields"]["Topo"]));
+    }
+    return temas;
+  }
 
   @override
   void initState() {
@@ -128,7 +160,7 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text("Escolha uma data",
+                      Text("Escolha a data",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
@@ -152,72 +184,57 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                       color: Colors.black,
                       fontSize: 20)),
               Padding(padding: EdgeInsets.all(4)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: width*0.28,
-                    height: width*0.28,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(16)
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.all(4)),
-
-                  Container(
-                    width: width*0.28,
-                    height: width*0.28,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(16)
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.all(4)),
-
-                  Container(
-                    width: width*0.28,
-                    height: width*0.28,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(16)
-                    ),
-                  ),
-                ],
-              ),
-              Padding(padding: EdgeInsets.all(4)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: width*0.28,
-                    height: width*0.28,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(16)
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.all(4)),
-
-                  Container(
-                    width: width*0.28,
-                    height: width*0.28,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(16)
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.all(4)),
-
-                  Container(
-                    width: width*0.28,
-                    height: width*0.28,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(16)
-                    ),
-                  ),
-                ],
+              FutureBuilder(
+                  future: _pegaTemasAirtable(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            child: CellTema(temas[0].tema, temas[0].topo, selecionado[0]),
+                            onTap: () {
+                              setState(() {
+                                _deixaTudoFalse();
+                                selecionado[0] = true;
+                                temaSelecionado = temas[0].tema;
+                                topoSelecionado = temas[0].topo;
+                              });
+                            },
+                          ),
+                          Padding(padding: EdgeInsets.all(4)),
+                          GestureDetector(
+                            child: CellTema(temas[1].tema, temas[1].topo, selecionado[1]),
+                            onTap: () {
+                              setState(() {
+                                _deixaTudoFalse();
+                                selecionado[1] = true;
+                                temaSelecionado = temas[1].tema;
+                                topoSelecionado = temas[1].topo;
+                              });
+                            },
+                          ),
+                          Padding(padding: EdgeInsets.all(4)),
+                          GestureDetector(
+                            child: CellTema(temas[2].tema, temas[2].topo, selecionado[2]),
+                            onTap: () {
+                              setState(() {
+                                _deixaTudoFalse();
+                                selecionado[2] = true;
+                                temaSelecionado = temas[2].tema;
+                                topoSelecionado = temas[2].topo;
+                              });
+                            },
+                          ),
+                        ],
+                      );
+                    } else {
+                      return CupertinoActivityIndicator(
+                        animating: true,
+                        radius: 15,
+                      );
+                    }
+                  }
               ),
               Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
               TextButton(
@@ -226,21 +243,25 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                     Map<String, dynamic> criarPraSalvar = Map();
                     criarPraSalvar["nomeEncarte"] = _textController.text;
                     criarPraSalvar["validade"] = date;
+                    criarPraSalvar["topo"] = topoSelecionado;
+                    criarPraSalvar["tema"] = temaSelecionado;
+                    print("encarte criado ${criarPraSalvar}");
                     _listaEncartes.add( criarPraSalvar );
                     salvarArquivo(_listaEncartes);
-                    Navigator.of(context).pop();
+                    print(_listaEncartes);
                     analyticsEvents.logEvent(
                         name: "criou_encarte",
                       parameters: {
                         "nome": "${_textController.text}",
                       },
                     );
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProdutosEncarte(_textController.text, listaTodosProdutos, date)
-                      ),
-                    );
+                  // Navigator.of(context).pop();
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => ProdutosEncarte(_textController.text, listaTodosProdutos, date)
+                    //   ),
+                    // );
                     _textController.text = "";
                     setState(() {
                       _lerArquivo();
