@@ -97,7 +97,7 @@ class _EncartesState extends State<Encartes> {
                 child:  TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarte()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarteComTema()));
                       FirebaseAnalytics.instance.logEvent(name: "criar_encarte");
                     },
                     child: Container(
@@ -137,7 +137,7 @@ class _EncartesState extends State<Encartes> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProdutosEncarte(encarte["nomeEncarte"], listaTodosProdutos, encarte["validade"])
+                                builder: (context) => ProdutosEncarte(encarte, listaTodosProdutos)
                             ),
                           );
                         },
