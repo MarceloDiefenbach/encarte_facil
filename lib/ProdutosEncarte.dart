@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:encarte_facil_2/Encartes.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
@@ -100,6 +101,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
+                  FirebaseAnalytics.instance.logEvent(name: "adicionar_produto_lista");
                   if (_listaProdutos.length == 4) {
                     showDialog(
                       context: context,
@@ -355,6 +357,12 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                   });
                                 });
                               }));
+                              FirebaseAnalytics.instance.logEvent(
+                                name: "gerar_encarte",
+                                parameters: {
+                                  "quantidade_itens": "${_listaProdutos.length.toString()}",
+                                },
+                              );
                             },
                           ))
                     ],

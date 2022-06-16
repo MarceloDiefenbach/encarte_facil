@@ -9,8 +9,8 @@ import 'ProdutosEncarte.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  FirebaseAnalytics.instance.logEvent(name: "open_app");
+
   runApp(MaterialApp(
     initialRoute: "/",
     routes: {

@@ -3,6 +3,7 @@ import 'package:encarte_facil_2/Components/Alert.dart';
 import 'package:encarte_facil_2/Components/Button.dart';
 import 'package:encarte_facil_2/Encartes.dart';
 import 'package:encarte_facil_2/NewProductsForm.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -225,8 +226,13 @@ class _ListaProdutosState extends State<ListaProdutos> {
                         ),
                       ),
                       onTap: () {
+                        FirebaseAnalytics.instance.logEvent(
+                          name: "adicionou_produto",
+                          parameters: {
+                            "nome_produto": "${produto.nome}",
+                          },
+                        );
                         _selecionaProduto(produto);
-                        print("oi");
                       },
                     );
                   }

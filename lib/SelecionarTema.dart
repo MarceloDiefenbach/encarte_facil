@@ -1,6 +1,7 @@
 import 'package:encarte_facil_2/Encartes/EncarteGerado2Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado3Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado4Produtos.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -144,6 +145,12 @@ class _SelecionarTemaState extends State<SelecionarTema> {
                                   ],
                                 ),
                                 onTap: () {
+                                  FirebaseAnalytics.instance.logEvent(
+                                    name: "escolheu_tema_encarte",
+                                    parameters: {
+                                      "nome_tema": "${tema.nome}",
+                                    },
+                                  );
                                   if (widget.listaProdutos.length == 1) {
                                     Navigator.push( context, MaterialPageRoute( builder: (context) => EncarteGerado1Produto(widget.listaProdutos, tema.tema, tema.topo, widget.validade)));
                                   } else if (widget.listaProdutos.length == 2) {
