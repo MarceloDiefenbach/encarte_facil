@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:encarte_facil_2/EditarEncarteComTema.dart';
 import 'package:encarte_facil_2/Encartes.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado1Produto.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado2Produtos.dart';
@@ -16,10 +17,11 @@ import 'Model/Produto.dart';
 import 'SelecionarTema.dart';
 
 class ProdutosEncarte extends StatefulWidget {
-  var encarte;
+  List listaEncartes;
   List<Produto> listaTodosProdutos;
+  int posicaoNaList;
 
-  ProdutosEncarte(this.encarte, this.listaTodosProdutos);
+  ProdutosEncarte(this.listaEncartes, this.listaTodosProdutos, this.posicaoNaList);
 
   @override
   _ProdutosEncarteState createState() => _ProdutosEncarteState();
@@ -30,7 +32,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
 
   Future<File> _getFile() async {
     final diretorio = await getApplicationDocumentsDirectory();
-    return File("${diretorio.path}/${widget.encarte["nomeEncarte"]}.json");
+    return File("${diretorio.path}/${widget.listaEncartes[widget.posicaoNaList]["nomeEncarte"]}.json");
   }
 
   _salvarArquivo() async {
@@ -63,7 +65,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
 
   Future<File> _getListaProdutosDoEncarte() async {
     final diretorio = await getApplicationDocumentsDirectory();
-    return File("${diretorio.path}/${widget.encarte["nomeEncarte"]}.json");
+    return File("${diretorio.path}/${widget.listaEncartes[widget.posicaoNaList]["nomeEncarte"]}.json");
   }
 
   _removerItem(int indice) async {
@@ -104,7 +106,12 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
-                    //do something
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditarEncarteComTema(widget.listaEncartes, widget.posicaoNaList)
+                      ),
+                    );
                   },
                   child: Container(
                       height: 30,
@@ -151,7 +158,9 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                         MaterialPageRoute(
                             builder: (context) => ListaProdutos(
                                 widget.listaTodosProdutos,
-                                widget.encarte["nomeEncarte"])),
+                                widget.listaEncartes[widget.posicaoNaList]["nomeEncarte"]
+                            )
+                        ),
                       ).then((value) => setState(() {
                         _lerArquivo().then((dados) {
                           setState(() {
@@ -198,7 +207,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Nome: ${widget.encarte["nomeEncarte"]}',
+                                'Nome: ${widget.listaEncartes[widget.posicaoNaList]["nomeEncarte"]}',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -207,7 +216,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                               ),
                               Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
                               Text(
-                                'Validade: ${widget.encarte["validade"]}',
+                                'Validade: ${widget.listaEncartes[widget.posicaoNaList]["validade"]}',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -226,7 +235,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                         fontSize: 20),
                                   ),
                                   Padding(padding: EdgeInsets.fromLTRB(0, 0, 16, 0)),
-                                  CellTema(widget.encarte["tema"], widget.encarte["topo"], false),
+                                  CellTema(widget.listaEncartes[widget.posicaoNaList]["tema"], widget.listaEncartes[widget.posicaoNaList]["topo"], false),
                                 ],
                               ),
                               ListView.builder(
@@ -276,18 +285,14 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                                   ),
                                                 ),
                                                 child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
+                                                  mainAxisSize: MainAxisSize.max,
                                                   children: [
                                                     Expanded(
                                                       child: Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(20, 8,
-                                                                    0, 0),
+                                                            EdgeInsetsDirectional.fromSTEB(20, 8, 0, 0),
                                                         child: Text(
-                                                          produto[
-                                                              "nomeProduto"],
+                                                          produto["nomeProduto"],
                                                         ),
                                                       ),
                                                     ),
@@ -316,13 +321,10 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                                   color: Colors.white,
                                                   borderRadius:
                                                       BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(10),
-                                                    bottomRight:
-                                                        Radius.circular(10),
+                                                    bottomLeft: Radius.circular(10),
+                                                    bottomRight: Radius.circular(10),
                                                     topLeft: Radius.circular(0),
-                                                    topRight:
-                                                        Radius.circular(0),
+                                                    topRight: Radius.circular(0),
                                                   ),
                                                 ),
                                                 child: Row(
@@ -343,21 +345,18 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                                     Expanded(
                                                       child: Align(
                                                         alignment:
-                                                            AlignmentDirectional(
-                                                                0, 0),
+                                                            AlignmentDirectional(0, 0),
                                                         child: Padding(
-                                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-                                                          child: CupertinoTextField(
-                                                                  placeholder: "Digite o valor",
+                                                          padding: EdgeInsetsDirectional.fromSTEB(80, 0, 20, 4),
+                                                          child: TextField(
                                                                   controller: _textController[indice],
                                                                   obscureText: false,
                                                                   textAlign: TextAlign.end,
                                                                   keyboardType: TextInputType.numberWithOptions(decimal: true),
-                                                                  onChanged:
-                                                                      (Stringe) {
+                                                                  onChanged: (Stringe) {
                                                                     produto["valor"] = _textController[indice].text;
                                                                     _salvarArquivo();
-                                                                    setState(() {});
+                                                                    // setState(() {});
                                                                   }),
                                                         ),
                                                       ),
@@ -385,7 +384,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
+                            padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
                             child: GestureDetector(
                               child: Container(
                                   width: width * 0.9,
@@ -420,9 +419,9 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                           builder: (context) =>
                                               EncarteGerado1Produto(
                                                   _listaProdutos,
-                                                  widget.encarte["tema"],
-                                                  widget.encarte["topo"],
-                                                  widget.encarte["validade"])));
+                                                  widget.listaEncartes[widget.posicaoNaList]["tema"],
+                                                  widget.listaEncartes[widget.posicaoNaList]["topo"],
+                                                  widget.listaEncartes[widget.posicaoNaList]["validade"])));
                                 } else if (_listaProdutos.length == 2) {
                                   Navigator.push(
                                       context,
@@ -430,9 +429,9 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                           builder: (context) =>
                                               EncarteGerado2Produtos(
                                                   _listaProdutos,
-                                                  widget.encarte["tema"],
-                                                  widget.encarte["topo"],
-                                                  widget.encarte["validade"])));
+                                                  widget.listaEncartes[widget.posicaoNaList]["tema"],
+                                                  widget.listaEncartes[widget.posicaoNaList]["topo"],
+                                                  widget.listaEncartes[widget.posicaoNaList]["validade"])));
                                 } else if (_listaProdutos.length == 3) {
                                   Navigator.push(
                                       context,
@@ -440,9 +439,9 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                           builder: (context) =>
                                               EncarteGerado3Produtos(
                                                   _listaProdutos,
-                                                  widget.encarte["tema"],
-                                                  widget.encarte["topo"],
-                                                  widget.encarte["validade"])));
+                                                  widget.listaEncartes[widget.posicaoNaList]["tema"],
+                                                  widget.listaEncartes[widget.posicaoNaList]["topo"],
+                                                  widget.listaEncartes[widget.posicaoNaList]["validade"])));
                                 } else if (_listaProdutos.length == 4) {
                                   Navigator.push(
                                       context,
@@ -450,9 +449,9 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                           builder: (context) =>
                                               EncarteGerado4Produtos(
                                                   _listaProdutos,
-                                                  widget.encarte["tema"],
-                                                  widget.encarte["topo"],
-                                                  widget.encarte["validade"])));
+                                                  widget.listaEncartes[widget.posicaoNaList]["tema"],
+                                                  widget.listaEncartes[widget.posicaoNaList]["topo"],
+                                                  widget.listaEncartes[widget.posicaoNaList]["validade"])));
                                 }
                                 FirebaseAnalytics.instance.logEvent(
                                   name: "gerar_encarte",

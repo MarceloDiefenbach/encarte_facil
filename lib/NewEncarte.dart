@@ -201,7 +201,7 @@ class _NewEncarteState extends State<NewEncarte> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ProdutosEncarte(_textController.text, listaTodosProdutos)
+                          builder: (context) => ProdutosEncarte(_listaEncartes, listaTodosProdutos, 1)
                       ),
                     );
                     _textController.text = "";
