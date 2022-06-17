@@ -101,6 +101,18 @@ class _EncarteGerado2ProdutosState extends State<EncarteGerado2Produtos> {
                                             child: Stack(
                                               children: [
                                                 Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.fromLTRB(0, 0, larguraProduto*0.19, 0),
+                                                      child: Container(
+                                                        width: larguraProduto*0.7,
+                                                        height: larguraProduto*0.7,
+                                                        child: Image.network(widget.listaProdutos[0]["imagem"]),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Column(
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
                                                     Row(
@@ -110,7 +122,7 @@ class _EncarteGerado2ProdutosState extends State<EncarteGerado2Produtos> {
                                                           widget.listaProdutos[0]["nomeProduto"],
                                                           style: TextStyle(
                                                               fontSize: larguraProduto*0.035,
-                                                              fontWeight: FontWeight.w400
+                                                              fontWeight: FontWeight.w700
                                                           ),
                                                         ),
                                                       ],
@@ -126,18 +138,6 @@ class _EncarteGerado2ProdutosState extends State<EncarteGerado2Produtos> {
                                                           ),
                                                         ),
                                                       ],
-                                                    ),
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    Padding(
-                                                      padding: EdgeInsets.fromLTRB(0, 0, larguraProduto*0.19, 0),
-                                                      child: Container(
-                                                        width: larguraProduto*0.7,
-                                                        height: larguraProduto*0.7,
-                                                        child: Image.network(widget.listaProdutos[0]["imagem"]),
-                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -186,6 +186,18 @@ class _EncarteGerado2ProdutosState extends State<EncarteGerado2Produtos> {
                                               child: Stack(
                                                 children: [
                                                   Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding: EdgeInsets.fromLTRB(0, 0, larguraProduto*0.19, 0),
+                                                        child: Container(
+                                                          width: larguraProduto*0.7,
+                                                          height: larguraProduto*0.7,
+                                                          child: Image.network(widget.listaProdutos[1]["imagem"]),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Column(
                                                     mainAxisAlignment: MainAxisAlignment.start,
                                                     children: [
                                                       Row(
@@ -195,7 +207,7 @@ class _EncarteGerado2ProdutosState extends State<EncarteGerado2Produtos> {
                                                             widget.listaProdutos[1]["nomeProduto"],
                                                             style: TextStyle(
                                                                 fontSize: larguraProduto*0.035,
-                                                                fontWeight: FontWeight.w400
+                                                                fontWeight: FontWeight.w700
                                                             ),
                                                           ),
                                                         ],
@@ -211,18 +223,6 @@ class _EncarteGerado2ProdutosState extends State<EncarteGerado2Produtos> {
                                                             ),
                                                           ),
                                                         ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding: EdgeInsets.fromLTRB(0, 0, larguraProduto*0.19, 0),
-                                                        child: Container(
-                                                          width: larguraProduto*0.7,
-                                                          height: larguraProduto*0.7,
-                                                          child: Image.network(widget.listaProdutos[1]["imagem"]),
-                                                        ),
                                                       ),
                                                     ],
                                                   ),

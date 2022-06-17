@@ -1,4 +1,4 @@
-import 'package:encarte_facil_2/Functions.dart';
+import 'package:encarte_facil_2/Logic/Functions.dart';
 import 'package:flutter/material.dart';
 import 'package:encarte_facil_2/Components/Button.dart';
 

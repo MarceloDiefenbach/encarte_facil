@@ -29,7 +29,6 @@ class _SelecionarTemaState extends State<SelecionarTema> {
   _pegaTemasAirtable() async {
 
     http.Response response;
-
     response = await http.get(
       Uri.parse('https://api.airtable.com/v0/app3yQeCe4U0NEM6H/Table%201'),
       // Send authorization headers to the backend.
@@ -39,9 +38,7 @@ class _SelecionarTemaState extends State<SelecionarTema> {
     );
 
     Map<String, dynamic> retorno = json.decode(response.body);
-
     List records = retorno["records"];
-
     temas.clear();
 
     for (int i=0; i<records.length; i++ ) {
@@ -49,7 +46,6 @@ class _SelecionarTemaState extends State<SelecionarTema> {
     }
 
     return temas;
-
   }
 
   @override
