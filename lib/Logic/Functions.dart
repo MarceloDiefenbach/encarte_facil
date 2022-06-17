@@ -17,6 +17,7 @@ Future<List> AirtableGet() async {
   Uri url = Uri.https("api.airtable.com",
       "v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa");
   http.Response response;
+  http.Response response2;
 
   response = await http.get(
     Uri.parse(
@@ -29,13 +30,33 @@ Future<List> AirtableGet() async {
 
   Map<String, dynamic> retorno = json.decode(response.body);
   List records = retorno["records"];
+  print(retorno["offset"]);
 
   listaTodosProdutos.clear();
   for (int i = 0; i < records.length; i++) {
-    // print(i);
+    print(i);
     listaTodosProdutos.add(Produto(records[i]["fields"]["primeira"],
         records[i]["fields"]["segunda"], "", records[i]["fields"]["imagem"]));
   }
+
+  response2 = await http.get(
+    Uri.parse(
+        "https://api.airtable.com/v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa&offset=${retorno["offset"]}"),
+    // Send authorization headers to the backend.
+    // headers: {
+    //   HttpHeaders.authorizationHeader: "Bearer keySFSIYnvACQhHAa",
+    // },
+  );
+
+  Map<String, dynamic> retorno2 = json.decode(response2.body);
+  List records2 = retorno2["records"];
+
+  for (int i = 0; i < records2.length; i++) {
+    print(records2[i]["fields"]["primeira"]);
+    listaTodosProdutos.add(Produto(records2[i]["fields"]["primeira"],
+        records2[i]["fields"]["segunda"], "", records2[i]["fields"]["imagem"]));
+  }
+
   return listaTodosProdutos;
 }
 
