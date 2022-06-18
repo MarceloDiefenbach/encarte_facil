@@ -30,11 +30,11 @@ Future<List> AirtableGet() async {
 
   Map<String, dynamic> retorno = json.decode(response.body);
   List records = retorno["records"];
-  print(retorno["offset"]);
+  // print(retorno["offset"]);
 
   listaTodosProdutos.clear();
   for (int i = 0; i < records.length; i++) {
-    print(i);
+    // print(i);
     listaTodosProdutos.add(Produto(records[i]["fields"]["primeira"],
         records[i]["fields"]["segunda"], "", records[i]["fields"]["imagem"]));
   }
@@ -52,7 +52,7 @@ Future<List> AirtableGet() async {
   List records2 = retorno2["records"];
 
   for (int i = 0; i < records2.length; i++) {
-    print(records2[i]["fields"]["primeira"]);
+    // print(records2[i]["fields"]["primeira"]);
     listaTodosProdutos.add(Produto(records2[i]["fields"]["primeira"],
         records2[i]["fields"]["segunda"], "", records2[i]["fields"]["imagem"]));
   }

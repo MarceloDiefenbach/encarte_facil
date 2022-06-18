@@ -28,7 +28,7 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
   TextEditingController _textControllerValidade;
   List<Tema> temas = [];
   FirebaseAnalytics analyticsEvents = FirebaseAnalytics.instance;
-  List<bool> selecionado = [false, false, false];
+  List<bool> selecionado = [false, false, false, false, false];
   String temaSelecionado = "";
   String topoSelecionado = "";
 
@@ -189,43 +189,76 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                   future: _pegaTemasAirtable(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      return Column(
                         children: [
-                          GestureDetector(
-                            child: CellTema(temas[0].tema, temas[0].topo, selecionado[0]),
-                            onTap: () {
-                              setState(() {
-                                _deixaTudoFalse();
-                                selecionado[0] = true;
-                                temaSelecionado = temas[0].tema;
-                                topoSelecionado = temas[0].topo;
-                              });
-                            },
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                child: CellTema(temas[0].tema, temas[0].topo, selecionado[0]),
+                                onTap: () {
+                                  setState(() {
+                                    _deixaTudoFalse();
+                                    selecionado[0] = true;
+                                    temaSelecionado = temas[0].tema;
+                                    topoSelecionado = temas[0].topo;
+                                  });
+                                },
+                              ),
+                              Padding(padding: EdgeInsets.all(4)),
+                              GestureDetector(
+                                child: CellTema(temas[1].tema, temas[1].topo, selecionado[1]),
+                                onTap: () {
+                                  setState(() {
+                                    _deixaTudoFalse();
+                                    selecionado[1] = true;
+                                    temaSelecionado = temas[1].tema;
+                                    topoSelecionado = temas[1].topo;
+                                  });
+                                },
+                              ),
+                              Padding(padding: EdgeInsets.all(4)),
+                              GestureDetector(
+                                child: CellTema(temas[2].tema, temas[2].topo, selecionado[2]),
+                                onTap: () {
+                                  setState(() {
+                                    _deixaTudoFalse();
+                                    selecionado[2] = true;
+                                    temaSelecionado = temas[2].tema;
+                                    topoSelecionado = temas[2].topo;
+                                  });
+                                },
+                              ),
+                            ],
                           ),
-                          Padding(padding: EdgeInsets.all(4)),
-                          GestureDetector(
-                            child: CellTema(temas[1].tema, temas[1].topo, selecionado[1]),
-                            onTap: () {
-                              setState(() {
-                                _deixaTudoFalse();
-                                selecionado[1] = true;
-                                temaSelecionado = temas[1].tema;
-                                topoSelecionado = temas[1].topo;
-                              });
-                            },
-                          ),
-                          Padding(padding: EdgeInsets.all(4)),
-                          GestureDetector(
-                            child: CellTema(temas[2].tema, temas[2].topo, selecionado[2]),
-                            onTap: () {
-                              setState(() {
-                                _deixaTudoFalse();
-                                selecionado[2] = true;
-                                temaSelecionado = temas[2].tema;
-                                topoSelecionado = temas[2].topo;
-                              });
-                            },
+                          Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                child: CellTema(temas[4].tema, temas[4].topo, selecionado[4]),
+                                onTap: () {
+                                  setState(() {
+                                    _deixaTudoFalse();
+                                    selecionado[4] = true;
+                                    temaSelecionado = temas[4].tema;
+                                    topoSelecionado = temas[4].topo;
+                                  });
+                                },
+                              ),
+                              Padding(padding: EdgeInsets.all(4)),
+                              GestureDetector(
+                                child: CellTema(temas[3].tema, temas[3].topo, selecionado[3]),
+                                onTap: () {
+                                  setState(() {
+                                    _deixaTudoFalse();
+                                    selecionado[3] = true;
+                                    temaSelecionado = temas[3].tema;
+                                    topoSelecionado = temas[3].topo;
+                                  });
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       );
@@ -267,7 +300,14 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                     setState(() {
                       _lerArquivo();
                     });
-                  FirebaseAnalytics.instance.logEvent(name: "criou_encarte");
+                  FirebaseAnalytics.instance.logEvent(
+                      name: "criou_encarte",
+                    parameters: {
+                      "nome_encarte": _textController.text,
+                      "validade": _textControllerValidade.text,
+                      "tema": temaSelecionado
+                    }
+                  );
                 },
                 child: Container(
                   height: 50,
@@ -312,9 +352,9 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                   ),
                 ),
               ),
-              // Container(
-              //   height: 500,
-              // )
+              Container(
+                height: 200,
+              )
             ],
           ),
         ),

@@ -121,7 +121,7 @@ class _EncartesState extends State<Encartes> {
               ],
             ),
             ListView.builder(
-                padding: EdgeInsets.fromLTRB(20, 60, 20, 0),
+                padding: EdgeInsets.fromLTRB(20, 60, 20, 200),
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemCount: _listaEncartes.length+1,
