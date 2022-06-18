@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 
+import 'Encartes.dart';
+
 class SugestionForm extends StatefulWidget {
   const SugestionForm({key}) : super(key: key);
 
@@ -108,7 +110,34 @@ class _SugestionForm extends State<SugestionForm> {
                     ],
                   ),
                 ),
-              )
+              ),
+              TextButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Encartes()
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 50,
+                  width: width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.transparent,
+                    border: Border.all(color: Colors.blueAccent),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Cancelar',
+                          style: TextStyle(color: Colors.blue, fontSize: 16)),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

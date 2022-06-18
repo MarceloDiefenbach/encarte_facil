@@ -15,7 +15,6 @@ import 'package:flutter/cupertino.dart';
 import 'Model/Produto.dart';
 import 'ProdutosEncarte.dart';
 
-
 class Encartes extends StatefulWidget {
   const Encartes({key}) : super(key: key);
 
@@ -24,17 +23,16 @@ class Encartes extends StatefulWidget {
 }
 
 class _EncartesState extends State<Encartes> {
-
   List _listaEncartes = [];
   List<Produto> listaTodosProdutos = [];
 
   _lerArquivo() async {
     listaTodosProdutos = await AirtableGet() as List<Produto>;
 
-    try{
+    try {
       final arquivo = await getFile();
       return arquivo.readAsString();
-    }catch(e){
+    } catch (e) {
       return null;
     }
   }
@@ -49,12 +47,11 @@ class _EncartesState extends State<Encartes> {
     _textController = TextEditingController(text: '');
     _textControllerValidade = TextEditingController(text: '');
 
-    _lerArquivo().then((dados){
+    _lerArquivo().then((dados) {
       setState(() {
         _listaEncartes = json.decode(dados);
-        print(_listaEncartes);
       });
-    } );
+    });
   }
 
   @override
@@ -65,136 +62,228 @@ class _EncartesState extends State<Encartes> {
 
     return Scaffold(
       body: Container(
-        height: height,
-        width: width,
-        color: Colors.grey[300],
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Spacer(),
-                Container(
-                  width: width,
-                  height: height*0.2,
-                  color: Colors.blueAccent,
-                  child: Column(
-                    children: [
-                      Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-                      Text("Tem algo a dizer?",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            height: 0.9,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 24),
-                      ),
-                      Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SugestionForm()));
-                        },
-                        child: Container(
-                            width: width*0.8,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('Envie sua sugestão',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: width*0.055,
-                                        fontWeight: FontWeight.bold
-                                    )
-                                ),
-                              ],
-                            )
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            ListView.builder(
-                padding: EdgeInsets.fromLTRB(20, 60, 20, 0),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: _listaEncartes.length+1,
-                itemBuilder: (context, indice) {
-                  if (indice == 0) {
-                    return Column(
+          height: height,
+          width: width,
+          color: Colors.grey[300],
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  Spacer(),
+                  Container(
+                    width: width,
+                    height: height * 0.2,
+                    color: Colors.blueAccent,
+                    child: Column(
                       children: [
-                        Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
-                        Row(
-                          children: [
-                            Container(
-                              width: width*0.55,
-                              child: Text("Lista de encartes",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    height: 0.9,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 24),
-                              ),
-                            ),
-                            Spacer(),
-                          ],
+                        Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
+                        Text(
+                          "Tem algo a dizer?",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              height: 0.9,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 24),
                         ),
+                        Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => NewEncarteComTema()));
-                            FirebaseAnalytics.instance.logEvent(name: "criar_encarte");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SugestionForm()));
                           },
                           child: Container(
-                              width: width,
-                              height: 70,
+                              width: width * 0.8,
+                              height: 60,
                               decoration: BoxDecoration(
-                                color: Colors.blue,
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('Criar novo encarte',
+                                  Text('Envie sua sugestão',
                                       style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: width*0.055,
-                                          fontWeight: FontWeight.bold
-                                      )
-                                  ),
+                                          color: Colors.black,
+                                          fontSize: width * 0.055,
+                                          fontWeight: FontWeight.bold)),
                                 ],
-                              )
-                          ),
+                              )),
                         ),
                       ],
-                    );
-                  } else {
-                    var encarte = _listaEncartes[indice-1];
-                    return GestureDetector(
-                      child: CellEncarte(encarte["nomeEncarte"], indice-1, _listaEncartes),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProdutosEncarte(_listaEncartes, listaTodosProdutos, indice-1)
-                          ),
-                        );
-                      },
-                    );
-                  }
-                }
-            ),
-          ],
-        )
-      ),
+                    ),
+                  ),
+                ],
+              ),
+              FutureBuilder(
+                  future: _lerArquivo(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                          padding: EdgeInsets.fromLTRB(20, 60, 20, 200),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: _listaEncartes.length + 1,
+                          itemBuilder: (context, indice) {
+                            if (indice == 0) {
+                              return Column(
+                                children: [
+                                  Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: width * 0.55,
+                                        child: Text(
+                                          "Lista de encartes",
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              height: 0.9,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                              fontSize: 24),
+                                        ),
+                                      ),
+                                      Spacer(),
+                                    ],
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  NewEncarteComTema()));
+                                      FirebaseAnalytics.instance
+                                          .logEvent(name: "criar_encarte");
+                                    },
+                                    child: Container(
+                                        width: width,
+                                        height: 70,
+                                        decoration: BoxDecoration(
+                                          color: Colors.blue,
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text('Criar novo encarte',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: width * 0.055,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ],
+                                        )),
+                                  ),
+                                ],
+                              );
+                            } else {
+                              var encarte = _listaEncartes[indice - 1];
+                              return GestureDetector(
+                                child: CellEncarte(encarte["nomeEncarte"],
+                                    indice - 1, _listaEncartes),
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ProdutosEncarte(
+                                            _listaEncartes,
+                                            listaTodosProdutos,
+                                            indice - 1)),
+                                  );
+                                },
+                              );
+                            }
+                          });
+                    } else {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        // crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ListView.builder(
+                              padding: EdgeInsets.fromLTRB(20, 60, 20, 200),
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: _listaEncartes.length + 1,
+                              itemBuilder: (context, indice) {
+                                if (indice == 0) {
+                                  return Column(
+                                    children: [
+                                      Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: width * 0.55,
+                                            child: Text(
+                                              "Lista de encartes",
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                  height: 0.9,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                  fontSize: 24),
+                                            ),
+                                          ),
+                                          Spacer(),
+                                        ],
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      NewEncarteComTema()));
+                                          FirebaseAnalytics.instance
+                                              .logEvent(name: "criar_encarte");
+                                        },
+                                        child: Container(
+                                            width: width,
+                                            height: 70,
+                                            decoration: BoxDecoration(
+                                              color: Colors.blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text('Criar novo encarte',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: width * 0.055,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ],
+                                            )),
+                                      ),
+                                      CupertinoActivityIndicator(
+                                        animating: true,
+                                        radius: 15,
+                                      )
+                                    ],
+                                  );
+                                }
+                              }),
+                        ],
+                      );
+                    }
+                  }),
+            ],
+          )),
     );
   }
 }

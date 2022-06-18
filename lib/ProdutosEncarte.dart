@@ -30,6 +30,8 @@ class ProdutosEncarte extends StatefulWidget {
 class _ProdutosEncarteState extends State<ProdutosEncarte> {
   List _listaProdutos = [];
 
+  _ProdutosEncarteState();
+
   Future<File> _getFile() async {
     final diretorio = await getApplicationDocumentsDirectory();
     return File("${diretorio.path}/${widget.listaEncartes[widget.posicaoNaList]["nomeEncarte"]}.json");
@@ -40,7 +42,6 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
 
     String dados = json.encode(_listaProdutos);
     arquivo.writeAsString(dados);
-    // print("salvou");
   }
 
   _lerArquivo() async {
@@ -58,7 +59,6 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
     _lerArquivo().then((dados) {
       setState(() {
         _listaProdutos = json.decode(dados);
-        print("atualizou");
       });
     });
   }
@@ -75,6 +75,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
     _salvarArquivo();
     arquivo.delete();
     _lerArquivo();
+    setState((){});
   }
 
   List<TextEditingController> _textController = [];
@@ -83,6 +84,9 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
+    ScrollController controller = ScrollController();
+
 
     return WillPopScope(
         onWillPop: () async => false,
@@ -165,7 +169,6 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                         _lerArquivo().then((dados) {
                           setState(() {
                             _listaProdutos = json.decode(dados);
-                            print("atualizou");
                           });
                         });
                       }));
@@ -195,15 +198,21 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
             body: Stack(
               children: [
                 Container(
-                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  alignment: Alignment.topLeft,
                   color: Colors.grey[300],
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          height: height,
-                          child: Column(
+                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: ListView.builder(
+                      shrinkWrap: false,
+                      itemCount: _listaProdutos.length+2,
+                      itemBuilder: (context, indice) {
+                        _textController.add(new TextEditingController());
+                        if (indice == _listaProdutos.length+1) {
+                          return Container(
+                            height: 100,
+                            color: Colors.grey[300],
+                          );
+                        }
+                        if (indice == 0 ){
+                          return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -237,144 +246,134 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                   Padding(padding: EdgeInsets.fromLTRB(0, 0, 16, 0)),
                                   CellTema(widget.listaEncartes[widget.posicaoNaList]["tema"], widget.listaEncartes[widget.posicaoNaList]["topo"], false),
                                 ],
-                              ),
-                              ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemCount: _listaProdutos.length,
-                                  itemBuilder: (context, indice) {
-                                    _textController.add(new TextEditingController());
-                                    var produto = _listaProdutos[indice];
-                                    _textController[indice].text =
-                                        produto["valor"];
-                                    return Column(
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                                                child: Text(
-                                                  'Produto ${indice + 1}',
-                                                  textAlign: TextAlign.start,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black,
-                                                      fontSize: 16),
-                                                ),
-                                              ),
-                                              Container(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                        bottomLeft: Radius.circular(0),
-                                                    bottomRight: Radius.circular(0),
-                                                    topLeft: Radius.circular(10),
-                                                    topRight: Radius.circular(10),
-                                                  ),
-                                                ),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional.fromSTEB(20, 8, 0, 0),
-                                                        child: Text(
-                                                          produto["nomeProduto"],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    IconButton(
-                                                      icon: Icon(
-                                                        Icons.delete,
-                                                        color: Colors.black,
-                                                        size: 20,
-                                                      ),
-                                                      onPressed: () {
-                                                        _removerItem(indice);
-                                                        setState(() {
-                                                          _lerArquivo();
-                                                        });
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Container(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    bottomLeft: Radius.circular(10),
-                                                    bottomRight: Radius.circular(10),
-                                                    topLeft: Radius.circular(0),
-                                                    topRight: Radius.circular(0),
-                                                  ),
-                                                ),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(20, 0,
-                                                                    0, 0),
-                                                        child: Text(
-                                                          'Valor do produto:',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Align(
-                                                        alignment:
-                                                            AlignmentDirectional(0, 0),
-                                                        child: Padding(
-                                                          padding: EdgeInsetsDirectional.fromSTEB(80, 0, 20, 4),
-                                                          child: TextField(
-                                                                  controller: _textController[indice],
-                                                                  obscureText: false,
-                                                                  textAlign: TextAlign.end,
-                                                                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                                                                  onChanged: (Stringe) {
-                                                                    produto["valor"] = _textController[indice].text;
-                                                                    _salvarArquivo();
-                                                                    // setState(() {});
-                                                                  }),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  }),
+                              )
                             ],
-                          ),
-                        )
-                      ],
-                    ),
+                          );
+                        } else {
+                          var produto = _listaProdutos[indice-1];
+                          _textController[indice].text = produto["valor"];
+                          return Column(
+                            children: [
+                              Padding(
+                                padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                                      child: Text(
+                                        'Produto ${indice}',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                            fontWeight:
+                                            FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 16),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                        BorderRadius.only(
+                                          bottomLeft: Radius.circular(0),
+                                          bottomRight: Radius.circular(0),
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                              EdgeInsetsDirectional.fromSTEB(20, 8, 0, 0),
+                                              child: Text(
+                                                produto["nomeProduto"],
+                                              ),
+                                            ),
+                                          ),
+                                          IconButton(
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: Colors.black,
+                                              size: 20,
+                                            ),
+                                            onPressed: () {
+                                              _removerItem(indice-1);
+                                              setState(() {
+                                                _lerArquivo();
+                                              });
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context)
+                                          .size
+                                          .width,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                        BorderRadius.only(
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10),
+                                          topLeft: Radius.circular(0),
+                                          topRight: Radius.circular(0),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize:
+                                        MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                              EdgeInsetsDirectional
+                                                  .fromSTEB(20, 0,
+                                                  0, 0),
+                                              child: Text(
+                                                'Valor do produto:',
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Align(
+                                              alignment:
+                                              AlignmentDirectional(0, 0),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional.fromSTEB(80, 0, 20, 4),
+                                                child: TextField(
+                                                    controller: _textController[indice],
+                                                    obscureText: false,
+                                                    textAlign: TextAlign.end,
+                                                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                                    onChanged: (Stringe) {
+                                                      produto["valor"] = _textController[indice].text;
+                                                      _salvarArquivo();
+                                                      // setState(() {});
+                                                    }),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                      }
                   ),
                 ),
                 Column(
@@ -408,7 +407,6 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                     setState(() {
                                       _listaProdutos = json.decode(dados);
                                       _salvarArquivo();
-                                      print("salvoi");
                                     });
                                   });
                                 });
