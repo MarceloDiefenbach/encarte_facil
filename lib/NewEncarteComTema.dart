@@ -279,16 +279,17 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                     criarPraSalvar["validade"] = _textControllerValidade.text;
                     criarPraSalvar["topo"] = topoSelecionado;
                     criarPraSalvar["tema"] = temaSelecionado;
-                    print("encarte criado ${criarPraSalvar}");
+
                     _listaEncartes.add( criarPraSalvar );
                     salvarArquivo(_listaEncartes);
-                    print(_listaEncartes);
+
                     analyticsEvents.logEvent(
                         name: "criou_encarte",
                       parameters: {
                         "nome": "${_textController.text}",
                       },
                     );
+
                   Navigator.of(context).pop();
                     Navigator.push(
                       context,
