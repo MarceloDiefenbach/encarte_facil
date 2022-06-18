@@ -5,6 +5,8 @@ import 'package:encarte_facil_2/Encartes/EncarteGerado1Produto.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado2Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado3Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado4Produtos.dart';
+import 'package:encarte_facil_2/NewEncarteComTema.dart';
+import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -20,8 +22,9 @@ class ProdutosEncarte extends StatefulWidget {
   List listaEncartes;
   List<Produto> listaTodosProdutos;
   int posicaoNaList;
+  String fromTo;
 
-  ProdutosEncarte(this.listaEncartes, this.listaTodosProdutos, this.posicaoNaList);
+  ProdutosEncarte(this.listaEncartes, this.listaTodosProdutos, this.posicaoNaList, this.fromTo);
 
   @override
   _ProdutosEncarteState createState() => _ProdutosEncarteState();
@@ -100,11 +103,25 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                     Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
                 onPressed: () {
                   _salvarArquivo();
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Encartes()),
-                  );
+                  if (widget.fromTo == "newEncarteComTema") {
+                    Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) => NewEncarteComTema(),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
+                    );
+                  } else if (widget.fromTo == "encartes") {
+                    Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) => HomeWidget(),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
+                    );
+                  }
                 },
               ),
               actions: <Widget>[
@@ -113,7 +130,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => EditarEncarteComTema(widget.listaEncartes, widget.posicaoNaList)
+                          builder: (context) => EditarEncarteComTema(widget.listaEncartes, widget.posicaoNaList, "ProdutosEncarte")
                       ),
                     );
                   },

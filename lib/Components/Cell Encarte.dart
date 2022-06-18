@@ -2,6 +2,8 @@ import 'package:encarte_facil_2/Logic/Functions.dart';
 import 'package:flutter/material.dart';
 import 'package:encarte_facil_2/Components/Button.dart';
 
+import '../Nova Home/Home.dart';
+
 
 class CellEncarte extends StatefulWidget {
 
@@ -65,7 +67,14 @@ class _CellEncarteState extends State<CellEncarte> {
                 onPressed: () {
                   deletarEncarte(widget.title, widget.indice, widget.listaEncartes);
                   setState(() {
-                    // _lerArquivo();
+                    Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) => HomeWidget(),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
+                    );
                   });
                 },
               ),

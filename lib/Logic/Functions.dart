@@ -14,49 +14,66 @@ import '../Model/Tema.dart';
 Future<List> AirtableGet() async {
   List<Produto> listaTodosProdutos = [];
 
-  Uri url = Uri.https("api.airtable.com",
-      "v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa");
+  listaTodosProdutos.clear();
+
   http.Response response;
   http.Response response2;
+  Map<String, dynamic> retorno;
 
-  response = await http.get(
-    Uri.parse(
-        'https://api.airtable.com/v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa'),
-    // Send authorization headers to the backend.
-    // headers: {
-    //   HttpHeaders.authorizationHeader: "Bearer keySFSIYnvACQhHAa",
-    // },
-  );
+  bool controle = true;
 
-  Map<String, dynamic> retorno = json.decode(response.body);
-  List records = retorno["records"];
-  // print(retorno["offset"]);
+  List records;
 
-  listaTodosProdutos.clear();
-  for (int i = 0; i < records.length; i++) {
-    // print(i);
-    listaTodosProdutos.add(Produto(records[i]["fields"]["primeira"],
-        records[i]["fields"]["segunda"], "", records[i]["fields"]["imagem"]));
+  for (int i = 0; i < 10; i++) {
+
+    if (i <= 0){
+
+      Uri url = Uri.https("api.airtable.com",
+          "v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa");
+
+      response = await http.get(
+        Uri.parse(
+            'https://api.airtable.com/v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa'),
+      );
+
+      retorno = json.decode(response.body);
+      records = retorno["records"];
+
+      for (int i = 0; i < records.length; i++) {
+        listaTodosProdutos.add(Produto(records[i]["fields"]["primeira"],
+            records[i]["fields"]["segunda"], "", records[i]["fields"]["imagem"]));
+      }
+      if (retorno["offset"] == []) {
+        return listaTodosProdutos;
+        break;
+      }
+      print("offset ${retorno["offset"]}");
+
+
+    } else {
+
+      if (controle) {
+        response2 = await http.get(
+          Uri.parse(
+              "https://api.airtable.com/v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa&offset=${retorno["offset"]}"),
+        );
+
+        Map<String, dynamic> retorno2 = json.decode(response2.body);
+        List records2 = retorno2["records"];
+
+        for (int i = 0; i < records2.length; i++) {
+          listaTodosProdutos.add(Produto(records2[i]["fields"]["primeira"],
+              records2[i]["fields"]["segunda"], "", records2[i]["fields"]["imagem"]));
+        }
+
+        if (records2.length < 99) {
+          controle = false;
+        }
+      } else {
+        //nothing to do here
+      }
+    }
   }
-
-  response2 = await http.get(
-    Uri.parse(
-        "https://api.airtable.com/v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa&offset=${retorno["offset"]}"),
-    // Send authorization headers to the backend.
-    // headers: {
-    //   HttpHeaders.authorizationHeader: "Bearer keySFSIYnvACQhHAa",
-    // },
-  );
-
-  Map<String, dynamic> retorno2 = json.decode(response2.body);
-  List records2 = retorno2["records"];
-
-  for (int i = 0; i < records2.length; i++) {
-    // print(records2[i]["fields"]["primeira"]);
-    listaTodosProdutos.add(Produto(records2[i]["fields"]["primeira"],
-        records2[i]["fields"]["segunda"], "", records2[i]["fields"]["imagem"]));
-  }
-
   return listaTodosProdutos;
 }
 
@@ -77,6 +94,7 @@ Future<File> getFile() async {
 //essa função salva o a lista de encartes na memoria do celular
 salvarArquivo(List listaEncartes) async {
 
+  print("salvou");
   print("lista de encartes");
   print(listaEncartes);
   var arquivo = await getFile();

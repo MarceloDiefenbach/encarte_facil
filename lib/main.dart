@@ -1,3 +1,4 @@
+import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -11,12 +12,17 @@ void main() async{
   await Firebase.initializeApp();
   FirebaseAnalytics.instance.logEvent(name: "open_app");
 
-  runApp(MaterialApp(
-    initialRoute: "/",
-    routes: {
-
-    },
-    home: Encartes(),
-    debugShowCheckedModeBanner: false,
-  ));
+  runApp(
+      MaterialApp(
+        initialRoute: "/",
+        routes: {
+          // When navigating to the "/" route, build the FirstScreen widget.
+          '/go-to-home': (context) => const HomeWidget(),
+          // When navigating to the "/second" route, build the SecondScreen widget.
+          // '/second': (context) => const SecondScreen(),
+        },
+        home: HomeWidget(),
+        debugShowCheckedModeBanner: false,
+      )
+  );
 }

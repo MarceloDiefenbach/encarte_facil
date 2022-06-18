@@ -81,12 +81,11 @@ class _ListaProdutosState extends State<ListaProdutos> {
     _listaProdutoFiltro.clear();
     for (int i=0; i < widget.listaTodosProdutos.length; i++) {
 
-      if(widget.listaTodosProdutos[i].nome.toLowerCase().contains(pesquisa.toLowerCase())) {
+      if(widget.listaTodosProdutos[i].nome.toLowerCase().contains(pesquisa.toLowerCase()) || widget.listaTodosProdutos[i].segunda.toLowerCase().contains(pesquisa.toLowerCase())) {
         // print(i);
         setState(() {
           _listaProdutoFiltro.add(widget.listaTodosProdutos[i]);
         });
-
       }
 
     }

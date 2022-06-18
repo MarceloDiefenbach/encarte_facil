@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:encarte_facil_2/Components/Cell%20Tema.dart';
 import 'package:encarte_facil_2/Encartes.dart';
+import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:http/http.dart' as http;
@@ -98,7 +99,7 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.topCenter,
         color: Colors.grey[300],
         child: SingleChildScrollView(
           child: Column(
@@ -127,7 +128,7 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                   child: TextField(
                     controller: _textController,
                     keyboardType: TextInputType.text,
-                    autofocus: true,
+                    autofocus: false,
                     onChanged: (String e) {},
                     textInputAction: TextInputAction.done,
                     style: TextStyle(
@@ -163,7 +164,7 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                   child: TextField(
                     controller: _textControllerValidade,
                     keyboardType: TextInputType.text,
-                    autofocus: true,
+                    autofocus: false,
                     onChanged: (String e) {},
                     textInputAction: TextInputAction.done,
                     style: TextStyle(
@@ -280,23 +281,11 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                     criarPraSalvar["topo"] = topoSelecionado;
                     criarPraSalvar["tema"] = temaSelecionado;
 
+                    print(criarPraSalvar);
                     _listaEncartes.add( criarPraSalvar );
                     salvarArquivo(_listaEncartes);
+                    print(_listaEncartes);
 
-                    analyticsEvents.logEvent(
-                        name: "criou_encarte",
-                      parameters: {
-                        "nome": "${_textController.text}",
-                      },
-                    );
-
-                  Navigator.of(context).pop();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Encartes()
-                      ),
-                    );
                     _textController.text = "";
                     setState(() {
                       _lerArquivo();
@@ -308,6 +297,14 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                       "validade": _textControllerValidade.text,
                       "tema": temaSelecionado
                     }
+                  );
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => ProdutosEncarte(_listaEncartes, listaTodosProdutos, _listaEncartes.length-1, "newEncarteComTema"),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
                   );
                 },
                 child: Container(
@@ -326,35 +323,8 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                   ),
                 ),
               ),
-              TextButton(
-                onPressed: () async {
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Encartes()
-                    ),
-                  );
-                },
-                child: Container(
-                  height: 50,
-                  width: width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.transparent,
-                    border: Border.all(color: Colors.blueAccent),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Cancelar',
-                          style: TextStyle(color: Colors.blue, fontSize: 16)),
-                    ],
-                  ),
-                ),
-              ),
               Container(
-                height: 200,
+                height: 30,
               )
             ],
           ),
