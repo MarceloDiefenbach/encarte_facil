@@ -18,8 +18,9 @@ class EditarEncarteComTema extends StatefulWidget {
 
   List listaEncartes;
   int posicaoNaLista;
+  String fromTo;
 
-  EditarEncarteComTema(this.listaEncartes, this.posicaoNaLista);
+  EditarEncarteComTema(this.listaEncartes, this.posicaoNaLista, this.fromTo);
 
   @override
   _EditarEncarteComTemaState createState() => _EditarEncarteComTemaState();
@@ -260,18 +261,29 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
                       "nome": "${_textController.text}",
                     },
                   );
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Encartes()
-                    ),
-                  );
-                  _textController.text = "";
-                  setState(() {
-                    _lerArquivo();
-                  });
-                  FirebaseAnalytics.instance.logEvent(name: "criou_encarte");
+
+                  if (widget.fromTo == "ProdutosEncarte") {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Encartes()
+                      ),
+                    );
+                  } else {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Encartes()
+                      ),
+                    );
+                    _textController.text = "";
+                    setState(() {
+                      _lerArquivo();
+                    });
+                    FirebaseAnalytics.instance.logEvent(name: "criou_encarte");
+                  }
                 },
                 child: Container(
                   height: 50,

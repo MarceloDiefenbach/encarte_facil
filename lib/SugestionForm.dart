@@ -1,3 +1,4 @@
+import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
@@ -30,23 +31,16 @@ class _SugestionForm extends State<SugestionForm> {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-        elevation: 0,
-        backgroundColor: Colors.grey[300],
-        foregroundColor: Colors.black,
-      ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         alignment: Alignment.bottomCenter,
         color: Colors.grey[300],
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0)),
-              Text("Escreva a sua sugestão",
+              Padding(padding: EdgeInsets.all(50)),
+              Text("Escreva a sua sugestão ou dúvida",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -66,7 +60,7 @@ class _SugestionForm extends State<SugestionForm> {
                   keyboardType: TextInputType.text,
                   minLines: 5,
                   maxLines: 9,
-                  autofocus: true,
+                  autofocus: false,
                   onChanged: (String e) {
                     produtos = e;
                     print(e);
@@ -81,16 +75,23 @@ class _SugestionForm extends State<SugestionForm> {
               Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
               TextButton(
                 onPressed: () async {
-                  await FlutterEmailSender.send(
-                      Email(
-                        body: 'Olá essa é a minha sugestão para o Encarte Fácil: \n\n\n ${controllerProdutos.text}',
-                        subject: 'Sugestão de melhoria',
-                        recipients: ['apptwocontato@gmail.com'],
-                        isHTML: false,
-                      )
-                  );
-                  Navigator.of(context).pop();
-                },
+                    await FlutterEmailSender.send(
+                        Email(
+                          body: 'Olá essa é a minha solicitação para o Encarte Fácil: \n\n\n ${controllerProdutos.text}',
+                          subject: 'Preciso de ajuda com o aplicativo',
+                          recipients: ['apptwocontato@gmail.com'],
+                          isHTML: false,
+                        )
+                    );
+                    Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) => HomeWidget(),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
+                    );
+                  },
                 child: Container(
                   height: 50,
                   width: width,
@@ -101,7 +102,7 @@ class _SugestionForm extends State<SugestionForm> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Enviar sugestão',
+                      Text('Enviar solicitação',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 16
@@ -113,11 +114,12 @@ class _SugestionForm extends State<SugestionForm> {
               ),
               TextButton(
                 onPressed: () async {
-                  Navigator.of(context).pop();
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => Encartes()
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => HomeWidget(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
                     ),
                   );
                 },
@@ -138,6 +140,7 @@ class _SugestionForm extends State<SugestionForm> {
                   ),
                 ),
               ),
+              Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 100)),
             ],
           ),
         ),
