@@ -58,110 +58,118 @@ class _EncartesState extends State<Encartes> {
 
     return Scaffold(
       body: Container(
-          height: height,
-          width: width,
-          color: Colors.grey[300],
-          child: Stack(
-            children: [
-              FutureBuilder(
-                  future: _lerArquivo(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                          padding: EdgeInsets.fromLTRB(20, 60, 20, 200),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: _listaEncartes.length + 1,
-                          itemBuilder: (context, indice) {
-                            if (indice == 0) {
-                              return Column(
-                                children: [
-                                  Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: width * 0.55,
-                                        child: Text(
-                                          "Lista de encartes",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              height: 0.9,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                              fontSize: 24),
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      ReloadButtonWidget()
-                                    ],
-                                  ),
-                                  Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
-                                ],
-                              );
-                            } else {
-                              var encarte = _listaEncartes[indice - 1];
-                              return GestureDetector(
-                                child: CellEncarte(encarte["nomeEncarte"],
-                                    indice - 1, _listaEncartes),
-                                onTap: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (context, animation1, animation2) => ProdutosEncarte(_listaEncartes, listaTodosEncartes, indice - 1, "encartes"),
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                },
-                              );
-                            }
-                          });
-                    } else {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        // crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ListView.builder(
-                              padding: EdgeInsets.fromLTRB(20, 60, 20, 200),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: _listaEncartes.length + 1,
-                              itemBuilder: (context, indice) {
-                                if (indice == 0) {
-                                  return Column(
-                                    children: [
-                                      Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            width: width * 0.55,
-                                            child: Text(
-                                              "Lista de encartes",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                  height: 0.9,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                  fontSize: 24),
+        color: Colors.grey[300],
+        child: SafeArea(
+          child: Container(
+              height: height,
+              width: width,
+              color: Colors.grey[300],
+              child: Stack(
+                children: [
+                  FutureBuilder(
+                      future: _lerArquivo(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Container(
+                            height: height,
+                            child: ListView.builder(
+                                padding: EdgeInsets.fromLTRB(20, 30, 20, 200),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: _listaEncartes.length + 1,
+                                itemBuilder: (context, indice) {
+                                  if (indice == 0) {
+                                    return Column(
+                                      children: [
+                                        Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: width * 0.55,
+                                              child: Text(
+                                                "Lista de encartes",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                    height: 0.9,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                    fontSize: 24),
+                                              ),
                                             ),
+                                            Spacer(),
+                                            ReloadButtonWidget()
+                                          ],
+                                        ),
+                                        Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
+                                      ],
+                                    );
+                                  } else {
+                                    var encarte = _listaEncartes[indice - 1];
+                                    return GestureDetector(
+                                      child: CellEncarte(encarte["nomeEncarte"],
+                                          indice - 1, _listaEncartes),
+                                      onTap: () {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          PageRouteBuilder(
+                                            pageBuilder: (context, animation1, animation2) => ProdutosEncarte(_listaEncartes, listaTodosEncartes, indice - 1, "encartes"),
+                                            transitionDuration: Duration.zero,
+                                            reverseTransitionDuration: Duration.zero,
                                           ),
-                                          Spacer(),
+                                        );
+                                      },
+                                    );
+                                  }
+                                }),
+                          );
+                        } else {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ListView.builder(
+                                  padding: EdgeInsets.fromLTRB(20, 60, 20, 200),
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemCount: _listaEncartes.length + 1,
+                                  itemBuilder: (context, indice) {
+                                    if (indice == 0) {
+                                      return Column(
+                                        children: [
+                                          Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                width: width * 0.55,
+                                                child: Text(
+                                                  "Lista de encartes",
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                      height: 0.9,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.black,
+                                                      fontSize: 24),
+                                                ),
+                                              ),
+                                              Spacer(),
+                                            ],
+                                          ),
+                                          CupertinoActivityIndicator(
+                                            animating: true,
+                                            radius: 15,
+                                          )
                                         ],
-                                      ),
-                                      CupertinoActivityIndicator(
-                                        animating: true,
-                                        radius: 15,
-                                      )
-                                    ],
-                                  );
-                                }
-                              }),
-                        ],
-                      );
-                    }
-                  }),
-            ],
-          )),
+                                      );
+                                    }
+                                  }),
+                            ],
+                          );
+                        }
+                      }),
+                ],
+              )),
+        ),
+      ),
     );
   }
 }
