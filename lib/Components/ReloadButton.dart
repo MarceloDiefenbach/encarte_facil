@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../Logic/controller.dart';
 import '../Nova Home/Home.dart';
 
 class ReloadButtonWidget extends StatefulWidget {
 
-  ReloadButtonWidget();
+  Controller controller;
+
+  ReloadButtonWidget(this.controller);
 
   @override
   _ReloadButtonWidgetState createState() => _ReloadButtonWidgetState();
@@ -17,6 +20,7 @@ class _ReloadButtonWidgetState extends State<ReloadButtonWidget> {
       icon:
       Icon(Icons.refresh_sharp, color: Colors.black),
       onPressed: () {
+        widget.controller.pegaAirtable();
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(
