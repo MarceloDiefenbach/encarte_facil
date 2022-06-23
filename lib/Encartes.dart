@@ -1,16 +1,15 @@
 import 'dart:convert';
 import 'package:encarte_facil_2/Components/Cell%20Encarte.dart';
 import 'package:encarte_facil_2/Components/ReloadButton.dart';
-import 'package:encarte_facil_2/NewEncarteComTema.dart';
-import 'package:encarte_facil_2/SugestionForm.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 import 'Logic/Functions.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'Logic/controller.dart';
 import 'Model/Produto.dart';
 import 'ProdutosEncarte.dart';
+
 
 class Encartes extends StatefulWidget {
   const Encartes({key}) : super(key: key);
@@ -21,38 +20,38 @@ class Encartes extends StatefulWidget {
 
 class _EncartesState extends State<Encartes> {
   List _listaEncartes = [];
-  List<Produto> listaTodosEncartes = [];
+  List<Produto> listaTodosProdutos = [];
 
-  _lerArquivo() async {
-    listaTodosEncartes = await AirtableGet() as List<Produto>;
+  Controller controller;
 
-    try {
-      final arquivo = await getFile();
-      return arquivo.readAsString();
-    } catch (e) {
-      return null;
-    }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+
+    controller = Provider.of<Controller>(context);
+    controller.pegaAirtable();
+    controller.pegaProdutos();
   }
 
-  TextEditingController _textController;
-  TextEditingController _textControllerValidade;
+  @override
+  void didUpdateWidget(covariant Encartes oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    controller.pegaAirtable();
+    listaTodosProdutos = controller.listaProdutos;
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _textController = TextEditingController(text: '');
-    _textControllerValidade = TextEditingController(text: '');
-
-    _lerArquivo().then((dados) {
-      setState(() {
-        _listaEncartes = json.decode(dados);
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -66,106 +65,57 @@ class _EncartesState extends State<Encartes> {
               color: Colors.grey[300],
               child: Stack(
                 children: [
-                  FutureBuilder(
-                      future: _lerArquivo(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Container(
-                            height: height,
-                            child: ListView.builder(
-                                padding: EdgeInsets.fromLTRB(20, 30, 20, 200),
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemCount: _listaEncartes.length + 1,
-                                itemBuilder: (context, indice) {
-                                  if (indice == 0) {
-                                    return Column(
-                                      children: [
-                                        Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              width: width * 0.55,
-                                              child: Text(
-                                                "Lista de encartes",
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                    height: 0.9,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black,
-                                                    fontSize: 24),
-                                              ),
-                                            ),
-                                            Spacer(),
-                                            ReloadButtonWidget()
-                                          ],
-                                        ),
-                                        Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
-                                      ],
-                                    );
-                                  } else {
-                                    var encarte = _listaEncartes[indice - 1];
-                                    return GestureDetector(
-                                      child: CellEncarte(encarte["nomeEncarte"],
-                                          indice - 1, _listaEncartes),
-                                      onTap: () {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          PageRouteBuilder(
-                                            pageBuilder: (context, animation1, animation2) => ProdutosEncarte(_listaEncartes, listaTodosEncartes, indice - 1, "encartes"),
-                                            transitionDuration: Duration.zero,
-                                            reverseTransitionDuration: Duration.zero,
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  }
-                                }),
-                          );
-                        } else {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ListView.builder(
-                                  padding: EdgeInsets.fromLTRB(20, 60, 20, 200),
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemCount: _listaEncartes.length + 1,
-                                  itemBuilder: (context, indice) {
-                                    if (indice == 0) {
-                                      return Column(
-                                        children: [
-                                          Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                width: width * 0.55,
-                                                child: Text(
-                                                  "Lista de encartes",
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      height: 0.9,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: Colors.black,
-                                                      fontSize: 24),
-                                                ),
-                                              ),
-                                              Spacer(),
-                                            ],
-                                          ),
-                                          CupertinoActivityIndicator(
-                                            animating: true,
-                                            radius: 15,
-                                          )
-                                        ],
-                                      );
-                                    }
-                                  }),
-                            ],
-                          );
-                        }
-                      }),
+                  Observer(builder: (_){
+                    return ListView.builder(
+                        padding: EdgeInsets.fromLTRB(20, 30, 20, 200),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: controller.listaEncartes.length + 1,
+                        itemBuilder: (context, indice) {
+                          if (indice == 0) {
+                            return Column(
+                              children: [
+                                Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: width * 0.55,
+                                      child: Text(
+                                        "Lista de encartes",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            height: 0.9,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 24),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    ReloadButtonWidget(controller)
+                                  ],
+                                ),
+                                Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
+                              ],
+                            );
+                          } else {
+                            var encarte = controller.listaEncartes[indice - 1];
+                            return GestureDetector(
+                              child: CellEncarte(encarte["nomeEncarte"],
+                                  indice - 1),
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation1, animation2) => ProdutosEncarte(controller.listaEncartes, listaTodosProdutos, indice - 1, "encartes"),
+                                    transitionDuration: Duration.zero,
+                                    reverseTransitionDuration: Duration.zero,
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        });
+                  }),
                 ],
               )),
         ),

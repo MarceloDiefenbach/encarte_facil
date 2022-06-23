@@ -21,35 +21,11 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> {
 
-  List _listaEncartes = [];
-  List<Produto> listaTodosProdutos = [];
-
-  _lerArquivo() async {
-    listaTodosProdutos = await AirtableGet() as List<Produto>;
-
-    try {
-      final arquivo = await getFile();
-      return arquivo.readAsString();
-    } catch (e) {
-      return null;
-    }
-  }
-
-  TextEditingController _textController;
-  TextEditingController _textControllerValidade;
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _textController = TextEditingController(text: '');
-    _textControllerValidade = TextEditingController(text: '');
 
-    _lerArquivo().then((dados) {
-      setState(() {
-        _listaEncartes = json.decode(dados);
-      });
-    });
   }
 
   @override

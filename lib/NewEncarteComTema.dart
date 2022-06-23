@@ -6,11 +6,13 @@ import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 import 'Logic/Functions.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'Logic/controller.dart';
 import 'Model/Produto.dart';
 import 'Model/Tema.dart';
 import 'ProdutosEncarte.dart';
@@ -24,7 +26,6 @@ class NewEncarteComTema extends StatefulWidget {
 
 class _NewEncarteComTemaState extends State<NewEncarteComTema> {
   List _listaEncartes = [];
-  List<Produto> listaTodosProdutos = [];
   TextEditingController _textController;
   TextEditingController _textControllerValidade;
   List<Tema> temas = [];
@@ -36,18 +37,6 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
   int dia = 1;
   int mes = 1;
   int ano = 2022;
-
-  _lerArquivo() async {
-
-    listaTodosProdutos = await AirtableGet() as List<Produto>;
-
-    try {
-      final arquivo = await getFile();
-      return arquivo.readAsString();
-    } catch (e) {
-      return null;
-    }
-  }
 
   _deixaTudoFalse() {
     for (int i = 0; i < selecionado.length; i++) {
@@ -83,11 +72,6 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
     _textController = TextEditingController(text: '');
     _textControllerValidade = TextEditingController(text: '');
 
-    _lerArquivo().then((dados) {
-      setState(() {
-        _listaEncartes = json.decode(dados);
-      });
-    });
   }
 
   @override
@@ -95,6 +79,9 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     String date = "";
+
+    Controller controller = Provider.of<Controller>(context);
+    _listaEncartes = controller.listaEncartes;
 
     return Scaffold(
       body: Container(
@@ -281,15 +268,10 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                     criarPraSalvar["topo"] = topoSelecionado;
                     criarPraSalvar["tema"] = temaSelecionado;
 
-                    print(criarPraSalvar);
                     _listaEncartes.add( criarPraSalvar );
                     salvarArquivo(_listaEncartes);
-                    print(_listaEncartes);
-
                     _textController.text = "";
-                    setState(() {
-                      _lerArquivo();
-                    });
+
                   FirebaseAnalytics.instance.logEvent(
                       name: "criou_encarte",
                     parameters: {
@@ -301,7 +283,7 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                   Navigator.pushReplacement(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => ProdutosEncarte(_listaEncartes, listaTodosProdutos, _listaEncartes.length-1, "newEncarteComTema"),
+                      pageBuilder: (context, animation1, animation2) => ProdutosEncarte(_listaEncartes, controller.listaProdutos, _listaEncartes.length-1, "newEncarteComTema"),
                       transitionDuration: Duration.zero,
                       reverseTransitionDuration: Duration.zero,
                     ),
