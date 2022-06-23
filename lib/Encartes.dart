@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:encarte_facil_2/Components/Button.dart';
 import 'package:encarte_facil_2/Components/Cell%20Encarte.dart';
 import 'package:encarte_facil_2/Components/ReloadButton.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -47,6 +48,9 @@ class _EncartesState extends State<Encartes> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    setState(){
+
+    };
   }
 
   @override
@@ -72,7 +76,34 @@ class _EncartesState extends State<Encartes> {
                         shrinkWrap: true,
                         itemCount: controller.listaEncartes.length + 1,
                         itemBuilder: (context, indice) {
-                          if (indice == 0) {
+                          if (controller.listaEncartes.length == 0){
+                            return Column(
+                              children: [
+                                Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: width * 0.55,
+                                      child: Text(
+                                        "Lista de encartes",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            height: 0.9,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 24),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    ReloadButtonWidget(controller)
+                                  ],
+                                ),
+                                Padding(padding: EdgeInsets.fromLTRB(0, 50, 0, 0)),
+                                ButtonWidget("Atualizar lista de encartes"),
+                                Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
+                              ],
+                            );
+                          } else if (indice == 0) {
                             return Column(
                               children: [
                                 Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
