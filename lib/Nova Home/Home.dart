@@ -10,6 +10,7 @@ import '../Logic/Functions.dart';
 import '../Model/Produto.dart';
 import '../NewEncarteComTema.dart';
 import '../ProdutosEncarte.dart';
+import '../Settings.dart';
 import '../SugestionForm.dart';
 
 class HomeWidget extends StatefulWidget {
@@ -46,12 +47,11 @@ class _HomeWidgetState extends State<HomeWidget> {
             label: 'Criar encarte',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.globe),
-            label: 'Ajuda',
+            icon: Icon(CupertinoIcons.settings),
+            label: 'Configurações',
           ),
         ],
         onTap: (index) {
-
           if (index == 1){
             setState((){});
             print("clicou");
@@ -66,13 +66,9 @@ class _HomeWidgetState extends State<HomeWidget> {
         if (index == 0) {
           return Encartes();
         } else if (index == 1) {
-          return CupertinoTabView(
-            builder: (BuildContext context) {
-              return NewEncarteComTema();
-            },
-          );
+          return NewEncarteComTema();
         } else if (index == 2){
-          return SugestionForm();
+          return Settings();
         }
       },
 

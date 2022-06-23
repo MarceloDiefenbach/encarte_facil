@@ -106,7 +106,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                     Navigator.pushReplacement(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) => NewEncarteComTema(),
+                        pageBuilder: (context, animation1, animation2) => HomeWidget(),
                         transitionDuration: Duration.zero,
                         reverseTransitionDuration: Duration.zero,
                       ),
