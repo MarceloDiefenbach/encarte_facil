@@ -2,8 +2,7 @@ import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-
-import 'Encartes.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SugestionForm extends StatefulWidget {
   const SugestionForm({key}) : super(key: key);
@@ -17,6 +16,15 @@ class _SugestionForm extends State<SugestionForm> {
   TextEditingController controllerProdutos = new TextEditingController();
 
   String produtos = "";
+
+  _abrirInstagram() async {
+    const url = 'https://www.instagram.com/encartefacilapp/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +48,44 @@ class _SugestionForm extends State<SugestionForm> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(padding: EdgeInsets.all(50)),
-              Text("Escreva a sua sugestão ou dúvida",
+              Text("Fale com a gente\nno Instagram",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: 40)),
+                      fontSize: 30)),
+              Padding(padding: EdgeInsets.all(5)),
+              TextButton(
+                onPressed: () async {
+                  _abrirInstagram();
+                },
+                child: Container(
+                  height: 50,
+                  width: width*0.4,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.blue,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Abrir Instagram',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16
+                          )
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(padding: EdgeInsets.all(10)),
+              Text("Ou escreva a sua \nsugestão ou dúvida",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 30)),
               Padding(padding: EdgeInsets.fromLTRB(0, 24, 0, 0)),
               Container(
                 width: width*0.85,
