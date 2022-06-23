@@ -51,6 +51,7 @@ class _EncartesState extends State<Encartes> {
 
   @override
   Widget build(BuildContext context) {
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -100,7 +101,7 @@ class _EncartesState extends State<Encartes> {
                             var encarte = controller.listaEncartes[indice - 1];
                             return GestureDetector(
                               child: CellEncarte(encarte["nomeEncarte"],
-                                  indice - 1, controller.listaEncartes),
+                                  indice - 1),
                               onTap: () {
                                 Navigator.pushReplacement(
                                   context,

@@ -1,7 +1,10 @@
 import 'package:encarte_facil_2/Logic/Functions.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:encarte_facil_2/Components/Button.dart';
+import 'package:provider/provider.dart';
 
+import '../Logic/controller.dart';
 import '../Nova Home/Home.dart';
 
 
@@ -9,17 +12,19 @@ class CellEncarte extends StatefulWidget {
 
   String title;
   int indice;
-  List listaEncartes;
 
-  CellEncarte(this.title, this.indice, this.listaEncartes);
+  CellEncarte(this.title, this.indice);
 
   @override
   _CellEncarteState createState() => _CellEncarteState();
 }
 
+
 class _CellEncarteState extends State<CellEncarte> {
   @override
   Widget build(BuildContext context) {
+
+    Controller controller = Provider.of<Controller>(context);
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -65,8 +70,15 @@ class _CellEncarteState extends State<CellEncarte> {
                 icon: Icon(Icons.delete,
                   color: Colors.black, size: 20,),
                 onPressed: () {
-                  deletarEncarte(widget.title, widget.indice, widget.listaEncartes);
+                  controller.pegaAirtable();
+                  deletarEncarte(widget.title, widget.indice, controller.listaEncartes);
                   setState(() {
+                    FirebaseAnalytics.instance.logEvent(
+                        name: "delete_encarte",
+                        parameters: {
+                          "nome_encarte": widget.title,
+                        }
+                    );
                     Navigator.pushReplacement(
                       context,
                       PageRouteBuilder(

@@ -6,11 +6,13 @@ import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 import 'Logic/Functions.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'Logic/controller.dart';
 import 'Model/Produto.dart';
 import 'Model/Tema.dart';
 import 'ProdutosEncarte.dart';
@@ -95,6 +97,9 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     String date = "";
+
+    Controller controller = Provider.of<Controller>(context);
+    _listaEncartes = controller.listaEncartes;
 
     return Scaffold(
       body: Container(
