@@ -98,8 +98,6 @@ class _EncartesState extends State<Encartes> {
                                     ReloadButtonWidget(controller)
                                   ],
                                 ),
-                                Padding(padding: EdgeInsets.fromLTRB(0, 50, 0, 0)),
-                                ButtonWidget("Atualizar lista de encartes"),
                                 Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
                               ],
                             );
