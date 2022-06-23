@@ -17,15 +17,6 @@ class _SugestionForm extends State<SugestionForm> {
 
   String produtos = "";
 
-  _abrirInstagram() async {
-    const url = 'https://www.instagram.com/encartefacilapp/';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -48,38 +39,6 @@ class _SugestionForm extends State<SugestionForm> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(padding: EdgeInsets.all(50)),
-              Text("Fale com a gente\nno Instagram",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 30)),
-              Padding(padding: EdgeInsets.all(5)),
-              TextButton(
-                onPressed: () async {
-                  _abrirInstagram();
-                },
-                child: Container(
-                  height: 50,
-                  width: width*0.4,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Abrir Instagram',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16
-                          )
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(padding: EdgeInsets.all(10)),
               Text("Ou escreva a sua \nsugestão ou dúvida",
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -154,14 +113,7 @@ class _SugestionForm extends State<SugestionForm> {
               ),
               TextButton(
                 onPressed: () async {
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => HomeWidget(),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  );
+                  Navigator.pop(context);
                 },
                 child: Container(
                   height: 50,
