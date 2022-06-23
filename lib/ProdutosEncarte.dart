@@ -16,7 +16,6 @@ import 'package:flutter/cupertino.dart';
 import 'Components/Cell Tema.dart';
 import 'ListaProdutos.dart';
 import 'Model/Produto.dart';
-import 'SelecionarTema.dart';
 
 class ProdutosEncarte extends StatefulWidget {
   List listaEncartes;
