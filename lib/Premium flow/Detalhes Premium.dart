@@ -22,7 +22,7 @@ class _DetalhesPremium extends State<DetalhesPremium> {
 
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         alignment: Alignment.centerLeft,
         color: Colors.grey[300],
         child: SingleChildScrollView(
@@ -30,7 +30,7 @@ class _DetalhesPremium extends State<DetalhesPremium> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(padding: EdgeInsets.all(50)),
-              Text("Seja PRO e tenha acesso a benefícios exclusivos",
+              Text("Seja PRO e tenha \nacesso a benefícios \nexclusivos!",
                   textAlign: TextAlign.start,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                           fontSize: 16)),
                 ],
               ),
-              Padding(padding: EdgeInsets.fromLTRB(0, 24, 0, 0)),
+              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
               Row(
                 children: [
                   Container(
@@ -76,27 +76,7 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                           fontSize: 16)),
                 ],
               ),
-              Padding(padding: EdgeInsets.fromLTRB(0, 24, 0, 0)),
-              Row(
-                children: [
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                        color: Colors.blueAccent,
-                        borderRadius: BorderRadius.circular(50)
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 8, 0)),
-                  Text("Prioridade na adição de novos produtos",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black,
-                          fontSize: 16)),
-                ],
-              ),
-              Padding(padding: EdgeInsets.fromLTRB(0, 24, 0, 0)),
+              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
               Row(
                 children: [
                   Container(
@@ -116,30 +96,19 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                           fontSize: 16)),
                 ],
               ),
-              Padding(padding: EdgeInsets.fromLTRB(0, 40, 0, 0)),
-              Text("Tudo isso por apenas",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black,
-                      fontSize: 16)),
+              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
               Row(
                 children: [
-                  Text("R\$",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black,
-                          fontSize: 16)),
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(50)
+                    ),
+                  ),
                   Padding(padding: EdgeInsets.fromLTRB(0, 0, 8, 0)),
-                  Text("20",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 40)),
-                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 8, 0)),
-                  Text("por mês",
+                  Text("Remova os anúncios",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
@@ -147,6 +116,46 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                           fontSize: 16)),
                 ],
               ),
+              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+              Row(
+                children: [
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(50)
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 8, 0)),
+                  Text("Prioridade na adição de novos produtos",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black,
+                          fontSize: 16)),
+                ],
+              ),
+              Padding(padding: EdgeInsets.fromLTRB(0, 40, 0, 0)),
+              Text("Tudo isso por apenas",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                      fontSize: 16)),
+              Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
+              Text("R\$ 20,00",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 40)),
+              Text("por mês",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                      fontSize: 16)),
               Padding(padding: EdgeInsets.fromLTRB(0, 40, 0, 0)),
               Container(
                 // height: 0,
