@@ -22,7 +22,7 @@ void main() async{
             // When navigating to the "/second" route, build the SecondScreen widget.
             // '/second': (context) => const SecondScreen(),
           },
-          home: Login(),
+          home: HomeWidget(),
           debugShowCheckedModeBanner: false,
         ),
       )

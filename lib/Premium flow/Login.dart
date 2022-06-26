@@ -43,7 +43,7 @@ class _Login extends State<Login> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text("Digite o seu código PRO",
+              Text("Sou cliente PRO",
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
                     color: Colors.black,
@@ -73,7 +73,7 @@ class _Login extends State<Login> {
                         fontSize: 20),
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Digite o seu código PRO',
+                      hintText: 'Código de cliente',
                     ),
                   ),
                 ),
@@ -92,7 +92,7 @@ class _Login extends State<Login> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Entrar no painel PRO',
+                      Text('Entrar',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -105,15 +105,14 @@ class _Login extends State<Login> {
               Padding(padding: EdgeInsets.all(4)),
               GestureDetector(
                 onTap: (){
-                  salvarCodigoPro();
-                  // Navigator.push(
-                  //   context,
-                  //   PageRouteBuilder(
-                  //     pageBuilder: (context, animation1, animation2) => DetalhesPremium(),
-                  //     transitionDuration: Duration.zero,
-                  //     reverseTransitionDuration: Duration.zero,
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => DetalhesPremium(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
                 },
                 child: Container(
                   height: 50,
@@ -129,7 +128,7 @@ class _Login extends State<Login> {
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
-                              fontWeight: FontWeight.w500
+                              fontWeight: FontWeight.w700
                           )),
                     ],
                   ),

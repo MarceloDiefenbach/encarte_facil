@@ -45,7 +45,6 @@ Future<List> AirtableGet() async {
       }
       if (retorno["offset"] == []) {
         return listaTodosProdutos;
-        break;
       }
       print("offset ${retorno["offset"]}");
 

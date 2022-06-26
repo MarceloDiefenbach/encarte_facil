@@ -87,9 +87,7 @@ class _ListaProdutosState extends State<ListaProdutos> {
           _listaProdutoFiltro.add(widget.listaTodosProdutos[i]);
         });
       }
-
     }
-
   }
 
   @override
