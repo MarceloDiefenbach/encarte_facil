@@ -4,7 +4,11 @@ import 'package:encarte_facil_2/Premium%20flow/Detalhes%20Premium.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../Logic/Functions.dart';
+import '../Logic/controller.dart';
 
 class Login extends StatefulWidget {
   const Login({key}) : super(key: key);
@@ -15,13 +19,13 @@ class Login extends StatefulWidget {
 
 class _Login extends State<Login> {
 
+  Controller controller;
   TextEditingController _textControllerCodigoPro;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
     _textControllerCodigoPro = TextEditingController(text: "");
   }
 
@@ -74,36 +78,42 @@ class _Login extends State<Login> {
                   ),
                 ),
               ),
-              Container(
-                height: 50,
-                width: width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.blue,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Entrar no painel PRO',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500
-                        )),
-                  ],
+              GestureDetector(
+                onTap: (){
+                  recuperaCodigoPro();
+                },
+                child: Container(
+                  height: 50,
+                  width: width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.blue,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Entrar no painel PRO',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500
+                          )),
+                    ],
+                  ),
                 ),
               ),
               Padding(padding: EdgeInsets.all(4)),
               GestureDetector(
                 onTap: (){
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => DetalhesPremium(),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  );
+                  salvarCodigoPro();
+                  // Navigator.push(
+                  //   context,
+                  //   PageRouteBuilder(
+                  //     pageBuilder: (context, animation1, animation2) => DetalhesPremium(),
+                  //     transitionDuration: Duration.zero,
+                  //     reverseTransitionDuration: Duration.zero,
+                  //   ),
+                  // );
                 },
                 child: Container(
                   height: 50,
@@ -133,23 +143,35 @@ class _Login extends State<Login> {
                     fontSize: 16),
               ),
               Padding(padding: EdgeInsets.all(8)),
-              Container(
-                height: 50,
-                width: width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.blue,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Usar gratuitamente',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500
-                        )),
-                  ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) => HomeWidget(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 50,
+                  width: width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.blue,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Usar gratuitamente',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500
+                          )),
+                    ],
+                  ),
                 ),
               ),
             ],

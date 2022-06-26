@@ -89,8 +89,6 @@ Future<File> getFile() async {
 }
 
 
-
-
 //essa função salva o a lista de encartes na memoria do celular
 salvarArquivo(List listaEncartes) async {
 
@@ -103,9 +101,45 @@ salvarArquivo(List listaEncartes) async {
 
 }
 
+Future<File> getFileCodigoPro() async {
+
+  final diretorio = await getApplicationDocumentsDirectory();
+  return File( "${diretorio.path}/codigoPRO.json" );
+
+}
+
+//salva o código pro na memoria
+salvarCodigoPro() async {
+
+  var arquivo = await getFileCodigoPro();
+
+  String dados = json.encode( "123lnkjasd" );
+  arquivo.writeAsString( dados );
+
+}
+
+//pega o código pro que ja ta salvo na memoria
+recuperaCodigoPro() async {
+
+  lerArquivo().then((dados) {
+    String dados2 = json.decode(dados);
+    print("${dados2} dentro do funcitions");
+    return dados2;
+  });
+}
+
+lerArquivo() async {
+  try {
+    final arquivo = await getFileCodigoPro();
+
+    return arquivo.readAsString();
+  } catch (e) {
+    return null;
+  }
+}
 
 
-
+//pega o lugar da memoria que o encarte que vai ser apagado ta salvo
 Future<File> getEncarteToDelete(String nome) async {
 
   final diretorio = await getApplicationDocumentsDirectory();
@@ -113,7 +147,7 @@ Future<File> getEncarteToDelete(String nome) async {
 
 }
 
-
+//deleta o encarte da lista de encartes
 deletarEncarte(String nome, int indice, List listaEncartes) async {
 
   var arquivo = await getEncarteToDelete(nome);
