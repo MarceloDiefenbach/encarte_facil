@@ -10,17 +10,12 @@ import 'Functions.dart';
 
 class Controller {
 
-  autorun(){
-    print("autorun");
-  }
-
   //variaveis
   List _listaEncartes = ObservableList();
   List<Produto> _listaProdutos = ObservableList();
   List _codigoPRO = ObservableList<String>();
 
   //actions
-  Action incrementar;
   Action pegaEncartes;
   Action pegaProdutos;
   Action pegaCodigoPRO;
@@ -28,7 +23,6 @@ class Controller {
 
   //define as actions
   Controller(){
-    incrementar = Action(_incrementar);
     pegaEncartes = Action(_pegaEncartesMemoria);
     pegaProdutos = Action(_pegaProdutos);
     pegaCodigoPRO = Action(_pegaCodigoPRO);

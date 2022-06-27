@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:encarte_facil_2/Logic/controller.dart';
+import 'package:encarte_facil_2/Model/CodigoPro.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 import '../Model/Produto.dart';
 import '../Model/Tema.dart';
-
-
 
 
 //essa função pega os produtos no airtable
@@ -128,8 +128,9 @@ Future<File> getFileCodigoPro() async {
 salvarCodigoPro() async {
 
   var arquivo = await getFileCodigoPro();
+  String codigo = "123lnkjasd";
 
-  String dados = json.encode( "123lnkjasd" );
+  String dados = json.encode(codigo);
   arquivo.writeAsString( dados );
 
 }
@@ -140,7 +141,7 @@ recuperaCodigoPro() async {
   lerArquivo().then((dados) {
     String dados2 = json.decode(dados);
     print("${dados2} dentro do funcitions");
-    return dados2;
+    return dados2.toString();
   });
 }
 
@@ -196,4 +197,36 @@ pegaTemasAirtable() async {
   }
 
   return temas;
+}
+
+//pega a lista de códigos pro válidos
+Future<List> codigosPROValidos() async {
+  List<CodigoPRO> listaCodigos = [];
+
+  listaCodigos.clear();
+
+  http.Response response;
+  http.Response response2;
+  Map<String, dynamic> retorno;
+
+  List records;
+
+  Uri url = Uri.https("api.airtable.com",
+      "v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa");
+
+  response = await http.get(
+    Uri.parse(
+        'https://api.airtable.com/v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa'),
+  );
+
+  retorno = json.decode(response.body);
+  records = retorno["records"];
+
+  for (int i = 0; i < records.length; i++) {
+    listaCodigos.add(CodigoPRO(records[i]["fields"]["codigo"]));
+  }
+  if (retorno["offset"] == []) {
+    return listaCodigos;
+  }
+  return listaCodigos;
 }

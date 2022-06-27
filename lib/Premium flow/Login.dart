@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:encarte_facil_2/Components/Button.dart';
 import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:encarte_facil_2/Premium%20flow/Detalhes%20Premium.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Logic/Functions.dart';
@@ -21,12 +24,66 @@ class _Login extends State<Login> {
 
   Controller controller;
   TextEditingController _textControllerCodigoPro;
+  bool isStopped = true;
+  SharedPreferences prefs;
+  String codigoPRO;
+
+  getSharedPreferences () async
+  {
+    prefs = await SharedPreferences.getInstance();
+  }
+
+  salvaCodigoPRO() async
+  {
+    prefs = await SharedPreferences.getInstance();
+    prefs.setString("codigo", "1234");
+  }
+
+  recuperaCodigoPRO() async
+  {
+    prefs = await SharedPreferences.getInstance();
+    codigoPRO = prefs.getString("codigo");
+    print(codigoPRO);
+    return codigoPRO;
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    controller = Provider.of<Controller>(context);
+    controller.pegaProdutos();
+    controller.pegaEncartes();
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _textControllerCodigoPro = TextEditingController(text: "");
+
+    Timer.periodic(Duration(milliseconds: 1), (timer) async {
+      if (isStopped) {
+        recuperaCodigoPRO();
+        if (codigoPRO == "1234") {
+          isStopped = false;
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) => HomeWidget(),
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+            ),
+          );
+        } else {
+          print("nao pegou");
+        }
+        if(false){
+          isStopped = false;
+        }
+      }
+    });
+
   }
 
   @override

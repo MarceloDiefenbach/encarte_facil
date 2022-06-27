@@ -37,8 +37,6 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget build(BuildContext context) {
 
     controller = Provider.of<Controller>(context);
-    controller.pegaProdutos();
-    controller.pegaEncartes();
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -60,10 +58,8 @@ class _HomeWidgetState extends State<HomeWidget> {
           ),
         ],
         onTap: (index) {
-          if (index == 1){
-            setState((){});
-            print("clicou");
-          }
+
+
         }
 
       ),
