@@ -4,9 +4,11 @@ import 'package:encarte_facil_2/Encartes.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../Components/Cell Encarte.dart';
 import '../Logic/Functions.dart';
+import '../Logic/controller.dart';
 import '../Model/Produto.dart';
 import '../NewEncarteComTema.dart';
 import '../ProdutosEncarte.dart';
@@ -22,6 +24,8 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> {
 
+  Controller controller;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -31,6 +35,10 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
+
+    controller = Provider.of<Controller>(context);
+    controller.pegaProdutos();
+    controller.pegaEncartes();
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;

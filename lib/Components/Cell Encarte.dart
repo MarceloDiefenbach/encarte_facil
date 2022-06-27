@@ -70,7 +70,7 @@ class _CellEncarteState extends State<CellEncarte> {
                 icon: Icon(Icons.delete,
                   color: Colors.black, size: 20,),
                 onPressed: () {
-                  controller.pegaAirtable();
+                  controller.pegaEncartes();
                   deletarEncarte(widget.title, widget.indice, controller.listaEncartes);
                   setState(() {
                     FirebaseAnalytics.instance.logEvent(
