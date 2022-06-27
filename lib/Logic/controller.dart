@@ -10,6 +10,10 @@ import 'Functions.dart';
 
 class Controller {
 
+  autorun(){
+    print("autorun");
+  }
+
   //variaveis
   var _contador = Observable(0);
   List _listaEncartes = ObservableList();
@@ -17,14 +21,14 @@ class Controller {
 
   //actions
   Action incrementar;
-  Action pegaAirtable;
+  Action pegaEncartes;
   Action pegaProdutos;
 
 
   //define as actions
   Controller(){
     incrementar = Action(_incrementar);
-    pegaAirtable = Action(_pegaEncartesMemoria);
+    pegaEncartes = Action(_pegaEncartesMemoria);
     pegaProdutos = Action(_pegaProdutos);
   }
 
@@ -60,7 +64,9 @@ class Controller {
   }
 
   _pegaProdutos() async {
-    _listaProdutos = await AirtableGet() as List<Produto>;
+    // print("entrou em pega produtos");
+    _listaProdutos = await AirtableGetProdutos() as List<Produto>;
+    print("aspokdpaoskd\n\n\n${_listaProdutos}");
   }
 
 }

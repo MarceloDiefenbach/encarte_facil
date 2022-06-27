@@ -11,7 +11,7 @@ import '../Model/Tema.dart';
 
 
 //essa função pega os produtos no airtable
-Future<List> AirtableGet() async {
+Future<List> AirtableGetProdutos() async {
   List<Produto> listaTodosProdutos = [];
 
   listaTodosProdutos.clear();
@@ -24,7 +24,7 @@ Future<List> AirtableGet() async {
 
   List records;
 
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < 4; i++) {
 
     if (i <= 0){
 
@@ -47,8 +47,6 @@ Future<List> AirtableGet() async {
         return listaTodosProdutos;
         break;
       }
-      print("offset ${retorno["offset"]}");
-
 
     } else {
 
@@ -70,14 +68,33 @@ Future<List> AirtableGet() async {
           controle = false;
         }
       } else {
-        //nothing to do here
+        print("nao fez nada");
       }
     }
   }
+
+  salvarProdutosNaMemoria(listaTodosProdutos);
+
   return listaTodosProdutos;
 }
 
+//essa função pega o diretorio onde ficam salvas as cisas
+Future<File> getFileProdutos() async {
 
+  final diretorio = await getApplicationDocumentsDirectory();
+  return File( "${diretorio.path}/produtos.json" );
+
+}
+
+
+//salvar lista de produtos do airtable na memoria
+salvarProdutosNaMemoria(List listaProdutos) async {
+
+  var arquivo = await getFileProdutos();
+  String dados = json.encode( listaProdutos );
+  arquivo.writeAsString( dados );
+
+}
 
 
 //essa função pega o diretorio onde ficam salvas as cisas
@@ -87,9 +104,6 @@ Future<File> getFile() async {
   return File( "${diretorio.path}/encartes7.json" );
 
 }
-
-
-
 
 //essa função salva o a lista de encartes na memoria do celular
 salvarArquivo(List listaEncartes) async {

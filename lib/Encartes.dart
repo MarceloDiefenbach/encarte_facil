@@ -25,36 +25,28 @@ class _EncartesState extends State<Encartes> {
 
   Controller controller;
 
-
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-
     controller = Provider.of<Controller>(context);
-    controller.pegaAirtable();
-    controller.pegaProdutos();
   }
 
-  @override
-  void didUpdateWidget(covariant Encartes oldWidget) {
-    // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
-    controller.pegaAirtable();
-    listaTodosProdutos = controller.listaProdutos;
-  }
+  TextEditingController _textController;
+  TextEditingController _textControllerValidade;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(){
-
-    };
+    _textController = TextEditingController(text: '');
+    _textControllerValidade = TextEditingController(text: '');
   }
 
   @override
   Widget build(BuildContext context) {
+
+    listaTodosProdutos = controller.listaProdutos;
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;

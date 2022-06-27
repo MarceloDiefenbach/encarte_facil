@@ -43,7 +43,7 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
 
   _lerArquivo() async {
 
-    listaTodosProdutos = await AirtableGet() as List<Produto>;
+    listaTodosProdutos = await AirtableGetProdutos() as List<Produto>;
 
     try {
       final arquivo = await getFile();
