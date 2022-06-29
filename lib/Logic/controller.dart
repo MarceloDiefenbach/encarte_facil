@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encarte_facil_2/Model/CodigoPro.dart';
 import 'package:mobx/mobx.dart';
 
 import '../Model/Produto.dart';
@@ -13,19 +14,19 @@ class Controller {
   //variaveis
   List _listaEncartes = ObservableList();
   List<Produto> _listaProdutos = ObservableList();
-  List _codigoPRO = ObservableList<String>();
+  List<CodigoPRO> _codigosPro = ObservableList<CodigoPRO>();
 
   //actions
   Action pegaEncartes;
   Action pegaProdutos;
-  Action pegaCodigoPRO;
+  Action pegaCodigosPROinterno;
 
 
   //define as actions
   Controller(){
     pegaEncartes = Action(_pegaEncartesMemoria);
     pegaProdutos = Action(_pegaProdutos);
-    pegaCodigoPRO = Action(_pegaCodigoPRO);
+    pegaCodigosPROinterno = Action(_pegaCodigosPRO);
   }
 
   //geters e setters
@@ -35,25 +36,12 @@ class Controller {
   List<Produto> get listaProdutos => _listaProdutos;
   set listaProdutos(List novoValor) => _listaProdutos = novoValor;
 
-  List get codigoPro => _codigoPRO[0];
-  set codigoPro(var novoValor) => _codigoPRO[0] = novoValor;
+  List get codigosPro => _codigosPro;
+  set codigosPro(var novoValor) => _codigosPro = novoValor;
 
 
-  _pegaCodigoPRO() async {
-    lerArquivoCodigo().then((dados) {
-      String dados2 = json.decode(dados);
-      _codigoPRO.add(dados2);
-    });
-  }
-
-  lerArquivoCodigo() async {
-    try {
-      final arquivo = await getFileCodigoPro();
-
-      return arquivo.readAsString();
-    } catch (e) {
-      return null;
-    }
+  _pegaCodigosPRO() async {
+    _codigosPro = await codigosPROValidos() as List<CodigoPRO>;
   }
 
   _pegaEncartesMemoria() async {
@@ -64,7 +52,7 @@ class Controller {
 
   lerArquivo() async {
     try {
-      final arquivo = await getFile();
+      final arquivo = await getDiretorioEncartes();
       return arquivo.readAsString();
     } catch (e) {
       return null;
@@ -72,9 +60,60 @@ class Controller {
   }
 
   _pegaProdutos() async {
-    // print("entrou em pega produtos");
     _listaProdutos = await AirtableGetProdutos() as List<Produto>;
-    print("aspokdpaoskd\n\n\n${_listaProdutos}");
   }
 
 }
+
+//
+//
+// import 'dart:convert';
+//
+// import 'package:encarte_facil_2/Model/CodigoPro.dart';
+// import 'package:mobx/mobx.dart';
+//
+// import '../Model/Produto.dart';
+// import 'Functions.dart';
+// part 'controller.g.dart';
+//
+// class Controller = ControllerBase with _$Controller;
+//
+// abstract class ControllerBase with Store {
+//
+//   @observable
+//   List listaEncartes = [];
+//
+//   @observable
+//   List listaProdutos = ["1"];
+//
+//   @observable
+//   List codigosPro = [];
+//
+//   @action
+//   pegaCodigosPRO() async {
+//     codigosPro = await codigosPROValidos() as List<CodigoPRO>;
+//   }
+//
+//   @action
+//   pegaEncartesMemoria() async {
+//     lerArquivo().then((dados) {
+//       listaEncartes = json.decode(dados);
+//     });
+//   }
+//
+//   @action
+//   lerArquivo() async {
+//     try {
+//       final arquivo = await getDiretorioEncartes();
+//       return arquivo.readAsString();
+//     } catch (e) {
+//       return null;
+//     }
+//   }
+//
+//   @action
+//   pegaProdutos() async {
+//     listaProdutos = await AirtableGetProdutos() as List<Produto>;
+//   }
+//
+// }

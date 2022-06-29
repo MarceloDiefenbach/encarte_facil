@@ -10,6 +10,34 @@ import '../Model/Produto.dart';
 import '../Model/Tema.dart';
 
 
+Future<List> codigosPROValidos() async {
+
+  List listaCodigosInterno = [];
+  listaCodigosInterno.clear();
+
+  http.Response response;
+  Map<String, dynamic> retorno;
+
+  List records;
+
+  Uri url = Uri.https("api.airtable.com",
+      "v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa");
+
+  response = await http.get(
+    Uri.parse(
+        'https://api.airtable.com/v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa'),
+  );
+
+  retorno = json.decode(response.body);
+  records = retorno["records"];
+
+  for (int i = 0; i < records.length; i++) {
+    listaCodigosInterno.add(CodigoPRO(records[i]["fields"]["codigo"]));
+  }
+
+  return listaCodigosInterno;
+}
+
 //essa função pega os produtos no airtable
 Future<List> AirtableGetProdutos() async {
   List<Produto> listaTodosProdutos = [];
@@ -67,7 +95,7 @@ Future<List> AirtableGetProdutos() async {
           controle = false;
         }
       } else {
-        print("nao fez nada");
+        // print("nao fez nada");
       }
     }
   }
@@ -97,7 +125,7 @@ salvarProdutosNaMemoria(List listaProdutos) async {
 
 
 //essa função pega o diretorio onde ficam salvas as cisas
-Future<File> getFile() async {
+Future<File> getDiretorioEncartes() async {
 
   final diretorio = await getApplicationDocumentsDirectory();
   return File( "${diretorio.path}/encartes7.json" );
@@ -106,53 +134,15 @@ Future<File> getFile() async {
 
 
 //essa função salva o a lista de encartes na memoria do celular
-salvarArquivo(List listaEncartes) async {
+salvarListaEncartes(List listaEncartes) async {
 
-  print("salvou");
-  print("lista de encartes");
-  print(listaEncartes);
-  var arquivo = await getFile();
+  // print("salvou");
+  // print("lista de encartes");
+  // print(listaEncartes);
+  var arquivo = await getDiretorioEncartes();
   String dados = json.encode( listaEncartes );
   arquivo.writeAsString( dados );
 
-}
-
-Future<File> getFileCodigoPro() async {
-
-  final diretorio = await getApplicationDocumentsDirectory();
-  return File( "${diretorio.path}/codigoPRO.json" );
-
-}
-
-//salva o código pro na memoria
-salvarCodigoPro() async {
-
-  var arquivo = await getFileCodigoPro();
-  String codigo = "123lnkjasd";
-
-  String dados = json.encode(codigo);
-  arquivo.writeAsString( dados );
-
-}
-
-//pega o código pro que ja ta salvo na memoria
-recuperaCodigoPro() async {
-
-  lerArquivo().then((dados) {
-    String dados2 = json.decode(dados);
-    print("${dados2} dentro do funcitions");
-    return dados2.toString();
-  });
-}
-
-lerArquivo() async {
-  try {
-    final arquivo = await getFileCodigoPro();
-
-    return arquivo.readAsString();
-  } catch (e) {
-    return null;
-  }
 }
 
 
@@ -170,13 +160,12 @@ deletarEncarte(String nome, int indice, List listaEncartes) async {
   var arquivo = await getEncarteToDelete(nome);
 
   listaEncartes.removeAt(indice);
-  salvarArquivo(listaEncartes);
+  salvarListaEncartes(listaEncartes);
   arquivo.delete();
 
 }
 
 pegaTemasAirtable() async {
-
   List<Tema> temas = [];
 
   http.Response response;
@@ -195,38 +184,5 @@ pegaTemasAirtable() async {
   for (int i=0; i<records.length; i++ ) {
     temas.add(Tema(records[i]["fields"]["Nome"], records[i]["fields"]["Fundo"], records[i]["fields"]["Topo"]));
   }
-
   return temas;
-}
-
-//pega a lista de códigos pro válidos
-Future<List> codigosPROValidos() async {
-  List<CodigoPRO> listaCodigos = [];
-
-  listaCodigos.clear();
-
-  http.Response response;
-  http.Response response2;
-  Map<String, dynamic> retorno;
-
-  List records;
-
-  Uri url = Uri.https("api.airtable.com",
-      "v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa");
-
-  response = await http.get(
-    Uri.parse(
-        'https://api.airtable.com/v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa'),
-  );
-
-  retorno = json.decode(response.body);
-  records = retorno["records"];
-
-  for (int i = 0; i < records.length; i++) {
-    listaCodigos.add(CodigoPRO(records[i]["fields"]["codigo"]));
-  }
-  if (retorno["offset"] == []) {
-    return listaCodigos;
-  }
-  return listaCodigos;
 }

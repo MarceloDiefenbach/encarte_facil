@@ -46,7 +46,7 @@ class _EncartesState extends State<Encartes> {
   @override
   Widget build(BuildContext context) {
 
-    listaTodosProdutos = controller.listaProdutos;
+    // listaTodosProdutos = controller.listaProdutos;
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;

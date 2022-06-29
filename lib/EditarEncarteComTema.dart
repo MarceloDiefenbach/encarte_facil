@@ -46,7 +46,7 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
     listaTodosProdutos = await AirtableGetProdutos() as List<Produto>;
 
     try {
-      final arquivo = await getFile();
+      final arquivo = await getDiretorioEncartes();
       return arquivo.readAsString();
     } catch (e) {
       return null;
@@ -253,7 +253,7 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
                   criarPraSalvar["tema"] = temaSelecionado;
                   print("encarte criado ${criarPraSalvar}");
                   _listaEncartes[widget.posicaoNaLista] = criarPraSalvar;
-                  salvarArquivo(_listaEncartes);
+                  salvarListaEncartes(_listaEncartes);
                   print(_listaEncartes);
                   analyticsEvents.logEvent(
                     name: "criou_encarte",

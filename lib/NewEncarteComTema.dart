@@ -269,7 +269,7 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                     criarPraSalvar["tema"] = temaSelecionado;
 
                     _listaEncartes.add( criarPraSalvar );
-                    salvarArquivo(_listaEncartes);
+                    salvarListaEncartes(_listaEncartes);
                     _textController.text = "";
 
                   FirebaseAnalytics.instance.logEvent(
