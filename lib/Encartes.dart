@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:encarte_facil_2/Components/Button.dart';
 import 'package:encarte_facil_2/Components/Cell%20Encarte.dart';
@@ -32,8 +33,26 @@ class _EncartesState extends State<Encartes> {
     controller = Provider.of<Controller>(context);
   }
 
-  TextEditingController _textController;
-  TextEditingController _textControllerValidade;
+  bool stoped = true;
+
+  @override
+  void didUpdateWidget(covariant Encartes oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    // controller.pegaAirtable();
+    if (stoped) {
+      print(stoped);
+      Timer.periodic(Duration(milliseconds: 500), (timer) {
+        listaTodosProdutos = controller.listaProdutos;
+        // print(listaTodosProdutos);
+        if (listaTodosProdutos.isNotEmpty){
+          stoped = false;
+          print(stoped);
+        }
+      });
+    } else {
+    }
+  }
 
   @override
   void initState() {
@@ -46,7 +65,8 @@ class _EncartesState extends State<Encartes> {
   @override
   Widget build(BuildContext context) {
 
-    listaTodosProdutos = controller.listaProdutos;
+    controller.pegaAirtable();
+    controller.pegaProdutos();
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -127,7 +147,7 @@ class _EncartesState extends State<Encartes> {
                                 Navigator.pushReplacement(
                                   context,
                                   PageRouteBuilder(
-                                    pageBuilder: (context, animation1, animation2) => ProdutosEncarte(controller.listaEncartes, listaTodosProdutos, indice - 1, "encartes"),
+                                    pageBuilder: (context, animation1, animation2) => ProdutosEncarte(controller.listaEncartes, indice - 1, "encartes"),
                                     transitionDuration: Duration.zero,
                                     reverseTransitionDuration: Duration.zero,
                                   ),

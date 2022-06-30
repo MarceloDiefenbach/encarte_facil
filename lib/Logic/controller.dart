@@ -10,42 +10,50 @@ import 'Functions.dart';
 
 class Controller {
 
-  autorun(){
-    print("autorun");
-  }
-
   //variaveis
-  var _contador = Observable(0);
   List _listaEncartes = ObservableList();
   List<Produto> _listaProdutos = ObservableList();
+  List _codigoPRO = ObservableList<String>();
 
   //actions
-  Action incrementar;
-  Action pegaEncartes;
+  Action pegaAirtable;
   Action pegaProdutos;
+  Action pegaCodigoPRO;
 
 
   //define as actions
   Controller(){
-    incrementar = Action(_incrementar);
-    pegaEncartes = Action(_pegaEncartesMemoria);
+    pegaAirtable = Action(_pegaEncartesMemoria);
     pegaProdutos = Action(_pegaProdutos);
+    pegaCodigoPRO = Action(_pegaCodigoPRO);
   }
 
   //geters e setters
-  int get contador => _contador.value;
-  set contador(int novoValor) => _contador.value = novoValor;
-
   List get listaEncartes => _listaEncartes;
   set listaEncartes(List novoValor) => _listaEncartes = novoValor;
 
   List<Produto> get listaProdutos => _listaProdutos;
   set listaProdutos(List novoValor) => _listaProdutos = novoValor;
 
+  List get codigoPro => _codigoPRO[0];
+  set codigoPro(var novoValor) => _codigoPRO[0] = novoValor;
 
-  //actions
-  _incrementar(){
-    contador++;
+
+  _pegaCodigoPRO() async {
+    lerArquivoCodigo().then((dados) {
+      String dados2 = json.decode(dados);
+      _codigoPRO.add(dados2);
+    });
+  }
+
+  lerArquivoCodigo() async {
+    try {
+      final arquivo = await getFileCodigoPro();
+
+      return arquivo.readAsString();
+    } catch (e) {
+      return null;
+    }
   }
 
   _pegaEncartesMemoria() async {
@@ -64,9 +72,7 @@ class Controller {
   }
 
   _pegaProdutos() async {
-    // print("entrou em pega produtos");
-    _listaProdutos = await AirtableGetProdutos() as List<Produto>;
-    print("aspokdpaoskd\n\n\n${_listaProdutos}");
+    _listaProdutos = await AirtableGet() as List<Produto>;
   }
 
 }

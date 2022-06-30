@@ -283,7 +283,7 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                   Navigator.pushReplacement(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => ProdutosEncarte(_listaEncartes, controller.listaProdutos, _listaEncartes.length-1, "newEncarteComTema"),
+                      pageBuilder: (context, animation1, animation2) => ProdutosEncarte(_listaEncartes, _listaEncartes.length-1, "newEncarteComTema"),
                       transitionDuration: Duration.zero,
                       reverseTransitionDuration: Duration.zero,
                     ),

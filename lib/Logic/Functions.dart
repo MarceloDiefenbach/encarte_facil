@@ -11,7 +11,7 @@ import '../Model/Tema.dart';
 
 
 //essa função pega os produtos no airtable
-Future<List> AirtableGetProdutos() async {
+Future<List> AirtableGet() async {
   List<Produto> listaTodosProdutos = [];
 
   listaTodosProdutos.clear();
@@ -45,8 +45,8 @@ Future<List> AirtableGetProdutos() async {
       }
       if (retorno["offset"] == []) {
         return listaTodosProdutos;
-        break;
       }
+
 
     } else {
 
@@ -68,33 +68,14 @@ Future<List> AirtableGetProdutos() async {
           controle = false;
         }
       } else {
-        print("nao fez nada");
+        //nothing to do here
       }
     }
   }
-
-  salvarProdutosNaMemoria(listaTodosProdutos);
-
   return listaTodosProdutos;
 }
 
-//essa função pega o diretorio onde ficam salvas as cisas
-Future<File> getFileProdutos() async {
 
-  final diretorio = await getApplicationDocumentsDirectory();
-  return File( "${diretorio.path}/produtos.json" );
-
-}
-
-
-//salvar lista de produtos do airtable na memoria
-salvarProdutosNaMemoria(List listaProdutos) async {
-
-  var arquivo = await getFileProdutos();
-  String dados = json.encode( listaProdutos );
-  arquivo.writeAsString( dados );
-
-}
 
 
 //essa função pega o diretorio onde ficam salvas as cisas
@@ -105,21 +86,54 @@ Future<File> getFile() async {
 
 }
 
+
 //essa função salva o a lista de encartes na memoria do celular
 salvarArquivo(List listaEncartes) async {
 
-  print("salvou");
-  print("lista de encartes");
-  print(listaEncartes);
   var arquivo = await getFile();
   String dados = json.encode( listaEncartes );
   arquivo.writeAsString( dados );
 
 }
 
+Future<File> getFileCodigoPro() async {
+
+  final diretorio = await getApplicationDocumentsDirectory();
+  return File( "${diretorio.path}/codigoPRO.json" );
+
+}
+
+//salva o código pro na memoria
+salvarCodigoPro() async {
+
+  var arquivo = await getFileCodigoPro();
+
+  String dados = json.encode( "123lnkjasd" );
+  arquivo.writeAsString( dados );
+
+}
+
+//pega o código pro que ja ta salvo na memoria
+recuperaCodigoPro() async {
+
+  lerArquivo().then((dados) {
+    String dados2 = json.decode(dados);
+    return dados2;
+  });
+}
+
+lerArquivo() async {
+  try {
+    final arquivo = await getFileCodigoPro();
+
+    return arquivo.readAsString();
+  } catch (e) {
+    return null;
+  }
+}
 
 
-
+//pega o lugar da memoria que o encarte que vai ser apagado ta salvo
 Future<File> getEncarteToDelete(String nome) async {
 
   final diretorio = await getApplicationDocumentsDirectory();
@@ -127,7 +141,7 @@ Future<File> getEncarteToDelete(String nome) async {
 
 }
 
-
+//deleta o encarte da lista de encartes
 deletarEncarte(String nome, int indice, List listaEncartes) async {
 
   var arquivo = await getEncarteToDelete(nome);
