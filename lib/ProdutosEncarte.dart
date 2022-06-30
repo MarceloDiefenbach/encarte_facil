@@ -19,11 +19,10 @@ import 'Model/Produto.dart';
 
 class ProdutosEncarte extends StatefulWidget {
   List listaEncartes;
-  List<Produto> listaTodosProdutos;
   int posicaoNaList;
   String fromTo;
 
-  ProdutosEncarte(this.listaEncartes, this.listaTodosProdutos, this.posicaoNaList, this.fromTo);
+  ProdutosEncarte(this.listaEncartes, this.posicaoNaList, this.fromTo);
 
   @override
   _ProdutosEncarteState createState() => _ProdutosEncarteState();
@@ -177,7 +176,6 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => ListaProdutos(
-                                widget.listaTodosProdutos,
                                 widget.listaEncartes[widget.posicaoNaList]["nomeEncarte"]
                             )
                         ),

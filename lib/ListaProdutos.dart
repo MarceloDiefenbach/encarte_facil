@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:encarte_facil_2/Components/Alert.dart';
 import 'package:encarte_facil_2/Components/Button.dart';
@@ -6,18 +7,20 @@ import 'package:encarte_facil_2/NewProductsForm.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
+import 'Logic/Functions.dart';
+import 'Logic/controller.dart';
 import 'Model/Produto.dart';
 
 class ListaProdutos extends StatefulWidget {
 
-  List<Produto> listaTodosProdutos;
-
   String nomeEncarte;
 
-  ListaProdutos(this.listaTodosProdutos, this.nomeEncarte);
+  ListaProdutos(this.nomeEncarte);
 
   @override
   _ListaProdutosState createState() => _ListaProdutosState();
@@ -27,24 +30,25 @@ class _ListaProdutosState extends State<ListaProdutos> {
 
   String pesquisa = "";
 
-  List _listaProdutos = [];
+  List _listaProdutosDoEncarte = [];
+  List<Produto> _listaProdutosAirtable = [];
+  Controller controller;
 
-  Future<File> _getFile() async {
+  Future<File> _getFileProdutosEncarte() async {
 
     final diretorio = await getApplicationDocumentsDirectory();
     return File( "${diretorio.path}/${widget.nomeEncarte}.json" );
 
   }
 
-  _lerArquivo() async {
+  _lerArquivoProdutosEncarte() async {
 
     try{
-      final arquivo = await _getFile();
+      final arquivo = await _getFileProdutosEncarte();
       return arquivo.readAsString();
     }catch(e){
       return null;
     }
-
   }
 
   _selecionaProduto(Produto produtoSelecionado) async {
@@ -55,7 +59,7 @@ class _ListaProdutosState extends State<ListaProdutos> {
     criarPraSalvar["valor"] = produtoSelecionado.valor;
     criarPraSalvar["imagem"] = produtoSelecionado.imagem;
 
-    _listaProdutos.add(criarPraSalvar);
+    _listaProdutosDoEncarte.add(criarPraSalvar);
 
     _salvarArquivo();
 
@@ -63,11 +67,10 @@ class _ListaProdutosState extends State<ListaProdutos> {
 
   _salvarArquivo() async {
 
-    var arquivo = await _getFile();
+    var arquivo = await _getFileProdutosEncarte();
 
-    String dados = json.encode( _listaProdutos );
+    String dados = json.encode( _listaProdutosDoEncarte );
     arquivo.writeAsString( dados );
-    print("salvou");
     Navigator.pop(context);
 
   }
@@ -75,18 +78,51 @@ class _ListaProdutosState extends State<ListaProdutos> {
   TextEditingController _textController;
 
   List<Produto> _listaProdutoFiltro = [];
+  List produtosInterno = [];
 
   _atualizaListaProdutos() {
-    print("entrou");
     _listaProdutoFiltro.clear();
-    for (int i=0; i < widget.listaTodosProdutos.length; i++) {
 
-      if(widget.listaTodosProdutos[i].nome.toLowerCase().contains(pesquisa.toLowerCase()) || widget.listaTodosProdutos[i].segunda.toLowerCase().contains(pesquisa.toLowerCase())) {
-        // print(i);
+    produtosInterno = controller.listaProdutos;
+
+    for (int i=0; i < produtosInterno.length; i++) {
+
+      if(produtosInterno[i].nome.toLowerCase().contains(pesquisa.toLowerCase()) || produtosInterno[i].segunda.toLowerCase().contains(pesquisa.toLowerCase())) {
         setState(() {
-          _listaProdutoFiltro.add(widget.listaTodosProdutos[i]);
+          _listaProdutoFiltro.add(produtosInterno[i]);
         });
       }
+    }
+  }
+
+
+  bool isStopped = true;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    controller = Provider.of<Controller>(context);
+
+    if (controller.listaProdutos.isNotEmpty){
+      _atualizaListaProdutos();
+    } else {
+      Timer.periodic(Duration(milliseconds: 100), (timer) {
+        if (isStopped) {
+          AirtableGet().then((dados) {
+            setState(() {
+              _listaProdutosAirtable = dados;
+              _atualizaListaProdutos();
+            });
+          });
+
+          if (_listaProdutosAirtable.isNotEmpty) {
+            _atualizaListaProdutos();
+            isStopped = false;
+            timer.cancel();
+          }
+        } else {}
+      });
     }
   }
 
@@ -94,15 +130,12 @@ class _ListaProdutosState extends State<ListaProdutos> {
   void initState() {
     super.initState();
     _textController = TextEditingController(text: '');
-    _atualizaListaProdutos();
 
-    _lerArquivo().then( (dados){
+    _lerArquivoProdutosEncarte().then((dados) {
       setState(() {
-
-        _listaProdutos = json.decode(dados);
-
+        _listaProdutosDoEncarte = json.decode(dados);
       });
-    } );
+    });
 
   }
 
@@ -152,87 +185,106 @@ class _ListaProdutosState extends State<ListaProdutos> {
                   },
                   child: AlertWidget()
               ),
-              ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: _listaProdutoFiltro.length,
-                  itemBuilder: (context, indice) {
-                    var produto = _listaProdutoFiltro[indice];
-                    return GestureDetector(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        child: Card(
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.white70, width: 1),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Container(
-                            width: 120,
-                            height: 70,
+              Observer(builder: (_){
+                if(controller.listaProdutos.isNotEmpty){
+                  return Container(
+                    color: Colors.transparent,
+                    width: width,
+                    height: 1,
+                  );
+                } else {
+                  return CupertinoActivityIndicator(
+                    color: Colors.black,
+                    animating: true,
+                    radius: 15,
+                  );
+                }
+              }),
+              Observer(
+                builder: (_) {
+                  return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: _listaProdutoFiltro.length,
+                      itemBuilder: (context, indice) {
+                        var produto = _listaProdutoFiltro[indice];
+                          return GestureDetector(
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 20, 0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        width: width*0.71,
-                                        child: Column(
+                              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                              child: Card(
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: Colors.white70, width: 1),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Container(
+                                  width: 120,
+                                  height: 70,
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(15, 0, 20, 0),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Column(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                              child: Text(
-                                                produto.nome,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20),
+                                          children: <Widget>[
+                                            Container(
+                                              width: width*0.71,
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                                    child: Text(
+                                                      produto.nome,
+                                                      style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 20),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    produto.segunda,
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.w300,
+                                                        fontSize: 20),
+                                                  ),
+                                                ],
                                               ),
-                                            ),
-                                            Text(
-                                              produto.segunda,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w300,
-                                                  fontSize: 20),
-                                            ),
+                                            )
                                           ],
                                         ),
-                                      )
-                                    ],
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 30,
+                                              height: 30,
+                                              color: Colors.transparent,
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 30,
-                                        height: 30,
-                                        color: Colors.transparent,
-                                      )
-                                    ],
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        FirebaseAnalytics.instance.logEvent(
-                          name: "adicionou_produto",
-                          parameters: {
-                            "nome_produto": "${produto.nome}",
-                          },
-                        );
-                        _selecionaProduto(produto);
-                      },
-                    );
-                  }
+                            onTap: () {
+                              FirebaseAnalytics.instance.logEvent(
+                                name: "adicionou_produto",
+                                parameters: {
+                                  "nome_produto": "${produto.nome}",
+                                },
+                              );
+                              _selecionaProduto(produto);
+                            },
+                          );
+                        }
+                  );
+                }
               )
             ],
           ),

@@ -24,7 +24,7 @@ Future<List> AirtableGet() async {
 
   List records;
 
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < 4; i++) {
 
     if (i <= 0){
 
@@ -46,7 +46,6 @@ Future<List> AirtableGet() async {
       if (retorno["offset"] == []) {
         return listaTodosProdutos;
       }
-      print("offset ${retorno["offset"]}");
 
 
     } else {
@@ -91,9 +90,6 @@ Future<File> getFile() async {
 //essa função salva o a lista de encartes na memoria do celular
 salvarArquivo(List listaEncartes) async {
 
-  print("salvou");
-  print("lista de encartes");
-  print(listaEncartes);
   var arquivo = await getFile();
   String dados = json.encode( listaEncartes );
   arquivo.writeAsString( dados );
@@ -122,7 +118,6 @@ recuperaCodigoPro() async {
 
   lerArquivo().then((dados) {
     String dados2 = json.decode(dados);
-    print("${dados2} dentro do funcitions");
     return dados2;
   });
 }
