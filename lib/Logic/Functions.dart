@@ -39,7 +39,7 @@ Future<List> codigosPROValidos() async {
 }
 
 //essa função pega os produtos no airtable
-Future<List> AirtableGetProdutos() async {
+Future<List> AirtableGet() async {
   List<Produto> listaTodosProdutos = [];
 
   listaTodosProdutos.clear();
@@ -75,6 +75,7 @@ Future<List> AirtableGetProdutos() async {
         return listaTodosProdutos;
       }
 
+
     } else {
 
       if (controle) {
@@ -95,33 +96,14 @@ Future<List> AirtableGetProdutos() async {
           controle = false;
         }
       } else {
-        // print("nao fez nada");
+        //nothing to do here
       }
     }
   }
-
-  salvarProdutosNaMemoria(listaTodosProdutos);
-
   return listaTodosProdutos;
 }
 
-//essa função pega o diretorio onde ficam salvas as cisas
-Future<File> getFileProdutos() async {
 
-  final diretorio = await getApplicationDocumentsDirectory();
-  return File( "${diretorio.path}/produtos.json" );
-
-}
-
-
-//salvar lista de produtos do airtable na memoria
-salvarProdutosNaMemoria(List listaProdutos) async {
-
-  var arquivo = await getFileProdutos();
-  String dados = json.encode( listaProdutos );
-  arquivo.writeAsString( dados );
-
-}
 
 
 //essa função pega o diretorio onde ficam salvas as cisas
@@ -136,13 +118,46 @@ Future<File> getDiretorioEncartes() async {
 //essa função salva o a lista de encartes na memoria do celular
 salvarListaEncartes(List listaEncartes) async {
 
-  // print("salvou");
-  // print("lista de encartes");
-  // print(listaEncartes);
-  var arquivo = await getDiretorioEncartes();
+  var arquivo = await getFile();
   String dados = json.encode( listaEncartes );
   arquivo.writeAsString( dados );
 
+}
+
+Future<File> getFileCodigoPro() async {
+
+  final diretorio = await getApplicationDocumentsDirectory();
+  return File( "${diretorio.path}/codigoPRO.json" );
+
+}
+
+//salva o código pro na memoria
+salvarCodigoPro() async {
+
+  var arquivo = await getFileCodigoPro();
+
+  String dados = json.encode( "123lnkjasd" );
+  arquivo.writeAsString( dados );
+
+}
+
+//pega o código pro que ja ta salvo na memoria
+recuperaCodigoPro() async {
+
+  lerArquivo().then((dados) {
+    String dados2 = json.decode(dados);
+    return dados2;
+  });
+}
+
+lerArquivo() async {
+  try {
+    final arquivo = await getFileCodigoPro();
+
+    return arquivo.readAsString();
+  } catch (e) {
+    return null;
+  }
 }
 
 

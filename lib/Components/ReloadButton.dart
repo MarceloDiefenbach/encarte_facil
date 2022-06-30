@@ -20,7 +20,7 @@ class _ReloadButtonWidgetState extends State<ReloadButtonWidget> {
       icon:
       Icon(Icons.refresh_sharp, color: Colors.black),
       onPressed: () {
-        widget.controller.pegaEncartes();
+        // widget.controller.pegaAirtable();
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(

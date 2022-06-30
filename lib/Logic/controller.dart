@@ -17,14 +17,14 @@ class Controller {
   List<CodigoPRO> _codigosPro = ObservableList<CodigoPRO>();
 
   //actions
-  Action pegaEncartes;
+  Action pegaAirtable;
   Action pegaProdutos;
   Action pegaCodigosPROinterno;
 
 
   //define as actions
   Controller(){
-    pegaEncartes = Action(_pegaEncartesMemoria);
+    pegaAirtable = Action(_pegaEncartesMemoria);
     pegaProdutos = Action(_pegaProdutos);
     pegaCodigosPROinterno = Action(_pegaCodigosPRO);
   }
@@ -60,7 +60,7 @@ class Controller {
   }
 
   _pegaProdutos() async {
-    _listaProdutos = await AirtableGetProdutos() as List<Produto>;
+    _listaProdutos = await AirtableGet() as List<Produto>;
   }
 
 }
