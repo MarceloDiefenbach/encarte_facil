@@ -23,7 +23,7 @@ class Encartes extends StatefulWidget {
 class _EncartesState extends State<Encartes> {
   List _listaEncartes = [];
   List<Produto> listaTodosProdutos = [];
-
+  bool stoped = true;
   Controller controller;
 
   @override
@@ -32,8 +32,6 @@ class _EncartesState extends State<Encartes> {
     super.didChangeDependencies();
     controller = Provider.of<Controller>(context);
   }
-
-  bool stoped = true;
 
   @override
   void didUpdateWidget(covariant Encartes oldWidget) {
@@ -52,14 +50,6 @@ class _EncartesState extends State<Encartes> {
       });
     } else {
     }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _textController = TextEditingController(text: '');
-    _textControllerValidade = TextEditingController(text: '');
   }
 
   @override

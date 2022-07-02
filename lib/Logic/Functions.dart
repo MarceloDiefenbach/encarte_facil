@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:encarte_facil_2/Logic/controller.dart';
+import 'package:encarte_facil_2/Model/CodigoPro.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
@@ -8,7 +10,33 @@ import '../Model/Produto.dart';
 import '../Model/Tema.dart';
 
 
+Future<List> codigosPROValidos() async {
 
+  List listaCodigosInterno = [];
+  listaCodigosInterno.clear();
+
+  http.Response response;
+  Map<String, dynamic> retorno;
+
+  List records;
+
+  Uri url = Uri.https("api.airtable.com",
+      "v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa");
+
+  response = await http.get(
+    Uri.parse(
+        'https://api.airtable.com/v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa'),
+  );
+
+  retorno = json.decode(response.body);
+  records = retorno["records"];
+
+  for (int i = 0; i < records.length; i++) {
+    listaCodigosInterno.add(CodigoPRO(records[i]["fields"]["codigo"]));
+  }
+
+  return listaCodigosInterno;
+}
 
 //essa função pega os produtos no airtable
 Future<List> AirtableGet() async {
@@ -72,6 +100,7 @@ Future<List> AirtableGet() async {
       }
     }
   }
+  print("${listaTodosProdutos.length} quantidade de itens");
   return listaTodosProdutos;
 }
 
@@ -79,7 +108,7 @@ Future<List> AirtableGet() async {
 
 
 //essa função pega o diretorio onde ficam salvas as cisas
-Future<File> getFile() async {
+Future<File> getDiretorioEncartes() async {
 
   final diretorio = await getApplicationDocumentsDirectory();
   return File( "${diretorio.path}/encartes7.json" );
@@ -88,9 +117,9 @@ Future<File> getFile() async {
 
 
 //essa função salva o a lista de encartes na memoria do celular
-salvarArquivo(List listaEncartes) async {
+salvarListaEncartes(List listaEncartes) async {
 
-  var arquivo = await getFile();
+  var arquivo = await getDiretorioEncartes();
   String dados = json.encode( listaEncartes );
   arquivo.writeAsString( dados );
 
@@ -147,13 +176,12 @@ deletarEncarte(String nome, int indice, List listaEncartes) async {
   var arquivo = await getEncarteToDelete(nome);
 
   listaEncartes.removeAt(indice);
-  salvarArquivo(listaEncartes);
+  salvarListaEncartes(listaEncartes);
   arquivo.delete();
 
 }
 
 pegaTemasAirtable() async {
-
   List<Tema> temas = [];
 
   http.Response response;
@@ -172,6 +200,5 @@ pegaTemasAirtable() async {
   for (int i=0; i<records.length; i++ ) {
     temas.add(Tema(records[i]["fields"]["Nome"], records[i]["fields"]["Fundo"], records[i]["fields"]["Topo"]));
   }
-
   return temas;
 }

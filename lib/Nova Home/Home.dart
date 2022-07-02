@@ -27,18 +27,9 @@ class _HomeWidgetState extends State<HomeWidget> {
   Controller controller;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-  }
-
-  @override
   Widget build(BuildContext context) {
 
     controller = Provider.of<Controller>(context);
-    controller.pegaProdutos();
-    controller.pegaEncartes();
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -60,14 +51,9 @@ class _HomeWidgetState extends State<HomeWidget> {
           ),
         ],
         onTap: (index) {
-          if (index == 1){
-            setState((){});
-            print("clicou");
-          }
+
         }
-
       ),
-
 
       //aqui configura qual widget vai aparecer
       tabBuilder: (BuildContext context, int index) {
@@ -79,7 +65,6 @@ class _HomeWidgetState extends State<HomeWidget> {
           return Settings();
         }
       },
-
     );
   }
 }
