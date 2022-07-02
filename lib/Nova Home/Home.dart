@@ -27,13 +27,6 @@ class _HomeWidgetState extends State<HomeWidget> {
   Controller controller;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-  }
-
-  @override
   Widget build(BuildContext context) {
 
     controller = Provider.of<Controller>(context);
@@ -59,11 +52,8 @@ class _HomeWidgetState extends State<HomeWidget> {
         ],
         onTap: (index) {
 
-
         }
-
       ),
-
 
       //aqui configura qual widget vai aparecer
       tabBuilder: (BuildContext context, int index) {
@@ -75,7 +65,6 @@ class _HomeWidgetState extends State<HomeWidget> {
           return Settings();
         }
       },
-
     );
   }
 }

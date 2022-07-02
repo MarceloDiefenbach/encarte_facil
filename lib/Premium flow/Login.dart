@@ -79,7 +79,7 @@ class _Login extends State<Login> {
     super.didChangeDependencies();
     controller = Provider.of<Controller>(context);
     controller.pegaProdutos();
-    controller.pegaEncartes();
+    controller.pegaAirtable();
     controller.pegaCodigosPROinterno();
 
     Timer.periodic(Duration(seconds: 1), (timer) async {

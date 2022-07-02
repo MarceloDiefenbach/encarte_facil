@@ -43,7 +43,7 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
 
   _lerArquivo() async {
 
-    listaTodosProdutos = await AirtableGetProdutos() as List<Produto>;
+    listaTodosProdutos = await AirtableGet() as List<Produto>;
 
     try {
       final arquivo = await getDiretorioEncartes();
@@ -102,23 +102,25 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
 
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.topCenter,
         color: Colors.grey[300],
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(padding: EdgeInsets.fromLTRB(0, height*0.1, 0, 0)),
-              Text("Nome do encarte",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                      fontSize: 20)
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Text("Nome do encarte",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 20)
+                ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
+                padding: EdgeInsets.fromLTRB(20, 16, 20, 8),
                 child: Container(
                   width: width * 0.9,
                   height: height*0.08,
@@ -132,7 +134,7 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
                   child: TextField(
                     controller: _textController,
                     keyboardType: TextInputType.text,
-                    autofocus: true,
+                    autofocus: false,
                     onChanged: (String e) {},
                     textInputAction: TextInputAction.done,
                     style: TextStyle(
@@ -146,15 +148,17 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
-              Text("Validade das ofertas",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                      fontSize: 20)),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
+                padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
+                child: Text("Validade das ofertas",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 20)),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 16, 20, 8),
                 child: Container(
                   width: width * 0.9,
                   height: height*0.08,
@@ -168,7 +172,7 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
                   child: TextField(
                     controller: _textControllerValidade,
                     keyboardType: TextInputType.text,
-                    autofocus: true,
+                    autofocus: false,
                     onChanged: (String e) {},
                     textInputAction: TextInputAction.done,
                     style: TextStyle(
@@ -182,62 +186,76 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
-              Text("Tema do encarte",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                      fontSize: 20)),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
+                child: Text("Tema do encarte",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 20)),
+              ),
               Padding(padding: EdgeInsets.all(4)),
               FutureBuilder(
                   future: _pegaTemasAirtable(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            child: CellTema(temas[0].tema, temas[0].topo, selecionado[0]),
-                            onTap: () {
-                              setState(() {
-                                _deixaTudoFalse();
-                                selecionado[0] = true;
-                                temaSelecionado = temas[0].tema;
-                                topoSelecionado = temas[0].topo;
-                              });
-                            },
-                          ),
-                          Padding(padding: EdgeInsets.all(4)),
-                          GestureDetector(
-                            child: CellTema(temas[1].tema, temas[1].topo, selecionado[1]),
-                            onTap: () {
-                              setState(() {
-                                _deixaTudoFalse();
-                                selecionado[1] = true;
-                                temaSelecionado = temas[1].tema;
-                                topoSelecionado = temas[1].topo;
-                              });
-                            },
-                          ),
-                          Padding(padding: EdgeInsets.all(4)),
-                          GestureDetector(
-                            child: CellTema(temas[2].tema, temas[2].topo, selecionado[2]),
-                            onTap: () {
-                              setState(() {
-                                _deixaTudoFalse();
-                                selecionado[2] = true;
-                                temaSelecionado = temas[2].tema;
-                                topoSelecionado = temas[2].topo;
-                              });
-                            },
-                          ),
-                        ],
+                      return Container(
+                        width: width,
+                        height: 100,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: temas.length,
+                            itemBuilder: (context, indice) {
+                              selecionado.add(false);
+                              if (indice == 0){
+                                return GestureDetector(
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                    child: CellTema(temas[indice].tema, temas[indice].topo, selecionado[indice]),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      _deixaTudoFalse();
+                                      selecionado[indice] = true;
+                                      temaSelecionado = temas[indice].tema;
+                                      topoSelecionado = temas[indice].topo;
+                                    });
+                                  },
+                                );
+                              } else {
+                                return GestureDetector(
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                                    child: CellTema(temas[indice].tema, temas[indice].topo, selecionado[indice]),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      _deixaTudoFalse();
+                                      selecionado[indice] = true;
+                                      temaSelecionado = temas[indice].tema;
+                                      topoSelecionado = temas[indice].topo;
+                                    });
+                                  },
+                                );
+                              }
+                            }
+                        ),
                       );
                     } else {
-                      return CupertinoActivityIndicator(
-                        animating: true,
-                        radius: 15,
+                      return Container(
+                        width: width,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CupertinoActivityIndicator(
+                              animating: true,
+                              radius: 15,
+                            )
+                          ],
+                        ),
                       );
                     }
                   }

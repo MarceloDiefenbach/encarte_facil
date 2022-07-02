@@ -150,8 +150,6 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                 ),
                 TextButton(
                   onPressed: () {
-                    FirebaseAnalytics.instance
-                        .logEvent(name: "adicionar_produto_lista");
                     if (_listaProdutos.length == 4) {
                       showDialog(
                         context: context,
@@ -172,6 +170,8 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                         },
                       );
                     } else {
+                      FirebaseAnalytics.instance
+                          .logEvent(name: "adicionar_produto_lista");
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -424,7 +424,42 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                     });
                                   });
                                 });
-                                if (_listaProdutos.length == 1) {
+                                if (_listaProdutos.length == 0) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CupertinoAlertDialog(
+                                        title:
+                                        Text("Você ainda não adicionou um produto nesse encarte"),
+                                        actions: <Widget>[
+                                          CupertinoDialogAction(
+                                            isDefaultAction: true,
+                                            child: Text("Adicionar produtos"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                              FirebaseAnalytics.instance
+                                                  .logEvent(name: "adicionar_produto_lista");
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => ListaProdutos(
+                                                        widget.listaEncartes[widget.posicaoNaList]["nomeEncarte"]
+                                                    )
+                                                ),
+                                              ).then((value) => setState(() {
+                                                _lerArquivo().then((dados) {
+                                                  setState(() {
+                                                    _listaProdutos = json.decode(dados);
+                                                  });
+                                                });
+                                              }));
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                } else if (_listaProdutos.length == 1) {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

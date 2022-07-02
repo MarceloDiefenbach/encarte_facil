@@ -100,6 +100,7 @@ Future<List> AirtableGet() async {
       }
     }
   }
+  print("${listaTodosProdutos.length} quantidade de itens");
   return listaTodosProdutos;
 }
 
@@ -118,7 +119,7 @@ Future<File> getDiretorioEncartes() async {
 //essa função salva o a lista de encartes na memoria do celular
 salvarListaEncartes(List listaEncartes) async {
 
-  var arquivo = await getFile();
+  var arquivo = await getDiretorioEncartes();
   String dados = json.encode( listaEncartes );
   arquivo.writeAsString( dados );
 
