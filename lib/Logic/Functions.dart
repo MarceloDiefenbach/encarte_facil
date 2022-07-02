@@ -52,13 +52,10 @@ Future<List> AirtableGet() async {
 
   List records;
 
-  for (int i = 0; i < 4; i++) {
-
-    if (i <= 0){
-
+  for (int i = 0; i < 5; i++) {
+    do {
       Uri url = Uri.https("api.airtable.com",
           "v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa");
-
       response = await http.get(
         Uri.parse(
             'https://api.airtable.com/v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa'),
@@ -71,36 +68,8 @@ Future<List> AirtableGet() async {
         listaTodosProdutos.add(Produto(records[i]["fields"]["primeira"],
             records[i]["fields"]["segunda"], "", records[i]["fields"]["imagem"]));
       }
-      if (retorno["offset"] == []) {
-        return listaTodosProdutos;
-      }
-
-
-    } else {
-
-      if (controle) {
-        response2 = await http.get(
-          Uri.parse(
-              "https://api.airtable.com/v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa&offset=${retorno["offset"]}"),
-        );
-
-        Map<String, dynamic> retorno2 = json.decode(response2.body);
-        List records2 = retorno2["records"];
-
-        for (int i = 0; i < records2.length; i++) {
-          listaTodosProdutos.add(Produto(records2[i]["fields"]["primeira"],
-              records2[i]["fields"]["segunda"], "", records2[i]["fields"]["imagem"]));
-        }
-
-        if (records2.length < 99) {
-          controle = false;
-        }
-      } else {
-        //nothing to do here
-      }
-    }
+    } while (retorno["offset"] == []);
   }
-  print("${listaTodosProdutos.length} quantidade de itens");
   return listaTodosProdutos;
 }
 

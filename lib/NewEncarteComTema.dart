@@ -292,6 +292,30 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                   ),
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                child: TextButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: 50,
+                    width: width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.transparent,
+                      border: Border.all(color: Colors.blueAccent),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Cancelar',
+                            style: TextStyle(color: Colors.blue, fontSize: 16)),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               Container(
                 height: 30,
               )
