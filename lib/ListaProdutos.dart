@@ -80,8 +80,11 @@ class _ListaProdutosState extends State<ListaProdutos> {
   List<Produto> _listaProdutoFiltro = [];
   List produtosInterno = [];
 
+  List<Produto> listaProdutosMostrados = [];
+
   _atualizaListaProdutos() {
     _listaProdutoFiltro.clear();
+    listaProdutosMostrados.clear();
 
     produtosInterno = controller.listaProdutos;
 
@@ -94,6 +97,7 @@ class _ListaProdutosState extends State<ListaProdutos> {
       }
     }
   }
+
 
 
   bool isStopped = true;

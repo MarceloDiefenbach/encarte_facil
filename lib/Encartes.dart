@@ -100,7 +100,51 @@ class _EncartesState extends State<Encartes> {
                                     ReloadButtonWidget(controller)
                                   ],
                                 ),
-                                Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(20, 150, 20, 20),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: width*0.6,
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                                                  child: Text(
+                                                    "Você ainda não criou \num encarte",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 20),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                                                  child: Text(
+                                                    "Clique em criar encarte\ne comece a divulgar \nsuas ofertas",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.normal,
+                                                        fontSize: 20),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                                CupertinoActivityIndicator(
+                                                  color: Colors.black,
+                                                  animating: true,
+                                                  radius: 15,
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             );
                           } else if (indice == 0) {
