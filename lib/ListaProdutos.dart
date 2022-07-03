@@ -90,10 +90,14 @@ class _ListaProdutosState extends State<ListaProdutos> {
 
     for (int i=0; i < produtosInterno.length; i++) {
 
-      if(produtosInterno[i].nome.toLowerCase().contains(pesquisa.toLowerCase()) || produtosInterno[i].segunda.toLowerCase().contains(pesquisa.toLowerCase())) {
-        setState(() {
-          _listaProdutoFiltro.add(produtosInterno[i]);
-        });
+      if(pesquisa.isNotEmpty) {
+        if(produtosInterno[i].nome.toLowerCase().contains(pesquisa.toLowerCase()) || produtosInterno[i].segunda.toLowerCase().contains(pesquisa.toLowerCase())) {
+          setState(() {
+            _listaProdutoFiltro.add(produtosInterno[i]);
+          });
+        }
+      } else {
+        _listaProdutoFiltro.add(produtosInterno[i]);
       }
     }
   }
@@ -108,25 +112,28 @@ class _ListaProdutosState extends State<ListaProdutos> {
     super.didChangeDependencies();
     controller = Provider.of<Controller>(context);
 
-    if (controller.listaProdutos.isNotEmpty){
-      _atualizaListaProdutos();
-    } else {
-      Timer.periodic(Duration(milliseconds: 100), (timer) {
-        if (isStopped) {
-          AirtableGet().then((dados) {
-            setState(() {
-              _listaProdutosAirtable = dados;
-              _atualizaListaProdutos();
+    if(isStopped){
+      if (controller.listaProdutos.isNotEmpty){
+        _atualizaListaProdutos();
+        isStopped = false;
+      } else {
+        Timer.periodic(Duration(milliseconds: 100), (timer) {
+          if (isStopped) {
+            AirtableGet().then((dados) {
+              setState(() {
+                _listaProdutosAirtable = dados;
+                _atualizaListaProdutos();
+              });
             });
-          });
 
-          if (_listaProdutosAirtable.isNotEmpty) {
-            _atualizaListaProdutos();
-            isStopped = false;
-            timer.cancel();
-          }
-        } else {}
-      });
+            if (_listaProdutosAirtable.isNotEmpty) {
+              _atualizaListaProdutos();
+              isStopped = false;
+              timer.cancel();
+            }
+          } else {}
+        });
+      }
     }
   }
 
@@ -170,6 +177,7 @@ class _ListaProdutosState extends State<ListaProdutos> {
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
                 child: CupertinoSearchTextField(
+                  placeholder: "Pesquise pelo nome do produto",
                   controller: _textController,
                   onChanged: (String e) {
                     pesquisa = e;
@@ -226,16 +234,30 @@ class _ListaProdutosState extends State<ListaProdutos> {
                                   width: 120,
                                   height: 70,
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(15, 0, 20, 0),
+                                    padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
+                                        // Column(
+                                        //   mainAxisAlignment: MainAxisAlignment.center,
+                                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                                        //   children: [
+                                        //     Container(
+                                        //       width: 60,
+                                        //       height: 60,
+                                        //       child: Image.network(
+                                        //         produto.imagem,
+                                        //         fit: BoxFit.contain, // I thought this would fill up my Container but it doesn't
+                                        //       )
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        Padding(padding: EdgeInsets.all(4)),
                                         Column(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Container(
-                                              width: width*0.71,
                                               child: Column(
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -246,14 +268,14 @@ class _ListaProdutosState extends State<ListaProdutos> {
                                                       produto.nome,
                                                       style: TextStyle(
                                                           fontWeight: FontWeight.bold,
-                                                          fontSize: 20),
+                                                          fontSize: 15),
                                                     ),
                                                   ),
                                                   Text(
                                                     produto.segunda,
                                                     style: TextStyle(
                                                         fontWeight: FontWeight.w300,
-                                                        fontSize: 20),
+                                                        fontSize: 15),
                                                   ),
                                                 ],
                                               ),

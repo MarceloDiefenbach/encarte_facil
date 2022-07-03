@@ -24,9 +24,15 @@ Future<List> AirtableGet() async {
 
   List records;
 
-    do {
+  String offset;
+
+  for (int i = 0; i < 4; i++) {
+
+    if (i <= 0){
+
       Uri url = Uri.https("api.airtable.com",
           "v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa");
+
       response = await http.get(
         Uri.parse(
             'https://api.airtable.com/v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa'),
@@ -39,9 +45,43 @@ Future<List> AirtableGet() async {
         listaTodosProdutos.add(Produto(records[i]["fields"]["primeira"],
             records[i]["fields"]["segunda"], "", records[i]["fields"]["imagem"]));
       }
-    } while (retorno["offset"] == []);
+      if (retorno["offset"] == offset) {
+        return listaTodosProdutos;
+      } else {
+        print("entrou no else ${retorno["offset"]}");
+        offset = retorno["offset"];
+      }
 
-    return listaTodosProdutos;
+    } else {
+
+      if (controle) {
+        response2 = await http.get(
+          Uri.parse(
+              "https://api.airtable.com/v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa&offset=${offset}"),
+        );
+
+        Map<String, dynamic> retorno2 = json.decode(response2.body);
+        List records2 = retorno2["records"];
+
+        for (int i = 0; i < records2.length; i++) {
+          listaTodosProdutos.add(Produto(records2[i]["fields"]["primeira"],
+              records2[i]["fields"]["segunda"], "", records2[i]["fields"]["imagem"]));
+        }
+
+        if (retorno2["offset"] == offset) {
+          return listaTodosProdutos;
+        } else {
+          print("entrou no else ${retorno["offset"]}");
+          offset = retorno2["offset"];
+        }
+
+      } else {
+        //nothing to do here
+      }
+    }
+  }
+  print("${listaTodosProdutos.length} quantidade de itens");
+  return listaTodosProdutos;
 }
 
 
@@ -148,7 +188,7 @@ recuperaCodigoPro() async {
   return codigoPRO;
 }
 
-Future<String> verificaProMemoria() async {
+Future<String> verificaProMemoria(Controller controller) async {
 
   List listComURL = [];
   listComURL.clear();
@@ -173,10 +213,12 @@ Future<String> verificaProMemoria() async {
     String url = records[i]["fields"]["url"];
     String codigoCliente = records[i]["fields"]["codigo"];
     salvarURL(url);
+    // controller.URLlogo = url;
+    // print(controller.URLlogo);
 
     String codigoMemoria = await recuperaCodigoPro();
       if (codigoMemoria == codigoCliente) {
-        print("validou certo");
+
         recuperaCodigoPro();
         return "true";
       }
@@ -218,7 +260,6 @@ Future<String> verificaProDigitado(String codigoProDigitado) async {
     urlLogoMercado = url;
 
     if (codigoCliente == codigoProDigitado) {
-      print("validou certo");
 
       salvarCodigoPro(codigoProDigitado);
       return "true";

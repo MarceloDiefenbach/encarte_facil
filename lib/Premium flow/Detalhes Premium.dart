@@ -1,4 +1,5 @@
 import 'package:encarte_facil_2/Components/Button.dart';
+import 'package:encarte_facil_2/Logic/Functions.dart';
 import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +14,6 @@ class DetalhesPremium extends StatefulWidget {
 }
 
 class _DetalhesPremium extends State<DetalhesPremium> {
-
 
   @override
   Widget build(BuildContext context) {

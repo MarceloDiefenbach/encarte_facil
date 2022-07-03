@@ -40,13 +40,11 @@ class _EncartesState extends State<Encartes> {
     super.didUpdateWidget(oldWidget);
     // controller.pegaAirtable();
     if (stoped) {
-      print(stoped);
       Timer.periodic(Duration(milliseconds: 500), (timer) {
         listaTodosProdutos = controller.listaProdutos;
         // print(listaTodosProdutos);
         if (listaTodosProdutos.isNotEmpty){
           stoped = false;
-          print(stoped);
         }
       });
     } else {
