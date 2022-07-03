@@ -41,9 +41,7 @@ class _Login extends State<Login> {
 
   salvaURLlogo(String url) async {
     prefs = await SharedPreferences.getInstance();
-    print(url);
     prefs.setString("urlLogo", "${url}");
-    print("${recuperaCodigoPro()} aqui aqui");
   }
 
   recuperaURLLlogo() async {
@@ -63,7 +61,7 @@ class _Login extends State<Login> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
 
-    if (await verificaProMemoria() == "true"){
+    if (await verificaProMemoria(controller) == "true"){
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
@@ -84,14 +82,7 @@ class _Login extends State<Login> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     _textControllerCodigoPro = TextEditingController(text: "");
-
-    Timer.periodic(
-        Duration(milliseconds: 500), (timer) async {
-    }
-    );
-
   }
 
   @override

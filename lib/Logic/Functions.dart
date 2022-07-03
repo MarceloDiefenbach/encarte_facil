@@ -148,7 +148,7 @@ recuperaCodigoPro() async {
   return codigoPRO;
 }
 
-Future<String> verificaProMemoria() async {
+Future<String> verificaProMemoria(Controller controller) async {
 
   List listComURL = [];
   listComURL.clear();
@@ -173,10 +173,12 @@ Future<String> verificaProMemoria() async {
     String url = records[i]["fields"]["url"];
     String codigoCliente = records[i]["fields"]["codigo"];
     salvarURL(url);
+    // controller.URLlogo = url;
+    // print(controller.URLlogo);
 
     String codigoMemoria = await recuperaCodigoPro();
       if (codigoMemoria == codigoCliente) {
-        print("validou certo");
+
         recuperaCodigoPro();
         return "true";
       }
@@ -218,7 +220,6 @@ Future<String> verificaProDigitado(String codigoProDigitado) async {
     urlLogoMercado = url;
 
     if (codigoCliente == codigoProDigitado) {
-      print("validou certo");
 
       salvarCodigoPro(codigoProDigitado);
       return "true";
