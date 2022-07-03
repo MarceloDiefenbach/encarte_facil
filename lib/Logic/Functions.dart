@@ -24,7 +24,6 @@ Future<List> AirtableGet() async {
 
   List records;
 
-  for (int i = 0; i < 5; i++) {
     do {
       Uri url = Uri.https("api.airtable.com",
           "v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa");
@@ -41,8 +40,8 @@ Future<List> AirtableGet() async {
             records[i]["fields"]["segunda"], "", records[i]["fields"]["imagem"]));
       }
     } while (retorno["offset"] == []);
-  }
-  return listaTodosProdutos;
+
+    return listaTodosProdutos;
 }
 
 

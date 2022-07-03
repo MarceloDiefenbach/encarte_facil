@@ -54,6 +54,7 @@ class Controller {
   }
 
   _pegaProdutos() async {
+    _listaProdutos.clear();
     _listaProdutos = await AirtableGet() as List<Produto>;
   }
 
