@@ -10,35 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../Model/Produto.dart';
 import '../Model/Tema.dart';
 
-
-// Future<List> codigosPROValidos() async {
-//
-//   List listaCodigosInterno = [];
-//   listaCodigosInterno.clear();
-//
-//   http.Response response;
-//   Map<String, dynamic> retorno;
-//
-//   List records;
-//
-//   Uri url = Uri.https("api.airtable.com",
-//       "v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa");
-//
-//   response = await http.get(
-//     Uri.parse(
-//         'https://api.airtable.com/v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa'),
-//   );
-//
-//   retorno = json.decode(response.body);
-//   records = retorno["records"];
-//
-//   for (int i = 0; i < records.length; i++) {
-//     listaCodigosInterno.add(CodigoPRO(records[i]["fields"]["codigo"], records[i]["fields"]["nome"]));
-//   }
-//
-//   return listaCodigosInterno;
-// }
-
 //essa função pega os produtos no airtable
 Future<List> AirtableGet() async {
   List<Produto> listaTodosProdutos = [];
@@ -150,7 +121,7 @@ lerArquivoCodigoPRO() async {
 Future<File> getFileCodigoPro() async {
 
   final diretorio = await getApplicationDocumentsDirectory();
-  return File( "${diretorio.path}/codigoPRO3.json" );
+  return File( "${diretorio.path}/codigoPRO.json" );
 
 }
 
@@ -202,7 +173,7 @@ Future<String> verificaProMemoria() async {
   for (int i = 0; i < records.length; i++) {
     String url = records[i]["fields"]["url"];
     String codigoCliente = records[i]["fields"]["codigo"];
-
+    salvarURL(url);
 
     String codigoMemoria = await recuperaCodigoPro();
       if (codigoMemoria == codigoCliente) {
@@ -214,6 +185,11 @@ Future<String> verificaProMemoria() async {
   return "false";
 }
 
+String urlLogoMercado;
+
+retornaURL() {
+  return urlLogoMercado;
+}
 
 Future<String> verificaProDigitado(String codigoProDigitado) async {
 
@@ -239,12 +215,51 @@ Future<String> verificaProDigitado(String codigoProDigitado) async {
   for (int i = 0; i < records.length; i++) {
     String url = records[i]["fields"]["url"];
     String codigoCliente = records[i]["fields"]["codigo"];
+    salvarURL(url);
+    urlLogoMercado = url;
 
     if (codigoCliente == codigoProDigitado) {
       print("validou certo");
+
       salvarCodigoPro(codigoProDigitado);
       return "true";
     }
   }
   return "false";
 }
+
+
+
+lerArquivoURL() async {
+  try {
+    final arquivo = await getFileURL();
+    return arquivo.readAsString();
+  } catch (e) {
+    return null;
+  }
+}
+
+Future<File> getFileURL() async {
+  final diretorio = await getApplicationDocumentsDirectory();
+  return File( "${diretorio.path}/URL-logo.json" );
+}
+
+salvarURL(String codigoPro) async {
+
+  try{
+    var arquivo = await getFileURL();
+    String dados = json.encode(codigoPro);
+    arquivo.writeAsString( dados );
+  } catch (e) {
+    return null;
+  }
+}
+
+recuperaURL() async {
+
+  String dados2 = json.decode(await lerArquivoURL());
+  String urlLogoMercado = dados2;
+
+  return urlLogoMercado;
+}
+
