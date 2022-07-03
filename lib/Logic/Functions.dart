@@ -5,38 +5,39 @@ import 'package:encarte_facil_2/Logic/controller.dart';
 import 'package:encarte_facil_2/Model/CodigoPro.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/Produto.dart';
 import '../Model/Tema.dart';
 
 
-Future<List> codigosPROValidos() async {
-
-  List listaCodigosInterno = [];
-  listaCodigosInterno.clear();
-
-  http.Response response;
-  Map<String, dynamic> retorno;
-
-  List records;
-
-  Uri url = Uri.https("api.airtable.com",
-      "v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa");
-
-  response = await http.get(
-    Uri.parse(
-        'https://api.airtable.com/v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa'),
-  );
-
-  retorno = json.decode(response.body);
-  records = retorno["records"];
-
-  for (int i = 0; i < records.length; i++) {
-    listaCodigosInterno.add(CodigoPRO(records[i]["fields"]["codigo"]));
-  }
-
-  return listaCodigosInterno;
-}
+// Future<List> codigosPROValidos() async {
+//
+//   List listaCodigosInterno = [];
+//   listaCodigosInterno.clear();
+//
+//   http.Response response;
+//   Map<String, dynamic> retorno;
+//
+//   List records;
+//
+//   Uri url = Uri.https("api.airtable.com",
+//       "v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa");
+//
+//   response = await http.get(
+//     Uri.parse(
+//         'https://api.airtable.com/v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa'),
+//   );
+//
+//   retorno = json.decode(response.body);
+//   records = retorno["records"];
+//
+//   for (int i = 0; i < records.length; i++) {
+//     listaCodigosInterno.add(CodigoPRO(records[i]["fields"]["codigo"], records[i]["fields"]["nome"]));
+//   }
+//
+//   return listaCodigosInterno;
+// }
 
 //essa função pega os produtos no airtable
 Future<List> AirtableGet() async {
@@ -94,42 +95,6 @@ salvarListaEncartes(List listaEncartes) async {
 
 }
 
-Future<File> getFileCodigoPro() async {
-
-  final diretorio = await getApplicationDocumentsDirectory();
-  return File( "${diretorio.path}/codigoPRO.json" );
-
-}
-
-//salva o código pro na memoria
-salvarCodigoPro() async {
-
-  var arquivo = await getFileCodigoPro();
-
-  String dados = json.encode( "123lnkjasd" );
-  arquivo.writeAsString( dados );
-
-}
-
-//pega o código pro que ja ta salvo na memoria
-recuperaCodigoPro() async {
-
-  lerArquivo().then((dados) {
-    String dados2 = json.decode(dados);
-    return dados2;
-  });
-}
-
-lerArquivo() async {
-  try {
-    final arquivo = await getFileCodigoPro();
-
-    return arquivo.readAsString();
-  } catch (e) {
-    return null;
-  }
-}
-
 
 //pega o lugar da memoria que o encarte que vai ser apagado ta salvo
 Future<File> getEncarteToDelete(String nome) async {
@@ -170,4 +135,116 @@ pegaTemasAirtable() async {
     temas.add(Tema(records[i]["fields"]["Nome"], records[i]["fields"]["Fundo"], records[i]["fields"]["Topo"]));
   }
   return temas;
+}
+
+
+lerArquivoCodigoPRO() async {
+  try {
+    final arquivo = await getFileCodigoPro();
+    return arquivo.readAsString();
+  } catch (e) {
+    return null;
+  }
+}
+
+Future<File> getFileCodigoPro() async {
+
+  final diretorio = await getApplicationDocumentsDirectory();
+  return File( "${diretorio.path}/codigoPRO3.json" );
+
+}
+
+//salva o código pro na memoria
+salvarCodigoPro(String codigoPro) async {
+
+  try{
+    var arquivo = await getFileCodigoPro();
+
+    String dados = json.encode(codigoPro);
+    arquivo.writeAsString( dados );
+  } catch (e) {
+    return null;
+  }
+}
+
+
+
+//pega o código pro que ja ta salvo na memoria
+recuperaCodigoPro() async {
+
+  String dados2 = json.decode(await lerArquivoCodigoPRO());
+  String codigoPRO = dados2;
+
+  return codigoPRO;
+}
+
+Future<String> verificaProMemoria() async {
+
+  List listComURL = [];
+  listComURL.clear();
+
+  http.Response response;
+  Map<String, dynamic> retorno;
+
+  List records;
+
+  Uri url = Uri.https("api.airtable.com",
+      "v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa");
+
+  response = await http.get(
+    Uri.parse(
+        'https://api.airtable.com/v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa'),
+  );
+
+  retorno = json.decode(response.body);
+  records = retorno["records"];
+
+  for (int i = 0; i < records.length; i++) {
+    String url = records[i]["fields"]["url"];
+    String codigoCliente = records[i]["fields"]["codigo"];
+
+
+    String codigoMemoria = await recuperaCodigoPro();
+      if (codigoMemoria == codigoCliente) {
+        print("validou certo");
+        recuperaCodigoPro();
+        return "true";
+      }
+  }
+  return "false";
+}
+
+
+Future<String> verificaProDigitado(String codigoProDigitado) async {
+
+  List listComURL = [];
+  listComURL.clear();
+
+  http.Response response;
+  Map<String, dynamic> retorno;
+
+  List records;
+
+  Uri url = Uri.https("api.airtable.com",
+      "v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa");
+
+  response = await http.get(
+    Uri.parse(
+        'https://api.airtable.com/v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa'),
+  );
+
+  retorno = json.decode(response.body);
+  records = retorno["records"];
+
+  for (int i = 0; i < records.length; i++) {
+    String url = records[i]["fields"]["url"];
+    String codigoCliente = records[i]["fields"]["codigo"];
+
+    if (codigoCliente == codigoProDigitado) {
+      print("validou certo");
+      salvarCodigoPro(codigoProDigitado);
+      return "true";
+    }
+  }
+  return "false";
 }

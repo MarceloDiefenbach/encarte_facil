@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:encarte_facil_2/Logic/Functions.dart';
 import 'package:encarte_facil_2/Model/CodigoPro.dart';
 import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:encarte_facil_2/Premium%20flow/Detalhes%20Premium.dart';
@@ -27,35 +28,7 @@ class _Login extends State<Login> {
   bool isStopped2 = true;
   SharedPreferences prefs;
   String codigoPRO;
-  List<CodigoPRO> listaCodigos;
 
-  // Future<List> codigosPROValidos() async {
-  //
-  //   List listaCodigosInterno = [];
-  //   listaCodigosInterno.clear();
-  //
-  //   http.Response response;
-  //   Map<String, dynamic> retorno;
-  //
-  //   List records;
-  //
-  //   Uri url = Uri.https("api.airtable.com",
-  //       "v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa");
-  //
-  //   response = await http.get(
-  //     Uri.parse(
-  //         'https://api.airtable.com/v0/app2OpRUT2B6brsT7/Table%201?api_key=keySFSIYnvACQhHAa'),
-  //   );
-  //
-  //   retorno = json.decode(response.body);
-  //   records = retorno["records"];
-  //
-  //   for (int i = 0; i < records.length; i++) {
-  //     listaCodigosInterno.add(CodigoPRO(records[i]["fields"]["codigo"]));
-  //   }
-  //
-  //   return listaCodigosInterno;
-  // }
 
   getSharedPreferences () async {
     prefs = await SharedPreferences.getInstance();
@@ -66,32 +39,45 @@ class _Login extends State<Login> {
     prefs.setString("codigo", "1234");
   }
 
+  salvaURLlogo(String url) async {
+    prefs = await SharedPreferences.getInstance();
+    print(url);
+    prefs.setString("urlLogo", "${url}");
+    print("${recuperaCodigoPro()} aqui aqui");
+  }
+
+  recuperaURLLlogo() async {
+    String urlLogo;
+    prefs = await SharedPreferences.getInstance();
+    urlLogo = prefs.getString("urlLogo");
+  }
+
   recuperaCodigoPRO() async {
     prefs = await SharedPreferences.getInstance();
     codigoPRO = prefs.getString("codigo");
-    // print(codigoPRO);
     return codigoPRO;
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
+
+    if (await verificaProMemoria() == "true"){
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => HomeWidget(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
+      );
+    } else {
+
+    }
     controller = Provider.of<Controller>(context);
     controller.pegaProdutos();
     controller.pegaAirtable();
-    controller.pegaCodigosPROinterno();
-
-    Timer.periodic(Duration(seconds: 1), (timer) async {
-      if (isStopped2) {
-        print(controller.codigosPro);
-        if (controller.codigosPro.isNotEmpty) {
-          isStopped2 = false;
-        } else {
-          // nothing to do
-        }
-      }
-    });
   }
 
   @override
@@ -101,24 +87,10 @@ class _Login extends State<Login> {
 
     _textControllerCodigoPro = TextEditingController(text: "");
 
-    Timer.periodic(Duration(seconds: 1), (timer) async {
-      if (isStopped) {
-        recuperaCodigoPRO();
-        if (codigoPRO == "1234") {
-          isStopped = false;
-          Navigator.pushReplacement(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation1, animation2) => HomeWidget(),
-              transitionDuration: Duration.zero,
-              reverseTransitionDuration: Duration.zero,
-            ),
-          );
-        } else {
-         //nothing to do
-        }
-      }
-    });
+    Timer.periodic(
+        Duration(milliseconds: 500), (timer) async {
+    }
+    );
 
   }
 
@@ -173,14 +145,31 @@ class _Login extends State<Login> {
               ),
               GestureDetector(
                 onTap: (){
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => HomeWidget(),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  );
+
+                  // salvarCodigoPro(_textControllerCodigoPro.text)
+                  verificaProDigitado(_textControllerCodigoPro.text).then((value) =>
+                  {
+                  if (value == "true"){
+                    Navigator.pushReplacement(context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) => HomeWidget(),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                        ),
+                    )
+                  } else {
+
+                  }
+                  });
+                  //
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   PageRouteBuilder(
+                  //     pageBuilder: (context, animation1, animation2) => HomeWidget(),
+                  //     transitionDuration: Duration.zero,
+                  //     reverseTransitionDuration: Duration.zero,
+                  //   ),
+                  // );
                 },
                 child: Container(
                   height: 50,

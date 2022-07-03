@@ -31,6 +31,7 @@ class _EncartesState extends State<Encartes> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     controller = Provider.of<Controller>(context);
+
   }
 
   @override
