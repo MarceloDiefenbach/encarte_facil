@@ -15,6 +15,8 @@ class Controller {
   List _listaEncartes = ObservableList();
   List<Produto> _listaProdutos = ObservableList();
   List<CodigoPRO> _codigosPro = ObservableList<CodigoPRO>();
+  String _isPRO;
+  String _URLlogo;
 
   //actions
   Action pegaAirtable;
@@ -37,6 +39,12 @@ class Controller {
 
   List get codigosPro => _codigosPro;
   set codigosPro(var novoValor) => _codigosPro = novoValor;
+
+  String get isPRO => _isPRO;
+  set isPRO(String novoValor) => _isPRO = novoValor;
+
+  String get URLlogo => _URLlogo;
+  set URLlogo(String novoValor) => _URLlogo = novoValor;
 
   _pegaEncartesMemoria() async {
     lerArquivo().then((dados) {

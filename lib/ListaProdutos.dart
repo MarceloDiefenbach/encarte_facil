@@ -256,6 +256,21 @@ class _ListaProdutosState extends State<ListaProdutos> {
                                         Column(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              width: 60,
+                                              height: 60,
+                                              child: Image.network(
+                                                produto.imagem,
+                                                fit: BoxFit.contain, // I thought this would fill up my Container but it doesn't
+                                              )
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(padding: EdgeInsets.all(4)),
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Container(
                                               child: Column(
