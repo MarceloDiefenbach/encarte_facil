@@ -234,32 +234,18 @@ class _ListaProdutosState extends State<ListaProdutos> {
                                   width: 120,
                                   height: 70,
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                    padding: EdgeInsets.fromLTRB(1, 0, 0, 0),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        // Column(
-                                        //   mainAxisAlignment: MainAxisAlignment.center,
-                                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                                        //   children: [
-                                        //     Container(
-                                        //       width: 60,
-                                        //       height: 60,
-                                        //       child: Image.network(
-                                        //         produto.imagem,
-                                        //         fit: BoxFit.contain, // I thought this would fill up my Container but it doesn't
-                                        //       )
-                                        //     ),
-                                        //   ],
-                                        // ),
                                         Padding(padding: EdgeInsets.all(4)),
                                         Column(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Container(
-                                              width: 60,
-                                              height: 60,
+                                              width: 40,
+                                              height: 40,
                                               child: Image.network(
                                                 produto.imagem,
                                                 fit: BoxFit.contain, // I thought this would fill up my Container but it doesn't
@@ -283,14 +269,14 @@ class _ListaProdutosState extends State<ListaProdutos> {
                                                       produto.nome,
                                                       style: TextStyle(
                                                           fontWeight: FontWeight.bold,
-                                                          fontSize: 15),
+                                                          fontSize: 14),
                                                     ),
                                                   ),
                                                   Text(
                                                     produto.segunda,
                                                     style: TextStyle(
                                                         fontWeight: FontWeight.w300,
-                                                        fontSize: 15),
+                                                        fontSize: 14),
                                                   ),
                                                 ],
                                               ),
