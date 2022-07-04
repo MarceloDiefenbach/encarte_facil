@@ -15,6 +15,8 @@ class Controller {
   List _listaEncartes = ObservableList();
   List<Produto> _listaProdutos = ObservableList();
   List<CodigoPRO> _codigosPro = ObservableList<CodigoPRO>();
+  String _isPRO;
+  String _URLlogo;
 
   //actions
   Action pegaAirtable;
@@ -26,7 +28,6 @@ class Controller {
   Controller(){
     pegaAirtable = Action(_pegaEncartesMemoria);
     pegaProdutos = Action(_pegaProdutos);
-    pegaCodigosPROinterno = Action(_pegaCodigosPRO);
   }
 
   //geters e setters
@@ -39,10 +40,11 @@ class Controller {
   List get codigosPro => _codigosPro;
   set codigosPro(var novoValor) => _codigosPro = novoValor;
 
+  String get isPRO => _isPRO;
+  set isPRO(String novoValor) => _isPRO = novoValor;
 
-  _pegaCodigosPRO() async {
-    _codigosPro = await codigosPROValidos() as List<CodigoPRO>;
-  }
+  String get URLlogo => _URLlogo;
+  set URLlogo(String novoValor) => _URLlogo = novoValor;
 
   _pegaEncartesMemoria() async {
     lerArquivo().then((dados) {
@@ -60,60 +62,8 @@ class Controller {
   }
 
   _pegaProdutos() async {
+    _listaProdutos.clear();
     _listaProdutos = await AirtableGet() as List<Produto>;
   }
 
 }
-
-//
-//
-// import 'dart:convert';
-//
-// import 'package:encarte_facil_2/Model/CodigoPro.dart';
-// import 'package:mobx/mobx.dart';
-//
-// import '../Model/Produto.dart';
-// import 'Functions.dart';
-// part 'controller.g.dart';
-//
-// class Controller = ControllerBase with _$Controller;
-//
-// abstract class ControllerBase with Store {
-//
-//   @observable
-//   List listaEncartes = [];
-//
-//   @observable
-//   List listaProdutos = ["1"];
-//
-//   @observable
-//   List codigosPro = [];
-//
-//   @action
-//   pegaCodigosPRO() async {
-//     codigosPro = await codigosPROValidos() as List<CodigoPRO>;
-//   }
-//
-//   @action
-//   pegaEncartesMemoria() async {
-//     lerArquivo().then((dados) {
-//       listaEncartes = json.decode(dados);
-//     });
-//   }
-//
-//   @action
-//   lerArquivo() async {
-//     try {
-//       final arquivo = await getDiretorioEncartes();
-//       return arquivo.readAsString();
-//     } catch (e) {
-//       return null;
-//     }
-//   }
-//
-//   @action
-//   pegaProdutos() async {
-//     listaProdutos = await AirtableGetProdutos() as List<Produto>;
-//   }
-//
-// }

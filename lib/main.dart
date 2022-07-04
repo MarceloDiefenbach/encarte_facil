@@ -5,6 +5,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:provider/provider.dart';
+import 'Logic/Functions.dart';
 import 'Logic/controller.dart';
 
 void main() async{

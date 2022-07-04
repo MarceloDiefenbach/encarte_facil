@@ -134,17 +134,19 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                   },
                   child: Container(
                       height: 30,
-                      width: 110,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: Colors.blueAccent),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Editar encarte',
-                              style: TextStyle(color: Colors.blueAccent)),
-                        ],
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Editar encarte',
+                                style: TextStyle(color: Colors.blueAccent)),
+                          ],
+                        ),
                       )
                   ),
                 ),
@@ -190,17 +192,19 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                   },
                   child: Container(
                       height: 30,
-                      width: 100,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.blue,
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Adicionar',
-                              style: TextStyle(color: Colors.white)),
-                        ],
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Adicionar',
+                                style: TextStyle(color: Colors.white)),
+                          ],
+                        ),
                       )
                   ),
                 ),
