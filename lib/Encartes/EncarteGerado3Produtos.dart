@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:screenshot/screenshot.dart';
 
+import '../Components/ProductEncarte.dart';
+
 class EncarteGerado3Produtos extends StatefulWidget {
 
   List listaProdutos;
@@ -74,7 +76,7 @@ class _EncarteGerado3ProdutosState extends State<EncarteGerado3Produtos> {
                                   children: [
                                     Container(
                                       width: width*0.8,
-                                      height: width*0.5,
+                                      height: width*0.4,
                                       color: Colors.transparent,
                                       child: Image.network(widget.temaEncarte),
                                     )
@@ -83,266 +85,16 @@ class _EncarteGerado3ProdutosState extends State<EncarteGerado3Produtos> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
-                                        width: larguraProduto*0.8,
-                                        height: larguraProduto*0.8,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(larguraProduto*0.03),
-                                          color: Colors.white,
-                                        ),
-                                        child: Padding(
-                                            padding: EdgeInsets.fromLTRB(0, larguraProduto*0.03, larguraProduto*0.03, larguraProduto*0.03),
-                                            child: Stack(
-                                              children: [
-                                                Column(
-                                                  children: [
-                                                    Padding(
-                                                      padding: EdgeInsets.fromLTRB(0, 0, larguraProduto*0.19, 0),
-                                                      child: Container(
-                                                        width: larguraProduto*0.7,
-                                                        height: larguraProduto*0.7,
-                                                        child: Image.network(widget.listaProdutos[0]["imagem"]),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.end,
-                                                      children: [
-                                                        Text(
-                                                          widget.listaProdutos[0]["nomeProduto"],
-                                                          style: TextStyle(
-                                                              fontSize: larguraProduto*0.035,
-                                                              fontWeight: FontWeight.w700
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.end,
-                                                      children: [
-                                                        Text(
-                                                          widget.listaProdutos[0]["segundaLinha"],
-                                                          style: TextStyle(
-                                                              fontSize: larguraProduto*0.035,
-                                                              fontWeight: FontWeight.w300
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                                Column(
-                                                    mainAxisAlignment: MainAxisAlignment.end,
-                                                    children: [
-                                                      Row(
-                                                          mainAxisAlignment: MainAxisAlignment.end,
-                                                          children: [
-                                                            Padding(
-                                                              padding: EdgeInsets.only(right: larguraProduto*0.03),
-                                                              child: Text(
-                                                                "R\$",
-                                                                style: TextStyle(
-                                                                  fontSize: larguraProduto*0.04,
-                                                                  fontWeight: FontWeight.w200,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              widget.listaProdutos[0]["valor"],
-                                                              style: TextStyle(
-                                                                  fontSize: larguraProduto*0.12,
-                                                                  fontWeight: FontWeight.w900
-                                                              ),
-                                                            ),
-                                                          ]
-                                                      )
-                                                    ]
-                                                )
-                                              ],
-                                            )
-                                        )
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                      child: Container(
-                                          width: larguraProduto*0.8,
-                                          height: larguraProduto*0.8,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(larguraProduto*0.03),
-                                            color: Colors.white,
-                                          ),
-                                          child: Padding(
-                                              padding: EdgeInsets.fromLTRB(0, larguraProduto*0.03, larguraProduto*0.03, larguraProduto*0.03),
-                                              child: Stack(
-                                                children: [
-                                                  Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding: EdgeInsets.fromLTRB(0, 0, larguraProduto*0.19, 0),
-                                                        child: Container(
-                                                          width: larguraProduto*0.7,
-                                                          height: larguraProduto*0.7,
-                                                          child: Image.network(widget.listaProdutos[1]["imagem"]),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.end,
-                                                        children: [
-                                                          Text(
-                                                            widget.listaProdutos[1]["nomeProduto"],
-                                                            style: TextStyle(
-                                                                fontSize: larguraProduto*0.035,
-                                                                fontWeight: FontWeight.w700
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.end,
-                                                        children: [
-                                                          Text(
-                                                            widget.listaProdutos[1]["segundaLinha"],
-                                                            style: TextStyle(
-                                                                fontSize: larguraProduto*0.035,
-                                                                fontWeight: FontWeight.w300
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                      mainAxisAlignment: MainAxisAlignment.end,
-                                                      children: [
-                                                        Row(
-                                                            mainAxisAlignment: MainAxisAlignment.end,
-                                                            children: [
-                                                              Padding(
-                                                                padding: EdgeInsets.only(right: larguraProduto*0.03),
-                                                                child: Text(
-                                                                  "R\$",
-                                                                  style: TextStyle(
-                                                                    fontSize: larguraProduto*0.04,
-                                                                    fontWeight: FontWeight.w200,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Text(
-                                                                widget.listaProdutos[1]["valor"],
-                                                                style: TextStyle(
-                                                                    fontSize: larguraProduto*0.12,
-                                                                    fontWeight: FontWeight.w900
-                                                                ),
-                                                              ),
-                                                            ]
-                                                        )
-                                                      ]
-                                                  )
-                                                ],
-                                              )
-                                          )
-                                      ),
-                                    )
+                                    ProductEncarte(width*0.36, widget.listaProdutos[0]),
+                                    Padding(padding: EdgeInsets.all(4)),
+                                    ProductEncarte(width*0.36, widget.listaProdutos[1]),
                                   ],
                                 ),
+                                Padding(padding: EdgeInsets.all(4)),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                      child: Container(
-                                          width: larguraProduto*0.8,
-                                          height: larguraProduto*0.8,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(larguraProduto*0.03),
-                                            color: Colors.white,
-                                          ),
-                                          child: Padding(
-                                              padding: EdgeInsets.fromLTRB(0, larguraProduto*0.03, larguraProduto*0.03, larguraProduto*0.02),
-                                              child: Stack(
-                                                children: [
-                                                  Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding: EdgeInsets.fromLTRB(0, 0, larguraProduto*0.19, 0),
-                                                        child: Container(
-                                                          width: larguraProduto*0.7,
-                                                          height: larguraProduto*0.7,
-                                                          child: Image.network(widget.listaProdutos[2]["imagem"]),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.end,
-                                                        children: [
-                                                          Text(
-                                                            widget.listaProdutos[2]["nomeProduto"],
-                                                            style: TextStyle(
-                                                                fontSize: larguraProduto*0.035,
-                                                                fontWeight: FontWeight.w700
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.end,
-                                                        children: [
-                                                          Text(
-                                                            widget.listaProdutos[2]["segundaLinha"],
-                                                            style: TextStyle(
-                                                                fontSize: larguraProduto*0.035,
-                                                                fontWeight: FontWeight.w300
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                      mainAxisAlignment: MainAxisAlignment.end,
-                                                      children: [
-                                                        Row(
-                                                            mainAxisAlignment: MainAxisAlignment.end,
-                                                            children: [
-                                                              Padding(
-                                                                padding: EdgeInsets.only(right: larguraProduto*0.03),
-                                                                child: Text(
-                                                                  "R\$",
-                                                                  style: TextStyle(
-                                                                    fontSize: larguraProduto*0.04,
-                                                                    fontWeight: FontWeight.w200,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Text(
-                                                                widget.listaProdutos[2]["valor"],
-                                                                style: TextStyle(
-                                                                    fontSize: larguraProduto*0.12,
-                                                                    fontWeight: FontWeight.w900
-                                                                ),
-                                                              ),
-                                                            ]
-                                                        )
-                                                      ]
-                                                  )
-                                                ],
-                                              )
-                                          )
-                                      ),
-                                    )
+                                    ProductEncarte(width*0.36, widget.listaProdutos[2]),
                                   ],
                                 ),
                                 Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),

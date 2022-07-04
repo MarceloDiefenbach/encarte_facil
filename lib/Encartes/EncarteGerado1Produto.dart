@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:screenshot/screenshot.dart';
 
+import '../Components/ProductEncarte.dart';
+
 class EncarteGerado1Produto extends StatefulWidget {
 
   List listaProdutos;
@@ -81,89 +83,7 @@ class _EncarteGerado1ProdutoState extends State<EncarteGerado1Produto> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Container(
-                                      width: larguraProduto*0.8,
-                                      height: larguraProduto*0.8,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: Colors.white,
-                                      ),
-                                      child: Padding(
-                                          padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
-                                          child: Stack(
-                                            children: [
-                                              Column(
-                                                children: [
-                                                  Padding(
-                                                    padding: EdgeInsets.fromLTRB(0, 0, larguraProduto*0.19, 0),
-                                                    child: Container(
-                                                      width: larguraProduto*0.7,
-                                                      height: larguraProduto*0.7,
-                                                      child: Image.network(widget.listaProdutos[0]["imagem"]),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.end,
-                                                    children: [
-                                                      Text(
-                                                        widget.listaProdutos[0]["nomeProduto"],
-                                                        style: TextStyle(
-                                                            fontSize: larguraProduto*0.03,
-                                                            fontWeight: FontWeight.w700
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.end,
-                                                    children: [
-                                                      Text(
-                                                        widget.listaProdutos[0]["segundaLinha"],
-                                                        style: TextStyle(
-                                                            fontSize: larguraProduto*0.03,
-                                                            fontWeight: FontWeight.w200
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              Column(
-                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                  children: [
-                                                    Row(
-                                                        mainAxisAlignment: MainAxisAlignment.end,
-                                                        children: [
-                                                          Padding(
-                                                            padding: EdgeInsets.only(right: 10),
-                                                            child: Text(
-                                                              "R\$",
-                                                              style: TextStyle(
-                                                                fontSize: larguraProduto*0.04,
-                                                                fontWeight: FontWeight.w200,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            widget.listaProdutos[0]["valor"],
-                                                            style: TextStyle(
-                                                                fontSize: larguraProduto*0.12,
-                                                                fontWeight: FontWeight.w900
-                                                            ),
-                                                          ),
-                                                        ]
-                                                    )
-                                                  ]
-                                              )
-                                            ],
-                                          )
-                                      )
-                                  )
+                                  ProductEncarte(width*0.7, widget.listaProdutos[0])
                                 ],
                               ),
                               Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
