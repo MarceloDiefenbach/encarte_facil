@@ -150,14 +150,14 @@ pegaTemasAirtable() async {
 
 lerArquivoCodigoPRO() async {
   try {
-    final arquivo = await getFileCodigoPro();
+    final arquivo = await _getFileCodigoPro();
     return arquivo.readAsString();
   } catch (e) {
     return null;
   }
 }
 
-Future<File> getFileCodigoPro() async {
+Future<File> _getFileCodigoPro() async {
 
   final diretorio = await getApplicationDocumentsDirectory();
   return File( "${diretorio.path}/codigoPRO.json" );
@@ -168,7 +168,7 @@ Future<File> getFileCodigoPro() async {
 salvarCodigoPro(String codigoPro) async {
 
   try{
-    var arquivo = await getFileCodigoPro();
+    var arquivo = await _getFileCodigoPro();
 
     String dados = json.encode(codigoPro);
     arquivo.writeAsString( dados );
