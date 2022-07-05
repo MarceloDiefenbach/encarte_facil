@@ -5,6 +5,8 @@ import 'package:encarte_facil_2/Encartes/EncarteGerado1Produto.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado2Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado3Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado4Produtos.dart';
+import 'package:encarte_facil_2/Encartes/EncarteGerado5Produtos.dart';
+import 'package:encarte_facil_2/Encartes/EncarteGerado6Produtos.dart';
 import 'package:encarte_facil_2/NewEncarteComTema.dart';
 import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -152,7 +154,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                 ),
                 TextButton(
                   onPressed: () {
-                    if (_listaProdutos.length == 4) {
+                    if (_listaProdutos.length == 6) {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -499,6 +501,26 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               EncarteGerado4Produtos(
+                                                  _listaProdutos,
+                                                  widget.listaEncartes[widget.posicaoNaList]["tema"],
+                                                  widget.listaEncartes[widget.posicaoNaList]["topo"],
+                                                  widget.listaEncartes[widget.posicaoNaList]["validade"])));
+                                } else if (_listaProdutos.length == 5) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              EncarteGerado5Produtos(
+                                                  _listaProdutos,
+                                                  widget.listaEncartes[widget.posicaoNaList]["tema"],
+                                                  widget.listaEncartes[widget.posicaoNaList]["topo"],
+                                                  widget.listaEncartes[widget.posicaoNaList]["validade"])));
+                                } else if (_listaProdutos.length == 6) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              EncarteGerado6Produtos(
                                                   _listaProdutos,
                                                   widget.listaEncartes[widget.posicaoNaList]["tema"],
                                                   widget.listaEncartes[widget.posicaoNaList]["topo"],

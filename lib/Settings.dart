@@ -119,44 +119,44 @@ class _Settings extends State<Settings> {
                   ),
                 )
               ),
-              Padding(
-                  padding: EdgeInsets.fromLTRB(0, 4, 0, 4),
-                  child: GestureDetector(
-                    onTap: (){
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) => DetalhesPremium(),
-                          transitionDuration: Duration.zero,
-                          reverseTransitionDuration: Duration.zero,
-                        ),
-                      );
-                    },
-                    child: Container(
-                        width: width * 0.9,
-                        height: height*0.08,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8),
-                          ),
-                        ),
-                        padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Encarte Fácil PRO",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                  fontSize: 20),
-                            ),
-                          ],
-                        )
-                    ),
-                  )
-              ),
+              // Padding(
+              //     padding: EdgeInsets.fromLTRB(0, 4, 0, 4),
+              //     child: GestureDetector(
+              //       onTap: (){
+              //         Navigator.push(
+              //           context,
+              //           PageRouteBuilder(
+              //             pageBuilder: (context, animation1, animation2) => DetalhesPremium(),
+              //             transitionDuration: Duration.zero,
+              //             reverseTransitionDuration: Duration.zero,
+              //           ),
+              //         );
+              //       },
+              //       child: Container(
+              //           width: width * 0.9,
+              //           height: height*0.08,
+              //           decoration: BoxDecoration(
+              //             color: Colors.white,
+              //             borderRadius: BorderRadius.all(
+              //               Radius.circular(8),
+              //             ),
+              //           ),
+              //           padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+              //           child: Column(
+              //             mainAxisAlignment: MainAxisAlignment.center,
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //               Text("Encarte Fácil PRO",
+              //                 style: TextStyle(
+              //                     fontWeight: FontWeight.w400,
+              //                     color: Colors.black,
+              //                     fontSize: 20),
+              //               ),
+              //             ],
+              //           )
+              //       ),
+              //     )
+              // ),
             ],
           ),
         ),
