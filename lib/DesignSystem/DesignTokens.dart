@@ -3,24 +3,25 @@ import 'package:flutter/material.dart';
 
 //SPACING
 
+//4
 spacingQuarck(double screenHeight) {
   return screenHeight*0.0105;
 }
-
+//8
 spacingNano(double screenHeight) {
   return screenHeight*0.021;
 }
-
+//16
 spacingXXXS(double screenHeight) {
   return screenHeight*0.042;
 }
-
-spacingXXS(double screenHeight) {
-  return screenHeight*0.063;
-}
-
+//20
 spacingGlobalMargin(){
   return 20.0;
+}
+//25
+spacingXXS(double screenHeight) {
+  return screenHeight*0.063;
 }
 
 
@@ -57,4 +58,25 @@ borderRadiusMedium() {
 
 borderRadiusCircular(){
   return BorderRadius.circular(500);
+}
+
+//FONT SIZE
+
+fontSizeXXS() {
+  return 12.0;
+}
+
+fontSizeXS() {
+  return 26.0;
+}
+
+fontSizeSM() {
+  return 20.0;
+}
+
+fontSizeMD(){
+  return 20.0;
+}
+fontSizeLG() {
+  return 32.0;
 }

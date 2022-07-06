@@ -220,7 +220,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
               children: [
                 Container(
                   color: Colors.grey[300],
-                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  padding: EdgeInsets.fromLTRB(spacingGlobalMargin(), 0, spacingGlobalMargin(), 0),
                   child: ListView.builder(
                       shrinkWrap: false,
                       itemCount: _listaProdutos.length+2,
@@ -242,18 +242,18 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: colorNeutralLowPure(),
-                                    fontSize: 20),
+                                    fontSize: fontSizeSM()),
                               ),
-                              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                              Padding(padding: EdgeInsets.fromLTRB(0, spacingNano(height), 0, 0)),
                               Text(
                                 'Validade: ${widget.listaEncartes[widget.posicaoNaList]["validade"]}',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: colorNeutralLowPure(),
-                                    fontSize: 20),
+                                    fontSize: fontSizeSM()),
                               ),
-                              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                              Padding(padding: EdgeInsets.fromLTRB(0, spacingNano(height), 0, 0)),
                               Row(
                                 children: [
                                   Text(
@@ -262,9 +262,9 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: colorNeutralLowPure(),
-                                        fontSize: 20),
+                                        fontSize: fontSizeSM()),
                                   ),
-                                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 16, 0)),
+                                  Padding(padding: EdgeInsets.fromLTRB(0, 0, spacingXXXS(height), 0)),
                                   CellTema(widget.listaEncartes[widget.posicaoNaList]["tema"], widget.listaEncartes[widget.posicaoNaList]["topo"], false),
                                 ],
                               )
@@ -292,7 +292,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                             fontWeight:
                                             FontWeight.bold,
                                             color: colorNeutralLowPure(),
-                                            fontSize: 16),
+                                            fontSize: fontSizeXS()),
                                       ),
                                     ),
                                     Container(
@@ -324,7 +324,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                             icon: Icon(
                                               Icons.delete,
                                               color: colorNeutralLowPure(),
-                                              size: 20,
+                                              size: fontSizeSM(),
                                             ),
                                             onPressed: () {
                                               _removerItem(indice-1);
@@ -347,8 +347,6 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                         BorderRadius.only(
                                           bottomLeft: Radius.circular(10),
                                           bottomRight: Radius.circular(10),
-                                          topLeft: Radius.circular(0),
-                                          topRight: Radius.circular(0),
                                         ),
                                       ),
                                       child: Row(
@@ -358,9 +356,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                           Expanded(
                                             child: Padding(
                                               padding:
-                                              EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0,
-                                                  0, 0),
+                                              EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                                               child: Text(
                                                 'Valor do produto:',
                                               ),
