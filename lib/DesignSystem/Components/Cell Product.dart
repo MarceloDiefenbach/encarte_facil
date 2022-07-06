@@ -1,4 +1,5 @@
 
+import 'package:encarte_facil_2/DesignSystem/DesignTokens.dart';
 import 'package:flutter/material.dart';
 
 class CellProductWidget extends StatelessWidget {
@@ -7,14 +8,17 @@ class CellProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+      padding: EdgeInsetsDirectional.fromSTEB(spacingXXS(height), 0, spacingXXS(height), 0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, spacingNano(height)),
             child: Text(
               'Produto 1',
               textAlign: TextAlign.start,
@@ -24,12 +28,10 @@ class CellProductWidget extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: 50,
             decoration: BoxDecoration(
-              color: Color(0xFFEEEEEE),
+              color: colorNeutralHighPure(),
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(0),
-                bottomRight: Radius.circular(0),
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
+                topLeft: borderRadiusMedium(),
+                topRight: borderRadiusMedium(),
               ),
             ),
             child: Row(
@@ -37,7 +39,7 @@ class CellProductWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(spacingXXS(height), 0, 0, 0),
                     child: Text(
                       'Nome do produto',
                       // style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -48,7 +50,7 @@ class CellProductWidget extends StatelessWidget {
                 ),
                 Icon(
                     Icons.chevron_right_rounded,
-                    color: Colors.black,
+                    color: colorNeutralLowPure(),
                     size: 30,
                   )
               ],
@@ -58,12 +60,10 @@ class CellProductWidget extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: 50,
             decoration: BoxDecoration(
-              color: Color(0xFFEEEEEE),
+              color: colorNeutralHighPure(),
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-                topLeft: Radius.circular(0),
-                topRight: Radius.circular(0),
+                bottomLeft: borderRadiusMedium(),
+                bottomRight: borderRadiusMedium(),
               ),
             ),
             child: Row(
@@ -71,7 +71,7 @@ class CellProductWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(spacingXXS(height), 0, 0, 0),
                     child: Text(
                       'Valor do produto',
                       // style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -84,7 +84,7 @@ class CellProductWidget extends StatelessWidget {
                   child: Align(
                     alignment: AlignmentDirectional(0, -1),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, spacingXXS(height), 0),
                       child: TextFormField(
                         controller: textController,
                         obscureText: false,

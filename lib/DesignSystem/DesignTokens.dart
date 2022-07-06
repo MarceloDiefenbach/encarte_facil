@@ -27,13 +27,34 @@ spacingGlobalMargin(){
 //COLORS
 
 colorBrandPrimary() {
-  return Colors.blueAccent;
+  return Color(0xff5DA0EF);
 }
 
-neutralHighPure(){
-  return Colors.white;
+colorNeutralHighPure(){
+  return Color(0xffFFFFFF);
 }
 
-neutralLowPure(){
-  return Colors.black;
+colorNeutralHighDark(){
+  return Color(0xffE4E4E4);
+}
+
+colorNeutralLowPure(){
+  return Color(0xff000000);
+}
+
+//CORNER RADIUS
+borderRadiusNone() {
+  return BorderRadius.circular(0);
+}
+
+borderRadiusSmall() {
+  return BorderRadius.circular(4);
+}
+
+borderRadiusMedium() {
+  return BorderRadius.circular(8);
+}
+
+borderRadiusCircular(){
+  return BorderRadius.circular(500);
 }

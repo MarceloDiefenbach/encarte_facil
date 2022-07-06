@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../DesignTokens.dart';
+
 class AlertWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -12,12 +14,12 @@ class AlertWidget extends StatelessWidget {
         width: width*0.9,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.blue,
+          color: colorBrandPrimary(),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Precisa de outro produto?', style: TextStyle(color: Colors.white, fontSize: 20)),
+            Text('Precisa de outro produto?', style: TextStyle(color: colorNeutralHighPure(), fontSize: 20)),
           ],
         )
     );

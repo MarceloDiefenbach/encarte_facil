@@ -16,6 +16,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'DesignSystem/Components/Cell Tema.dart';
+import 'DesignSystem/DesignTokens.dart';
 import 'ListaProdutos.dart';
 import 'Model/Produto.dart';
 
@@ -97,10 +98,10 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
             appBar: AppBar(
               title: Text("",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black)),
+                      fontWeight: FontWeight.bold, color: colorNeutralLowPure())),
               leading: IconButton(
                 icon:
-                    Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
+                    Icon(Icons.arrow_back_ios_new_rounded, color: colorNeutralLowPure()),
                 onPressed: () {
                   _salvarArquivo();
                   if (widget.fromTo == "newEncarteComTema") {
@@ -138,7 +139,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                       height: 30,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.blueAccent),
+                        border: Border.all(color: colorBrandPrimary()),
                       ),
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -146,7 +147,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text('Editar encarte',
-                                style: TextStyle(color: Colors.blueAccent)),
+                                style: TextStyle(color: colorBrandPrimary())),
                           ],
                         ),
                       )
@@ -196,7 +197,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                       height: 30,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue,
+                        color: colorBrandPrimary(),
                       ),
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -204,7 +205,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text('Adicionar',
-                                style: TextStyle(color: Colors.white)),
+                                style: TextStyle(color: colorNeutralHighPure())),
                           ],
                         ),
                       )
@@ -213,7 +214,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
               ],
               elevation: 0,
               backgroundColor: Colors.grey[300],
-              foregroundColor: Colors.black,
+              foregroundColor: colorNeutralLowPure(),
             ),
             body: Stack(
               children: [
@@ -240,7 +241,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                                    color: colorNeutralLowPure(),
                                     fontSize: 20),
                               ),
                               Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
@@ -249,7 +250,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                                    color: colorNeutralLowPure(),
                                     fontSize: 20),
                               ),
                               Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
@@ -260,7 +261,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: colorNeutralLowPure(),
                                         fontSize: 20),
                                   ),
                                   Padding(padding: EdgeInsets.fromLTRB(0, 0, 16, 0)),
@@ -290,7 +291,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                         style: TextStyle(
                                             fontWeight:
                                             FontWeight.bold,
-                                            color: Colors.black,
+                                            color: colorNeutralLowPure(),
                                             fontSize: 16),
                                       ),
                                     ),
@@ -298,7 +299,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                       width: MediaQuery.of(context).size.width,
                                       height: 50,
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color: colorNeutralHighPure(),
                                         borderRadius:
                                         BorderRadius.only(
                                           bottomLeft: Radius.circular(0),
@@ -322,7 +323,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                           IconButton(
                                             icon: Icon(
                                               Icons.delete,
-                                              color: Colors.black,
+                                              color: colorNeutralLowPure(),
                                               size: 20,
                                             ),
                                             onPressed: () {
@@ -341,7 +342,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                           .width,
                                       height: 50,
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color: colorNeutralHighPure(),
                                         borderRadius:
                                         BorderRadius.only(
                                           bottomLeft: Radius.circular(10),
@@ -410,14 +411,14 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                   height: 50,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: Colors.blue,
+                                    color: colorBrandPrimary(),
                                   ),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text('Gerar encarte',
                                           style: TextStyle(
-                                              color: Colors.white,
+                                              color: colorNeutralHighPure(),
                                               fontSize: 18)),
                                     ],
                                   )),

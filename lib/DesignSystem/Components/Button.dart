@@ -1,3 +1,4 @@
+import 'package:encarte_facil_2/DesignSystem/DesignTokens.dart';
 import 'package:flutter/material.dart';
 
 class ButtonWidget extends StatefulWidget {
@@ -16,8 +17,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
         height: 30,
         padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.blue,
+          borderRadius: borderRadiusMedium(),
+          color: colorBrandPrimary(),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -1,3 +1,4 @@
+import 'package:encarte_facil_2/DesignSystem/DesignTokens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
@@ -30,10 +31,10 @@ class _NewProductsForm extends State<NewProductsForm> {
     return Scaffold(
       appBar: AppBar(
         title: Text("",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+            style: TextStyle(fontWeight: FontWeight.bold, color: colorNeutralLowPure())),
         elevation: 0,
         backgroundColor: Colors.grey[300],
-        foregroundColor: Colors.black,
+        foregroundColor: colorNeutralLowPure(),
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
@@ -48,13 +49,13 @@ class _NewProductsForm extends State<NewProductsForm> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: colorNeutralLowPure(),
                       fontSize: 40)),
               Padding(padding: EdgeInsets.fromLTRB(0, 24, 0, 0)),
               Container(
                 width: width*0.85,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: colorNeutralHighPure(),
                   borderRadius: BorderRadius.all(Radius.circular(16),
                   ),
                 ),
@@ -94,14 +95,14 @@ class _NewProductsForm extends State<NewProductsForm> {
                     width: width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      color: Colors.blue,
+                      color: colorBrandPrimary(),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Enviar solicitação',
                             style: TextStyle(
-                                color: Colors.white,
+                                color: colorNeutralHighPure(),
                                 fontSize: 16
                             )
                         ),

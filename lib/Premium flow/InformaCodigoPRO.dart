@@ -98,7 +98,7 @@ class _InformaCodigoPRO extends State<InformaCodigoPRO> {
               Text("Sou cliente PRO",
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    color: neutralLowPure(),
+                    color: colorNeutralLowPure(),
                     fontSize: 20),
               ),
               Padding(padding: EdgeInsets.only(top: spacingNano(height))),
@@ -106,7 +106,7 @@ class _InformaCodigoPRO extends State<InformaCodigoPRO> {
                 width: width * 0.9,
                 height: height*0.08,
                 decoration: BoxDecoration(
-                  color: neutralHighPure(),
+                  color: colorNeutralHighPure(),
                   borderRadius: BorderRadius.all(
                     Radius.circular(8),
                   ),
@@ -120,7 +120,7 @@ class _InformaCodigoPRO extends State<InformaCodigoPRO> {
                   textInputAction: TextInputAction.done,
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      color: neutralLowPure(),
+                      color: colorNeutralLowPure(),
                       fontSize: 20),
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -160,7 +160,7 @@ class _InformaCodigoPRO extends State<InformaCodigoPRO> {
                     children: [
                       Text('Entrar',
                           style: TextStyle(
-                              color: neutralHighPure(),
+                              color: colorNeutralHighPure(),
                               fontSize: 16,
                               fontWeight: FontWeight.w500
                           )),
@@ -192,7 +192,7 @@ class _InformaCodigoPRO extends State<InformaCodigoPRO> {
                     children: [
                       Text('Ainda não sou PRO, quero assinar!',
                           style: TextStyle(
-                              color: neutralLowPure(),
+                              color: colorNeutralLowPure(),
                               fontSize: 16,
                               fontWeight: FontWeight.w700
                           )),
@@ -224,7 +224,7 @@ class _InformaCodigoPRO extends State<InformaCodigoPRO> {
                     children: [
                       Text('Voltar para a versão gratuita',
                           style: TextStyle(
-                              color: neutralHighPure(),
+                              color: colorNeutralHighPure(),
                               fontSize: height*0.021,
                               fontWeight: FontWeight.w500
                           )),

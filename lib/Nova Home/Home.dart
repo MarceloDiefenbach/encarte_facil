@@ -1,19 +1,12 @@
-import 'dart:convert';
-
+import 'package:encarte_facil_2/DesignSystem/DesignTokens.dart';
 import 'package:encarte_facil_2/Encartes.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../DesignSystem/Components/Cell Encarte.dart';
-import '../Logic/Functions.dart';
 import '../Logic/controller.dart';
-import '../Model/Produto.dart';
 import '../NewEncarteComTema.dart';
-import '../ProdutosEncarte.dart';
 import '../Settings.dart';
-import '../SugestionForm.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({key}) : super(key: key);
@@ -38,14 +31,17 @@ class _HomeWidgetState extends State<HomeWidget> {
       tabBar: CupertinoTabBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+            activeIcon: Icon(CupertinoIcons.list_bullet, color: Color(0xff5DA0EF)),
             icon: Icon(CupertinoIcons.list_bullet),
             label: 'Encartes',
           ),
           BottomNavigationBarItem(
+            activeIcon: Icon(CupertinoIcons.plus_circle, color: Color(0xff5DA0EF)),
             icon: Icon(CupertinoIcons.plus_circle),
             label: 'Criar encarte',
           ),
           BottomNavigationBarItem(
+            activeIcon: Icon(CupertinoIcons.settings, color: Color(0xff5DA0EF)),
             icon: Icon(CupertinoIcons.settings),
             label: 'Configurações',
           ),
