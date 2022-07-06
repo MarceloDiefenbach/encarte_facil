@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../Components/Cell Encarte.dart';
+import '../DesignSystem/Components/Cell Encarte.dart';
 import '../Logic/Functions.dart';
 import '../Logic/controller.dart';
 import '../Model/Produto.dart';

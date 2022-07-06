@@ -1,13 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:encarte_facil_2/Components/Button.dart';
-import 'package:encarte_facil_2/Components/Cell%20Encarte.dart';
-import 'package:encarte_facil_2/Components/ReloadButton.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'Logic/Functions.dart';
+import 'DesignSystem/Components/Cell Encarte.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'DesignSystem/Components/ReloadButton.dart';
 import 'Logic/controller.dart';
 import 'Model/Produto.dart';
 import 'ProdutosEncarte.dart';

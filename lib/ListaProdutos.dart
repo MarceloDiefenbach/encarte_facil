@@ -1,8 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:encarte_facil_2/Components/Alert.dart';
-import 'package:encarte_facil_2/Components/Button.dart';
-import 'package:encarte_facil_2/Encartes.dart';
 import 'package:encarte_facil_2/NewProductsForm.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +9,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'DesignSystem/Components/Alert.dart';
 import 'Logic/Functions.dart';
 import 'Logic/controller.dart';
 import 'Model/Produto.dart';

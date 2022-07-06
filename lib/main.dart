@@ -1,5 +1,5 @@
 import 'package:encarte_facil_2/Nova%20Home/Home.dart';
-import 'package:encarte_facil_2/Premium%20flow/Login.dart';
+import 'package:encarte_facil_2/Premium%20flow/InformaCodigoPRO.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
