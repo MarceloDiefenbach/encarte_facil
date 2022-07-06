@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'DesignSystem/DesignTokens.dart';
+
 class SugestionForm extends StatefulWidget {
   const SugestionForm({key}) : super(key: key);
 
@@ -31,7 +33,7 @@ class _SugestionForm extends State<SugestionForm> {
 
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+        padding: EdgeInsets.fromLTRB(spacingGlobalMargin(), 0, spacingGlobalMargin(), 0),
         alignment: Alignment.bottomCenter,
         color: Colors.grey[300],
         child: SingleChildScrollView(
@@ -43,15 +45,14 @@ class _SugestionForm extends State<SugestionForm> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: colorNeutralLowPure(),
                       fontSize: 30)),
               Padding(padding: EdgeInsets.fromLTRB(0, 24, 0, 0)),
               Container(
                 width: width*0.85,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(16),
-                  ),
+                  color: colorNeutralHighPure(),
+                  borderRadius: borderRadiusMedium(),
                 ),
                 padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
                 child: TextField(
@@ -95,15 +96,15 @@ class _SugestionForm extends State<SugestionForm> {
                   height: 50,
                   width: width,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.blue,
+                    borderRadius: borderRadiusMedium(),
+                    color: colorBrandPrimary(),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Enviar solicitação',
                           style: TextStyle(
-                              color: Colors.white,
+                              color: colorNeutralHighPure(),
                               fontSize: 16
                           )
                       ),
@@ -119,15 +120,15 @@ class _SugestionForm extends State<SugestionForm> {
                   height: 50,
                   width: width,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: borderRadiusMedium(),
                     color: Colors.transparent,
-                    border: Border.all(color: Colors.blueAccent),
+                    border: Border.all(color: colorBrandPrimary()),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Cancelar',
-                          style: TextStyle(color: Colors.blue, fontSize: 16)),
+                          style: TextStyle(color: colorBrandPrimary(), fontSize: 16)),
                     ],
                   ),
                 ),

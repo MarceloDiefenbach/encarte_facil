@@ -15,7 +15,8 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'Components/Cell Tema.dart';
+import 'DesignSystem/Components/Cell Tema.dart';
+import 'DesignSystem/DesignTokens.dart';
 import 'ListaProdutos.dart';
 import 'Model/Produto.dart';
 
@@ -97,10 +98,10 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
             appBar: AppBar(
               title: Text("",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black)),
+                      fontWeight: FontWeight.bold, color: colorNeutralLowPure())),
               leading: IconButton(
                 icon:
-                    Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
+                    Icon(Icons.arrow_back_ios_new_rounded, color: colorNeutralLowPure()),
                 onPressed: () {
                   _salvarArquivo();
                   if (widget.fromTo == "newEncarteComTema") {
@@ -138,7 +139,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                       height: 30,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.blueAccent),
+                        border: Border.all(color: colorBrandPrimary()),
                       ),
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -146,7 +147,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text('Editar encarte',
-                                style: TextStyle(color: Colors.blueAccent)),
+                                style: TextStyle(color: colorBrandPrimary())),
                           ],
                         ),
                       )
@@ -196,7 +197,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                       height: 30,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue,
+                        color: colorBrandPrimary(),
                       ),
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -204,7 +205,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text('Adicionar',
-                                style: TextStyle(color: Colors.white)),
+                                style: TextStyle(color: colorNeutralHighPure())),
                           ],
                         ),
                       )
@@ -212,14 +213,14 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                 ),
               ],
               elevation: 0,
-              backgroundColor: Colors.grey[300],
-              foregroundColor: Colors.black,
+              backgroundColor: colorNeutralHighDark(),
+              foregroundColor: colorNeutralLowPure(),
             ),
             body: Stack(
               children: [
                 Container(
-                  color: Colors.grey[300],
-                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  color: colorNeutralHighDark(),
+                  padding: EdgeInsets.fromLTRB(spacingGlobalMargin(), 0, spacingGlobalMargin(), 0),
                   child: ListView.builder(
                       shrinkWrap: false,
                       itemCount: _listaProdutos.length+2,
@@ -228,7 +229,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                         if (indice == _listaProdutos.length+1) {
                           return Container(
                             height: 100,
-                            color: Colors.grey[300],
+                            color: colorNeutralHighDark(),
                           );
                         }
                         if (indice == 0 ){
@@ -240,19 +241,19 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 20),
+                                    color: colorNeutralLowPure(),
+                                    fontSize: fontSizeSM()),
                               ),
-                              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                              Padding(padding: EdgeInsets.fromLTRB(0, spacingNano(height), 0, 0)),
                               Text(
                                 'Validade: ${widget.listaEncartes[widget.posicaoNaList]["validade"]}',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 20),
+                                    color: colorNeutralLowPure(),
+                                    fontSize: fontSizeSM()),
                               ),
-                              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
+                              Padding(padding: EdgeInsets.fromLTRB(0, spacingNano(height), 0, 0)),
                               Row(
                                 children: [
                                   Text(
@@ -260,10 +261,10 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: 20),
+                                        color: colorNeutralLowPure(),
+                                        fontSize: fontSizeSM()),
                                   ),
-                                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 16, 0)),
+                                  Padding(padding: EdgeInsets.fromLTRB(0, 0, spacingXXXS(height), 0)),
                                   CellTema(widget.listaEncartes[widget.posicaoNaList]["tema"], widget.listaEncartes[widget.posicaoNaList]["topo"], false),
                                 ],
                               )
@@ -290,15 +291,15 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                         style: TextStyle(
                                             fontWeight:
                                             FontWeight.bold,
-                                            color: Colors.black,
-                                            fontSize: 16),
+                                            color: colorNeutralLowPure(),
+                                            fontSize: fontSizeXS()),
                                       ),
                                     ),
                                     Container(
                                       width: MediaQuery.of(context).size.width,
                                       height: 50,
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color: colorNeutralHighPure(),
                                         borderRadius:
                                         BorderRadius.only(
                                           bottomLeft: Radius.circular(0),
@@ -322,8 +323,8 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                           IconButton(
                                             icon: Icon(
                                               Icons.delete,
-                                              color: Colors.black,
-                                              size: 20,
+                                              color: colorNeutralLowPure(),
+                                              size: fontSizeSM(),
                                             ),
                                             onPressed: () {
                                               _removerItem(indice-1);
@@ -341,13 +342,11 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                           .width,
                                       height: 50,
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color: colorNeutralHighPure(),
                                         borderRadius:
                                         BorderRadius.only(
                                           bottomLeft: Radius.circular(10),
                                           bottomRight: Radius.circular(10),
-                                          topLeft: Radius.circular(0),
-                                          topRight: Radius.circular(0),
                                         ),
                                       ),
                                       child: Row(
@@ -357,9 +356,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                           Expanded(
                                             child: Padding(
                                               padding:
-                                              EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0,
-                                                  0, 0),
+                                              EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                                               child: Text(
                                                 'Valor do produto:',
                                               ),
@@ -410,14 +407,14 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                   height: 50,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: Colors.blue,
+                                    color: colorBrandPrimary(),
                                   ),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text('Gerar encarte',
                                           style: TextStyle(
-                                              color: Colors.white,
+                                              color: colorNeutralHighPure(),
                                               fontSize: 18)),
                                     ],
                                   )),

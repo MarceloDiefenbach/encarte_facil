@@ -1,26 +1,22 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:encarte_facil_2/Logic/Functions.dart';
-import 'package:encarte_facil_2/Model/CodigoPro.dart';
 import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:encarte_facil_2/Premium%20flow/Detalhes%20Premium.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../DesignSystem/DesignTokens.dart';
 import '../Logic/controller.dart';
 
-class Login extends StatefulWidget {
-  const Login({key}) : super(key: key);
+class InformaCodigoPRO extends StatefulWidget {
+  const InformaCodigoPRO({key}) : super(key: key);
 
   @override
-  _Login createState() => _Login();
+  _InformaCodigoPRO createState() => _InformaCodigoPRO();
 }
 
-class _Login extends State<Login> {
+class _InformaCodigoPRO extends State<InformaCodigoPRO> {
 
   Controller controller;
   TextEditingController _textControllerCodigoPro;
@@ -61,21 +57,21 @@ class _Login extends State<Login> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
 
-    if (await verificaProMemoria(controller) == "true"){
-      Navigator.pushReplacement(
-        context,
-        PageRouteBuilder(
-          pageBuilder: (context, animation1, animation2) => HomeWidget(),
-          transitionDuration: Duration.zero,
-          reverseTransitionDuration: Duration.zero,
-        ),
-      );
-    } else {
-
-    }
+    // if (await verificaProMemoria(controller) == "true"){
+    //   Navigator.pushReplacement(
+    //     context,
+    //     PageRouteBuilder(
+    //       pageBuilder: (context, animation1, animation2) => HomeWidget(),
+    //       transitionDuration: Duration.zero,
+    //       reverseTransitionDuration: Duration.zero,
+    //     ),
+    //   );
+    // } else {
+    //
+    // }
     controller = Provider.of<Controller>(context);
-    controller.pegaProdutos();
-    controller.pegaAirtable();
+    // controller.pegaProdutos();
+    // controller.pegaAirtable();
   }
 
   @override
@@ -92,7 +88,7 @@ class _Login extends State<Login> {
 
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+        padding: EdgeInsets.fromLTRB(spacingGlobalMargin(), 0, spacingGlobalMargin(), 0),
         alignment: Alignment.center,
         color: Colors.grey[300],
         child: SingleChildScrollView(
@@ -102,42 +98,41 @@ class _Login extends State<Login> {
               Text("Sou cliente PRO",
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    color: Colors.black,
+                    color: colorNeutralLowPure(),
                     fontSize: 20),
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
-                child: Container(
-                  width: width * 0.9,
-                  height: height*0.08,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(8),
-                    ),
+              Padding(padding: EdgeInsets.only(top: spacingNano(height))),
+              Container(
+                width: width * 0.9,
+                height: height*0.08,
+                decoration: BoxDecoration(
+                  color: colorNeutralHighPure(),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8),
                   ),
-                  padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
-                  child: TextField(
-                    controller: _textControllerCodigoPro,
-                    keyboardType: TextInputType.text,
-                    autofocus: false,
-                    onChanged: (String e) {},
-                    textInputAction: TextInputAction.done,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                        fontSize: 20),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Código de cliente',
-                    ),
+                ),
+                padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                child: TextField(
+                  controller: _textControllerCodigoPro,
+                  keyboardType: TextInputType.text,
+                  autofocus: false,
+                  onChanged: (String e) {},
+                  textInputAction: TextInputAction.done,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: colorNeutralLowPure(),
+                      fontSize: 20),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Código de cliente',
                   ),
                 ),
               ),
+              Padding(padding: EdgeInsets.only(top: spacingQuarck(height))),
               GestureDetector(
                 onTap: (){
 
-                  // salvarCodigoPro(_textControllerCodigoPro.text)
+                  //salvarCodigoPro(_textControllerCodigoPro.text)
                   verificaProDigitado(_textControllerCodigoPro.text).then((value) =>
                   {
                   if (value == "true"){
@@ -152,29 +147,20 @@ class _Login extends State<Login> {
 
                   }
                   });
-                  //
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   PageRouteBuilder(
-                  //     pageBuilder: (context, animation1, animation2) => HomeWidget(),
-                  //     transitionDuration: Duration.zero,
-                  //     reverseTransitionDuration: Duration.zero,
-                  //   ),
-                  // );
                 },
                 child: Container(
                   height: 50,
                   width: width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    color: Colors.blue,
+                    color: colorBrandPrimary(),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Entrar',
                           style: TextStyle(
-                              color: Colors.white,
+                              color: colorNeutralHighPure(),
                               fontSize: 16,
                               fontWeight: FontWeight.w500
                           )),
@@ -182,7 +168,7 @@ class _Login extends State<Login> {
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.all(4)),
+              Padding(padding: EdgeInsets.only(top: spacingQuarck(height))),
               GestureDetector(
                 onTap: (){
                   Navigator.push(
@@ -199,14 +185,14 @@ class _Login extends State<Login> {
                   width: width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.blueAccent),
+                    border: Border.all(color: colorBrandPrimary()),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Ainda não sou PRO, quero assinar!',
                           style: TextStyle(
-                              color: Colors.black,
+                              color: colorNeutralLowPure(),
                               fontSize: 16,
                               fontWeight: FontWeight.w700
                           )),
@@ -214,14 +200,7 @@ class _Login extends State<Login> {
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.all(50)),
-              Text("Ou entre na versão 100% gratuita",
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black,
-                    fontSize: 16),
-              ),
-              Padding(padding: EdgeInsets.all(8)),
+              Padding(padding: EdgeInsets.all(60)),
               GestureDetector(
                 onTap: (){
                   Navigator.push(
@@ -235,18 +214,18 @@ class _Login extends State<Login> {
                 },
                 child: Container(
                   height: 50,
-                  width: width,
+                  width: width*0.65,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    color: Colors.blue,
+                    color: colorBrandPrimary(),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Usar gratuitamente',
+                      Text('Voltar para a versão gratuita',
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
+                              color: colorNeutralHighPure(),
+                              fontSize: height*0.021,
                               fontWeight: FontWeight.w500
                           )),
                     ],

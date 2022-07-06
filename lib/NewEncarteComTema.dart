@@ -1,15 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:encarte_facil_2/Components/Cell%20Tema.dart';
-import 'package:encarte_facil_2/Encartes.dart';
-import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:numberpicker/numberpicker.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-
+import 'DesignSystem/Components/Cell Tema.dart';
+import 'DesignSystem/DesignTokens.dart';
 import 'Logic/Functions.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'Logic/controller.dart';
@@ -280,7 +276,7 @@ class _NewEncarteComTemaState extends State<NewEncarteComTema> {
                     width: width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      color: Colors.blue,
+                      color: colorBrandPrimary(),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:encarte_facil_2/Components/Cell%20Tema.dart';
 import 'package:encarte_facil_2/Encartes.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:numberpicker/numberpicker.dart';
 import 'package:http/http.dart' as http;
 
+import 'DesignSystem/Components/Cell Tema.dart';
 import 'Logic/Functions.dart';
 
 import 'package:flutter/material.dart';

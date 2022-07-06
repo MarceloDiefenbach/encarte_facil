@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../DesignTokens.dart';
+
 class ButtonSecondaryWidget extends StatefulWidget {
 
   String title;
@@ -16,9 +18,9 @@ class _ButtonSecondaryWidgetState extends State<ButtonSecondaryWidget> {
         height: 30,
         padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.blue,
-            border: Border.all(color: Colors.blueAccent)
+          borderRadius: borderRadiusMedium(),
+          color: colorBrandPrimary(),
+            border: Border.all(color: colorBrandPrimary())
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

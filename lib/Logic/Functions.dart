@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Model/Produto.dart';
 import '../Model/Tema.dart';
+import '../Model/Produto.dart';
 
 //essa função pega os produtos no airtable
 Future<List> AirtableGet() async {

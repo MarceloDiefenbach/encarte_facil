@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../Logic/controller.dart';
-import '../Nova Home/Home.dart';
+import '../../Logic/controller.dart';
+import '../../Nova Home/Home.dart';
 
 class ReloadButtonWidget extends StatefulWidget {
 

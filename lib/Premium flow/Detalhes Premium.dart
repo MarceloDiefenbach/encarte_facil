@@ -1,6 +1,7 @@
 import 'package:encarte_facil_2/Components/Button.dart';
 import 'package:encarte_facil_2/Logic/Functions.dart';
 import 'package:encarte_facil_2/Nova%20Home/Home.dart';
+import 'package:encarte_facil_2/Premium%20flow/InformaCodigoPRO.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
@@ -157,19 +158,75 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                       color: Colors.black,
                       fontSize: 16)),
               Padding(padding: EdgeInsets.fromLTRB(0, 40, 0, 0)),
-              Container(
-                // height: 0,
-                  padding: EdgeInsets.fromLTRB(24, 16, 24, 16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.blue,
+              Row(
+                children: [
+                  GestureDetector(
+                    child: Container(
+                      // height: 0,
+                        padding: EdgeInsets.fromLTRB(24, 16, 24, 16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.blue,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Quero ser PRO', style: TextStyle(color: Colors.white)),
+                          ],
+                        )
+                    ),
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) => InformaCodigoPRO(),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
+                    },
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text('Quero ser PRO', style: TextStyle(color: Colors.white)),
-                    ],
+                  Padding(padding: EdgeInsets.all(4)),
+                  GestureDetector(
+                    child: Container(
+                      // height: 0,
+                        padding: EdgeInsets.fromLTRB(24, 16, 24, 16),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blueAccent),
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.transparent,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Já sou PRO', style: TextStyle(color: Colors.black)),
+                          ],
+                        )
+                    ),
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) => InformaCodigoPRO(),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
+                    },
                   )
+                ],
+              ),
+              Padding(padding: EdgeInsets.all(8)),
+              GestureDetector(
+                child: Text("Usar versão grátis",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black,
+                        fontSize: 12)),
+                onTap: (){
+                  Navigator.of(context).pop();
+                },
               ),
             ],
           ),

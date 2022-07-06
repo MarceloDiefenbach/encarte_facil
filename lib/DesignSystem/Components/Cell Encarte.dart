@@ -1,11 +1,11 @@
 import 'package:encarte_facil_2/Logic/Functions.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:encarte_facil_2/Components/Button.dart';
 import 'package:provider/provider.dart';
-
-import '../Logic/controller.dart';
-import '../Nova Home/Home.dart';
+import '../../DesignSystem/Components/Button.dart';
+import '../../Logic/controller.dart';
+import '../../Nova Home/Home.dart';
+import '../DesignTokens.dart';
 
 
 class CellEncarte extends StatefulWidget {
@@ -31,12 +31,13 @@ class _CellEncarteState extends State<CellEncarte> {
 
     return Card(
       elevation: 0,
+      color: colorNeutralHighPure(),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: borderRadiusMedium(),
       ),
       child: Container(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+          padding: EdgeInsets.all(spacingGlobalMargin()),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -51,7 +52,7 @@ class _CellEncarteState extends State<CellEncarte> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, spacingNano(height)),
                           child: Text(
                             widget.title,
                             style: TextStyle(

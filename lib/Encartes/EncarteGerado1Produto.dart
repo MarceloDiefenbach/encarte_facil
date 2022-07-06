@@ -1,12 +1,10 @@
 import 'dart:typed_data';
-import 'package:encarte_facil_2/Components/Button.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:screenshot/screenshot.dart';
-
-import '../Components/ProductEncarte.dart';
+import '../DesignSystem/Components/ProductEncarte.dart';
 
 class EncarteGerado1Produto extends StatefulWidget {
 
