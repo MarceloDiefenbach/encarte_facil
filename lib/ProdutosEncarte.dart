@@ -213,13 +213,13 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                 ),
               ],
               elevation: 0,
-              backgroundColor: Colors.grey[300],
+              backgroundColor: colorNeutralHighDark(),
               foregroundColor: colorNeutralLowPure(),
             ),
             body: Stack(
               children: [
                 Container(
-                  color: Colors.grey[300],
+                  color: colorNeutralHighDark(),
                   padding: EdgeInsets.fromLTRB(spacingGlobalMargin(), 0, spacingGlobalMargin(), 0),
                   child: ListView.builder(
                       shrinkWrap: false,
@@ -229,7 +229,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                         if (indice == _listaProdutos.length+1) {
                           return Container(
                             height: 100,
-                            color: Colors.grey[300],
+                            color: colorNeutralHighDark(),
                           );
                         }
                         if (indice == 0 ){

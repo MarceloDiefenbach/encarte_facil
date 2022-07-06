@@ -5,6 +5,7 @@ import 'DesignSystem/Components/Cell Encarte.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'DesignSystem/Components/ReloadButton.dart';
+import 'DesignSystem/DesignTokens.dart';
 import 'Logic/controller.dart';
 import 'Model/Produto.dart';
 import 'ProdutosEncarte.dart';
@@ -59,12 +60,12 @@ class _EncartesState extends State<Encartes> {
 
     return Scaffold(
       body: Container(
-        color: Colors.grey[300],
+        color: colorNeutralHighDark(),
         child: SafeArea(
           child: Container(
               height: height,
               width: width,
-              color: Colors.grey[300],
+              color: colorNeutralHighDark(),
               child: Stack(
                 children: [
                   Observer(builder: (_){
