@@ -1,9 +1,8 @@
 import 'package:encarte_facil_2/Logic/Functions.dart';
-import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:encarte_facil_2/Premium%20flow/Detalhes%20Premium.dart';
+import 'package:encarte_facil_2/Premium%20flow/HomePRO.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../DesignSystem/DesignTokens.dart';
@@ -205,7 +204,7 @@ class _InformaCodigoPRO extends State<InformaCodigoPRO> {
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => HomeWidget(),
+                      pageBuilder: (context, animation1, animation2) => HomeWidgetPRO(),
                       transitionDuration: Duration.zero,
                       reverseTransitionDuration: Duration.zero,
                     ),

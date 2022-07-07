@@ -1,5 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:encarte_facil_2/DesignSystem/Components/Alert.dart';
+import 'package:encarte_facil_2/DesignSystem/DesignTokens.dart';
+import 'package:encarte_facil_2/Logic/Functions.dart';
+import 'package:encarte_facil_2/Logic/controller.dart';
+import 'package:encarte_facil_2/Model/Produto.dart';
 import 'package:encarte_facil_2/NewProductsForm.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,12 +13,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-
-import 'DesignSystem/Components/Alert.dart';
-import 'DesignSystem/DesignTokens.dart';
-import 'Logic/Functions.dart';
-import 'Logic/controller.dart';
-import 'Model/Produto.dart';
 
 class ListaProdutos extends StatefulWidget {
 

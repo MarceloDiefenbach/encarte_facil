@@ -1,56 +1,37 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:encarte_facil_2/Encartes.dart';
+import 'package:encarte_facil_2/DesignSystem/Components/Cell%20Tema.dart';
+import 'package:encarte_facil_2/DesignSystem/DesignTokens.dart';
+import 'package:encarte_facil_2/Logic/Functions.dart';
+import 'package:encarte_facil_2/Logic/controller.dart';
+import 'package:encarte_facil_2/Model/Tema.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:http/http.dart' as http;
-
-import 'DesignSystem/Components/Cell Tema.dart';
-import 'Logic/Functions.dart';
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'Model/Produto.dart';
-import 'Model/Tema.dart';
 import 'ProdutosEncarte.dart';
 
-class EditarEncarteComTema extends StatefulWidget {
-
-  List listaEncartes;
-  int posicaoNaLista;
-  String fromTo;
-
-  EditarEncarteComTema(this.listaEncartes, this.posicaoNaLista, this.fromTo);
+class NewEncarteComTema extends StatefulWidget {
+  const NewEncarteComTema({key}) : super(key: key);
 
   @override
-  _EditarEncarteComTemaState createState() => _EditarEncarteComTemaState();
+  _NewEncarteComTemaState createState() => _NewEncarteComTemaState();
 }
 
-class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
+class _NewEncarteComTemaState extends State<NewEncarteComTema> {
   List _listaEncartes = [];
-  List<Produto> listaTodosProdutos = [];
   TextEditingController _textController;
   TextEditingController _textControllerValidade;
   List<Tema> temas = [];
   FirebaseAnalytics analyticsEvents = FirebaseAnalytics.instance;
-  List<bool> selecionado = [false, false, false];
+  List<bool> selecionado = [false, false, false, false, false];
   String temaSelecionado = "";
   String topoSelecionado = "";
 
   int dia = 1;
   int mes = 1;
   int ano = 2022;
-
-  _lerArquivo() async {
-
-    // listaTodosProdutos = await AirtableGet() as List<Produto>;
-
-    try {
-      final arquivo = await getDiretorioEncartes();
-      return arquivo.readAsString();
-    } catch (e) {
-      return null;
-    }
-  }
 
   _deixaTudoFalse() {
     for (int i = 0; i < selecionado.length; i++) {
@@ -83,14 +64,9 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _textController = TextEditingController(text: widget.listaEncartes[widget.posicaoNaLista]["nomeEncarte"]);
-    _textControllerValidade = TextEditingController(text: widget.listaEncartes[widget.posicaoNaLista]["validade"]);
+    _textController = TextEditingController(text: '');
+    _textControllerValidade = TextEditingController(text: '');
 
-    _lerArquivo().then((dados) {
-      setState(() {
-        _listaEncartes = json.decode(dados);
-      });
-    });
   }
 
   @override
@@ -98,6 +74,9 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     String date = "";
+
+    Controller controller = Provider.of<Controller>(context);
+    _listaEncartes = controller.listaEncartes;
 
     return Scaffold(
       body: Container(
@@ -119,7 +98,7 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 16, 20, 8),
+                  padding: EdgeInsets.fromLTRB(20, 16, 20, 8),
                 child: Container(
                   width: width * 0.9,
                   height: height*0.08,
@@ -259,95 +238,58 @@ class _EditarEncarteComTemaState extends State<EditarEncarteComTema> {
                     }
                   }
               ),
-              Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
-              TextButton(
-                onPressed: () async {
-                  date = "${dia}/${mes}/${ano}";
-                  Map<String, dynamic> criarPraSalvar = Map();
-                  criarPraSalvar["nomeEncarte"] = _textController.text;
-                  criarPraSalvar["validade"] = _textControllerValidade.text;
-                  criarPraSalvar["topo"] = topoSelecionado;
-                  criarPraSalvar["tema"] = temaSelecionado;
-                  print("encarte criado ${criarPraSalvar}");
-                  _listaEncartes[widget.posicaoNaLista] = criarPraSalvar;
-                  salvarListaEncartes(_listaEncartes);
-                  print(_listaEncartes);
-                  analyticsEvents.logEvent(
-                    name: "criou_encarte",
-                    parameters: {
-                      "nome": "${_textController.text}",
-                    },
-                  );
+              Padding(
+                padding: EdgeInsets.fromLTRB(15, 8, 15, 0),
+                child: TextButton(
+                  onPressed: () async {
+                    date = "${dia}/${mes}/${ano}";
+                      Map<String, dynamic> criarPraSalvar = Map();
+                      criarPraSalvar["nomeEncarte"] = _textController.text;
+                      criarPraSalvar["validade"] = _textControllerValidade.text;
+                      criarPraSalvar["topo"] = topoSelecionado;
+                      criarPraSalvar["tema"] = temaSelecionado;
 
-                  if (widget.fromTo == "ProdutosEncarte") {
-                    Navigator.of(context).pop();
-                    Navigator.push(
+                      _listaEncartes.add( criarPraSalvar );
+                      salvarListaEncartes(_listaEncartes);
+                      _textController.text = "";
+
+                    FirebaseAnalytics.instance.logEvent(
+                        name: "criou_encarte",
+                      parameters: {
+                        "nome_encarte": _textController.text,
+                        "validade": _textControllerValidade.text,
+                        "tema": temaSelecionado
+                      }
+                    );
+                    Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => Encartes()
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) => ProdutosEncarte(_listaEncartes, _listaEncartes.length-1, "newEncarteComTema"),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
                       ),
                     );
-                  } else {
-                    Navigator.of(context).pop();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Encartes()
-                      ),
-                    );
-                    _textController.text = "";
-                    setState(() {
-                      _lerArquivo();
-                    });
-                    FirebaseAnalytics.instance.logEvent(name: "criou_encarte");
-                  }
-                },
-                child: Container(
-                  height: 50,
-                  width: width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.blue,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Salvar alterações',
-                          style: TextStyle(color: Colors.white, fontSize: 16)),
-                    ],
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () async {
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Encartes()
+                  },
+                  child: Container(
+                    height: 50,
+                    width: width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: colorBrandPrimary(),
                     ),
-                  );
-                },
-                child: Container(
-                  height: 50,
-                  width: width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.transparent,
-                    border: Border.all(color: Colors.blueAccent),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Cancelar',
-                          style: TextStyle(color: Colors.blue, fontSize: 16)),
-                    ],
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Criar encarte',
+                            style: TextStyle(color: Colors.white, fontSize: 16)),
+                      ],
+                    ),
                   ),
                 ),
               ),
-              // Container(
-              //   height: 500,
-              // )
+              Container(
+                height: 30,
+              )
             ],
           ),
         ),

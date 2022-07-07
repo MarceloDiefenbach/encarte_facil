@@ -1,15 +1,10 @@
-import 'package:encarte_facil_2/Encartes.dart';
-import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:encarte_facil_2/Premium%20flow/EncartesPRO.dart';
+import 'package:encarte_facil_2/Premium%20flow/NewEncarteComTemaPRO.dart';
+import 'package:encarte_facil_2/Premium%20flow/SettingsPRO.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../Logic/Functions.dart';
-import '../Logic/controller.dart';
-import '../NewEncarteComTema.dart';
-import '../Settings.dart';
+import '../HomeNormal/Settings.dart';
 
 class HomeWidgetPRO extends StatefulWidget {
   const HomeWidgetPRO({key}) : super(key: key);
@@ -27,17 +22,33 @@ class _HomeWidgetPROState extends State<HomeWidgetPRO> {
     super.didChangeDependencies();
 
     if (await verificaProMemoria() == "true"){
-      print("é pro");
       //nothing to do
     } else {
-      print("nao é pro");
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
-          pageBuilder: (context, animation1, animation2) => HomeWidget(),
+          pageBuilder: (context, animation1, animation2) => HomeWidgetPRO(),
           transitionDuration: Duration.zero,
           reverseTransitionDuration: Duration.zero,
         ),
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title:
+            Text("Sua assinatura expirou"),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                isDefaultAction: true,
+                child: Text("Ok"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
       );
     }
 
@@ -85,9 +96,9 @@ class _HomeWidgetPROState extends State<HomeWidgetPRO> {
         if (index == 0) {
           return EncartesPRO();
         } else if (index == 1) {
-          return NewEncarteComTema();
+          return NewEncarteComTemaPRO();
         } else if (index == 2){
-          return Settings();
+          return SettingsPRO();
         }
       },
     );

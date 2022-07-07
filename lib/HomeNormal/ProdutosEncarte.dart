@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'package:encarte_facil_2/EditarEncarteComTema.dart';
-import 'package:encarte_facil_2/Encartes.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado1Produto.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado2Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado3Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado4Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado5Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado6Produtos.dart';
-import 'package:encarte_facil_2/NewEncarteComTema.dart';
 import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +16,6 @@ import 'package:flutter/cupertino.dart';
 import 'DesignSystem/Components/Cell Tema.dart';
 import 'DesignSystem/DesignTokens.dart';
 import 'ListaProdutos.dart';
-import 'Model/Produto.dart';
 
 class ProdutosEncarte extends StatefulWidget {
   List listaEncartes;
