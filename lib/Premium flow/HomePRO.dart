@@ -16,6 +16,8 @@ class HomeWidgetPRO extends StatefulWidget {
 class _HomeWidgetPROState extends State<HomeWidgetPRO> {
 
 
+  bool pro = false;
+
   @override
   void didChangeDependencies() async {
     // TODO: implement didChangeDependencies
@@ -24,6 +26,9 @@ class _HomeWidgetPROState extends State<HomeWidgetPRO> {
     if (await verificaProMemoria() == "true"){
       //nothing to do
     } else {
+      setState() {
+        pro = true;
+      }
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
@@ -32,33 +37,7 @@ class _HomeWidgetPROState extends State<HomeWidgetPRO> {
           reverseTransitionDuration: Duration.zero,
         ),
       );
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CupertinoAlertDialog(
-            title:
-            Text("Sua assinatura expirou"),
-            actions: <Widget>[
-              CupertinoDialogAction(
-                isDefaultAction: true,
-                child: Text("Ok"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
     }
-
-
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
   }
 
   @override

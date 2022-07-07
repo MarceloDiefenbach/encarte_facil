@@ -1,16 +1,10 @@
-
-import 'package:encarte_facil_2/Encartes.dart';
-import 'package:encarte_facil_2/Premium%20flow/EncartesPRO.dart';
+import 'package:encarte_facil_2/HomeNormal/Encartes.dart';
+import 'package:encarte_facil_2/HomeNormal/NewEncarteComTema.dart';
 import 'package:encarte_facil_2/Premium%20flow/HomePRO.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../Logic/Functions.dart';
-import '../Logic/controller.dart';
-import '../NewEncarteComTema.dart';
-import '../Settings.dart';
+import 'Settings.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({key}) : super(key: key);
@@ -27,7 +21,6 @@ class _HomeWidgetState extends State<HomeWidget> {
     super.didChangeDependencies();
 
     if (await verificaProMemoria() == "true"){
-      print("é pro");
       Navigator.pushReplacement(
       context,
         PageRouteBuilder(
@@ -37,7 +30,6 @@ class _HomeWidgetState extends State<HomeWidget> {
         ),
       );
     } else {
-      print("nao é pro");
       //nothing to do
     }
   }

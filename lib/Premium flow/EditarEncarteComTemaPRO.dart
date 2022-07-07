@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:encarte_facil_2/DesignSystem/Components/Cell%20Tema.dart';
-import 'package:encarte_facil_2/Encartes.dart';
 import 'package:encarte_facil_2/Logic/Functions.dart';
 import 'package:encarte_facil_2/Model/Produto.dart';
 import 'package:encarte_facil_2/Model/Tema.dart';
+import 'package:encarte_facil_2/Premium%20flow/EncartesPRO.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -282,7 +282,7 @@ class _EditarEncarteComTemaPROState extends State<EditarEncarteComTemaPRO> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Encartes()
+                          builder: (context) => EncartesPRO()
                       ),
                     );
                   } else {
@@ -290,7 +290,7 @@ class _EditarEncarteComTemaPROState extends State<EditarEncarteComTemaPRO> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Encartes()
+                          builder: (context) => EncartesPRO()
                       ),
                     );
                     _textController.text = "";
@@ -322,7 +322,7 @@ class _EditarEncarteComTemaPROState extends State<EditarEncarteComTemaPRO> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Encartes()
+                        builder: (context) => EncartesPRO()
                     ),
                   );
                 },
