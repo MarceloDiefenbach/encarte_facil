@@ -22,12 +22,14 @@ class Controller {
   Action pegaAirtable;
   Action pegaProdutos;
   Action pegaCodigosPROinterno;
+  Action salvaURLimagem;
 
 
   //define as actions
   Controller(){
     pegaAirtable = Action(_pegaEncartesMemoria);
     pegaProdutos = Action(_pegaProdutos);
+    salvaURLimagem = Action(_salvaURLimagem);
   }
 
   //geters e setters
@@ -64,6 +66,10 @@ class Controller {
   _pegaProdutos() async {
     _listaProdutos.clear();
     _listaProdutos = await AirtableGet() as List<Produto>;
+  }
+
+  _salvaURLimagem(String url) {
+    _URLlogo = url;
   }
 
 }

@@ -1,10 +1,9 @@
-import 'package:encarte_facil_2/Nova%20Home/Home.dart';
+import 'package:encarte_facil_2/HomeNormal/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import 'DesignSystem/DesignTokens.dart';
+import '../DesignSystem/DesignTokens.dart';
 
 class SugestionForm extends StatefulWidget {
   const SugestionForm({key}) : super(key: key);

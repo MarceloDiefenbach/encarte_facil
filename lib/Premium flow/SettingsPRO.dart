@@ -1,19 +1,17 @@
-import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:encarte_facil_2/Premium%20flow/Detalhes%20Premium.dart';
-import 'package:encarte_facil_2/SugestionForm.dart';
+import 'package:encarte_facil_2/Premium%20flow/SugestionFormPRO.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({key}) : super(key: key);
+class SettingsPRO extends StatefulWidget {
+  const SettingsPRO({key}) : super(key: key);
 
   @override
-  _Settings createState() => _Settings();
+  _SettingsPRO createState() => _SettingsPRO();
 }
 
-class _Settings extends State<Settings> {
+class _SettingsPRO extends State<SettingsPRO> {
 
   _abrirInstagram() async {
     const url = 'https://www.instagram.com/encartefacilapp/';
@@ -57,7 +55,7 @@ class _Settings extends State<Settings> {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) => SugestionForm(),
+                        pageBuilder: (context, animation1, animation2) => SugestionFormPRO(),
                         transitionDuration: Duration.zero,
                         reverseTransitionDuration: Duration.zero,
                       ),

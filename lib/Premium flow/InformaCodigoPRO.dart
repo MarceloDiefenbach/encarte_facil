@@ -1,9 +1,8 @@
 import 'package:encarte_facil_2/Logic/Functions.dart';
-import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:encarte_facil_2/Premium%20flow/Detalhes%20Premium.dart';
+import 'package:encarte_facil_2/Premium%20flow/HomePRO.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../DesignSystem/DesignTokens.dart';
@@ -30,9 +29,9 @@ class _InformaCodigoPRO extends State<InformaCodigoPRO> {
     prefs = await SharedPreferences.getInstance();
   }
 
-  salvaCodigoPRO() async {
+  salvaCodigoPRO(String codigoPRO) async {
     prefs = await SharedPreferences.getInstance();
-    prefs.setString("codigo", "1234");
+    prefs.setString("codigo", codigoPRO);
   }
 
   salvaURLlogo(String url) async {
@@ -67,9 +66,9 @@ class _InformaCodigoPRO extends State<InformaCodigoPRO> {
     //     ),
     //   );
     // } else {
-    //
+    //   print("errado");
     // }
-    controller = Provider.of<Controller>(context);
+    // controller = Provider.of<Controller>(context);
     // controller.pegaProdutos();
     // controller.pegaAirtable();
   }
@@ -131,21 +130,20 @@ class _InformaCodigoPRO extends State<InformaCodigoPRO> {
               Padding(padding: EdgeInsets.only(top: spacingQuarck(height))),
               GestureDetector(
                 onTap: (){
-
-                  //salvarCodigoPro(_textControllerCodigoPro.text)
-                  verificaProDigitado(_textControllerCodigoPro.text).then((value) =>
-                  {
-                  if (value == "true"){
-                    Navigator.pushReplacement(context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) => HomeWidget(),
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero,
-                        ),
-                    )
-                  } else {
-
-                  }
+                  print(_textControllerCodigoPro.text);
+                  verificaProDigitado(_textControllerCodigoPro.text).then((value) => {
+                    if (value == "true"){
+                        salvaCodigoPRO(_textControllerCodigoPro.text),
+                      // Navigator.pushReplacement(context,
+                      //   PageRouteBuilder(
+                      //     pageBuilder: (context, animation1, animation2) => HomeWidget(),
+                      //     transitionDuration: Duration.zero,
+                      //     reverseTransitionDuration: Duration.zero,
+                      //     ),
+                      // )
+                    } else {
+                      print("errado")
+                    }
                   });
                 },
                 child: Container(
@@ -206,7 +204,7 @@ class _InformaCodigoPRO extends State<InformaCodigoPRO> {
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) => HomeWidget(),
+                      pageBuilder: (context, animation1, animation2) => HomeWidgetPRO(),
                       transitionDuration: Duration.zero,
                       reverseTransitionDuration: Duration.zero,
                     ),

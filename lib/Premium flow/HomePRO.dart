@@ -1,28 +1,47 @@
-import 'package:encarte_facil_2/DesignSystem/DesignTokens.dart';
-import 'package:encarte_facil_2/Encartes.dart';
+import 'package:encarte_facil_2/Premium%20flow/EncartesPRO.dart';
+import 'package:encarte_facil_2/Premium%20flow/NewEncarteComTemaPRO.dart';
+import 'package:encarte_facil_2/Premium%20flow/SettingsPRO.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import '../Logic/Functions.dart';
+import '../HomeNormal/Settings.dart';
 
-import '../Logic/controller.dart';
-import '../NewEncarteComTema.dart';
-import '../Settings.dart';
-
-class HomeWidget extends StatefulWidget {
-  const HomeWidget({key}) : super(key: key);
+class HomeWidgetPRO extends StatefulWidget {
+  const HomeWidgetPRO({key}) : super(key: key);
 
   @override
-  State<HomeWidget> createState() => _HomeWidgetState();
+  State<HomeWidgetPRO> createState() => _HomeWidgetPROState();
 }
 
-class _HomeWidgetState extends State<HomeWidget> {
+class _HomeWidgetPROState extends State<HomeWidgetPRO> {
 
-  Controller controller;
+
+  bool pro = false;
+
+  @override
+  void didChangeDependencies() async {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+
+    if (await verificaProMemoria() == "true"){
+      //nothing to do
+    } else {
+      setState() {
+        pro = true;
+      }
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => HomeWidgetPRO(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    controller = Provider.of<Controller>(context);
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -54,11 +73,11 @@ class _HomeWidgetState extends State<HomeWidget> {
       //aqui configura qual widget vai aparecer
       tabBuilder: (BuildContext context, int index) {
         if (index == 0) {
-          return Encartes();
+          return EncartesPRO();
         } else if (index == 1) {
-          return NewEncarteComTema();
+          return NewEncarteComTemaPRO();
         } else if (index == 2){
-          return Settings();
+          return SettingsPRO();
         }
       },
     );

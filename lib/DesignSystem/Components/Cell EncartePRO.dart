@@ -1,12 +1,11 @@
-import 'package:encarte_facil_2/HomeNormal/Home.dart';
 import 'package:encarte_facil_2/Logic/Functions.dart';
+import 'package:encarte_facil_2/Premium%20flow/HomePRO.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../DesignSystem/Components/Button.dart';
 import '../../Logic/controller.dart';
 import '../DesignTokens.dart';
-
 
 class CellEncarte extends StatefulWidget {
 
@@ -83,7 +82,7 @@ class _CellEncarteState extends State<CellEncarte> {
                     Navigator.pushReplacement(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) => HomeWidget(),
+                        pageBuilder: (context, animation1, animation2) => HomeWidgetPRO(),
                         transitionDuration: Duration.zero,
                         reverseTransitionDuration: Duration.zero,
                       ),

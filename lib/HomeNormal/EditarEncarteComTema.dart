@@ -1,17 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:encarte_facil_2/Encartes.dart';
+import 'package:encarte_facil_2/HomeNormal/Encartes.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:http/http.dart' as http;
 
-import 'DesignSystem/Components/Cell Tema.dart';
-import 'Logic/Functions.dart';
+import '../DesignSystem/Components/Cell Tema.dart';
+import '../Logic/Functions.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'Model/Produto.dart';
-import 'Model/Tema.dart';
-import 'ProdutosEncarte.dart';
+import '../Model/Produto.dart';
+import '../Model/Tema.dart';
 
 class EditarEncarteComTema extends StatefulWidget {
 
