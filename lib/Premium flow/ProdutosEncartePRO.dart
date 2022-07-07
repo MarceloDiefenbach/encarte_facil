@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'package:encarte_facil_2/DesignSystem/Components/Cell%20Tema.dart';
 import 'package:encarte_facil_2/DesignSystem/DesignTokens.dart';
-import 'package:encarte_facil_2/EditarEncarteComTema.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado1Produto.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado2Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado3Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado4Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado5Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado6Produtos.dart';
-import 'package:encarte_facil_2/Nova%20Home/Home.dart';
+import 'package:encarte_facil_2/Premium%20flow/EditarEncarteComTemaPRO.dart';
+import 'package:encarte_facil_2/Premium%20flow/HomePRO.dart';
 import 'package:encarte_facil_2/Premium%20flow/ListaProdutosPRO.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +28,8 @@ class ProdutosEncartePRO extends StatefulWidget {
 }
 
 class _ProdutosEncartePROState extends State<ProdutosEncartePRO> {
-  List _listaProdutos = [];
 
-  _ProdutosEncartePROState();
+  List _listaProdutos = [];
 
   Future<File> _getFile() async {
     final diretorio = await getApplicationDocumentsDirectory();
@@ -104,7 +103,7 @@ class _ProdutosEncartePROState extends State<ProdutosEncartePRO> {
                     Navigator.pushReplacement(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) => HomeWidget(),
+                        pageBuilder: (context, animation1, animation2) => HomeWidgetPRO(),
                         transitionDuration: Duration.zero,
                         reverseTransitionDuration: Duration.zero,
                       ),
@@ -113,7 +112,7 @@ class _ProdutosEncartePROState extends State<ProdutosEncartePRO> {
                     Navigator.pushReplacement(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) => HomeWidget(),
+                        pageBuilder: (context, animation1, animation2) => HomeWidgetPRO(),
                         transitionDuration: Duration.zero,
                         reverseTransitionDuration: Duration.zero,
                       ),
@@ -127,7 +126,7 @@ class _ProdutosEncartePROState extends State<ProdutosEncartePRO> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => EditarEncarteComTema(widget.listaEncartes, widget.posicaoNaList, "ProdutosEncarte")
+                          builder: (context) => EditarEncarteComTemaPRO(widget.listaEncartes, widget.posicaoNaList, "ProdutosEncarte")
                       ),
                     );
                   },

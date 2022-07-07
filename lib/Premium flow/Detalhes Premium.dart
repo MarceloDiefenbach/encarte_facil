@@ -1,11 +1,6 @@
-import 'package:encarte_facil_2/Components/Button.dart';
-import 'package:encarte_facil_2/Logic/Functions.dart';
-import 'package:encarte_facil_2/Nova%20Home/Home.dart';
 import 'package:encarte_facil_2/Premium%20flow/InformaCodigoPRO.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DetalhesPremium extends StatefulWidget {
   const DetalhesPremium({key}) : super(key: key);
