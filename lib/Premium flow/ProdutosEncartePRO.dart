@@ -1,40 +1,36 @@
 import 'dart:convert';
+import 'package:encarte_facil_2/DesignSystem/Components/Cell%20Tema.dart';
+import 'package:encarte_facil_2/DesignSystem/DesignTokens.dart';
 import 'package:encarte_facil_2/EditarEncarteComTema.dart';
-import 'package:encarte_facil_2/Encartes.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado1Produto.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado2Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado3Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado4Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado5Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado6Produtos.dart';
-import 'package:encarte_facil_2/NewEncarteComTema.dart';
 import 'package:encarte_facil_2/Nova%20Home/Home.dart';
+import 'package:encarte_facil_2/Premium%20flow/ListaProdutosPRO.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'DesignSystem/Components/Cell Tema.dart';
-import 'DesignSystem/DesignTokens.dart';
-import 'ListaProdutos.dart';
-import 'Model/Produto.dart';
-
-class ProdutosEncarte extends StatefulWidget {
+class ProdutosEncartePRO extends StatefulWidget {
   List listaEncartes;
   int posicaoNaList;
   String fromTo;
 
-  ProdutosEncarte(this.listaEncartes, this.posicaoNaList, this.fromTo);
+  ProdutosEncartePRO(this.listaEncartes, this.posicaoNaList, this.fromTo);
 
   @override
-  _ProdutosEncarteState createState() => _ProdutosEncarteState();
+  _ProdutosEncartePROState createState() => _ProdutosEncartePROState();
 }
 
-class _ProdutosEncarteState extends State<ProdutosEncarte> {
+class _ProdutosEncartePROState extends State<ProdutosEncartePRO> {
   List _listaProdutos = [];
 
-  _ProdutosEncarteState();
+  _ProdutosEncartePROState();
 
   Future<File> _getFile() async {
     final diretorio = await getApplicationDocumentsDirectory();
@@ -180,7 +176,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ListaProdutos(
+                            builder: (context) => ListaProdutosPRO(
                                 widget.listaEncartes[widget.posicaoNaList]["nomeEncarte"]
                             )
                         ),
@@ -445,7 +441,7 @@ class _ProdutosEncarteState extends State<ProdutosEncarte> {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                    builder: (context) => ListaProdutos(
+                                                    builder: (context) => ListaProdutosPRO(
                                                         widget.listaEncartes[widget.posicaoNaList]["nomeEncarte"]
                                                     )
                                                 ),

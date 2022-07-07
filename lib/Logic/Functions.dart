@@ -10,6 +10,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../Model/Tema.dart';
 import '../Model/Produto.dart';
 
+
+SharedPreferences prefs;
+
+
 //essa função pega os produtos no airtable
 Future<List> AirtableGet() async {
   List<Produto> listaTodosProdutos = [];
@@ -48,7 +52,7 @@ Future<List> AirtableGet() async {
       if (retorno["offset"] == offset) {
         return listaTodosProdutos;
       } else {
-        print("entrou no else ${retorno["offset"]}");
+        // print("entrou no else ${retorno["offset"]}");
         offset = retorno["offset"];
       }
 
@@ -71,7 +75,7 @@ Future<List> AirtableGet() async {
         if (retorno2["offset"] == offset) {
           return listaTodosProdutos;
         } else {
-          print("entrou no else ${retorno["offset"]}");
+          // print("entrou no else ${retorno["offset"]}");
           offset = retorno2["offset"];
         }
 
@@ -80,7 +84,7 @@ Future<List> AirtableGet() async {
       }
     }
   }
-  print("${listaTodosProdutos.length} quantidade de itens");
+  // print("${listaTodosProdutos.length} quantidade de itens");
   return listaTodosProdutos;
 }
 
@@ -188,7 +192,7 @@ recuperaCodigoPro() async {
   return codigoPRO;
 }
 
-Future<String> verificaProMemoria(Controller controller) async {
+Future<String> verificaProMemoria() async {
 
   List listComURL = [];
   listComURL.clear();
@@ -212,9 +216,7 @@ Future<String> verificaProMemoria(Controller controller) async {
   for (int i = 0; i < records.length; i++) {
     String url = records[i]["fields"]["url"];
     String codigoCliente = records[i]["fields"]["codigo"];
-    salvarURL(url);
-    // controller.URLlogo = url;
-    // print(controller.URLlogo);
+    salvaURLlogo(url);
 
     String codigoMemoria = await recuperaCodigoPro();
       if (codigoMemoria == codigoCliente) {
@@ -224,6 +226,18 @@ Future<String> verificaProMemoria(Controller controller) async {
       }
   }
   return "false";
+}
+
+salvaURLlogo(String url) async {
+  prefs = await SharedPreferences.getInstance();
+  prefs.setString("urlLogo", "${url}");
+}
+
+recuperaURLLlogo() async {
+  String urlLogo;
+  prefs = await SharedPreferences.getInstance();
+  urlLogo = prefs.getString("urlLogo");
+  print(urlLogo);
 }
 
 String urlLogoMercado;
@@ -256,7 +270,7 @@ Future<String> verificaProDigitado(String codigoProDigitado) async {
   for (int i = 0; i < records.length; i++) {
     String url = records[i]["fields"]["url"];
     String codigoCliente = records[i]["fields"]["codigo"];
-    salvarURL(url);
+    salvaURLlogo(url);
     urlLogoMercado = url;
 
     if (codigoCliente == codigoProDigitado) {
@@ -282,17 +296,6 @@ lerArquivoURL() async {
 Future<File> getFileURL() async {
   final diretorio = await getApplicationDocumentsDirectory();
   return File( "${diretorio.path}/URL-logo.json" );
-}
-
-salvarURL(String codigoPro) async {
-
-  try{
-    var arquivo = await getFileURL();
-    String dados = json.encode(codigoPro);
-    arquivo.writeAsString( dados );
-  } catch (e) {
-    return null;
-  }
 }
 
 recuperaURL() async {

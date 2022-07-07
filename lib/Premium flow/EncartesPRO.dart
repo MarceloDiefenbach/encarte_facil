@@ -1,25 +1,24 @@
 import 'dart:async';
+import 'package:encarte_facil_2/DesignSystem/Components/Cell%20Encarte.dart';
+import 'package:encarte_facil_2/DesignSystem/Components/ReloadButton.dart';
+import 'package:encarte_facil_2/DesignSystem/DesignTokens.dart';
+import 'package:encarte_facil_2/Premium%20flow/ProdutosEncartePRO.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'DesignSystem/Components/Cell Encarte.dart';
+import '../Logic/controller.dart';
+import '../Model/Produto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'DesignSystem/Components/ReloadButton.dart';
-import 'DesignSystem/DesignTokens.dart';
-import 'Logic/controller.dart';
-import 'Model/Produto.dart';
-import 'ProdutosEncarte.dart';
 
 
-class Encartes extends StatefulWidget {
-  const Encartes({key}) : super(key: key);
+class EncartesPRO extends StatefulWidget {
+  const EncartesPRO({key}) : super(key: key);
 
   @override
-  _EncartesState createState() => _EncartesState();
+  _EncartesPROState createState() => _EncartesPROState();
 }
 
-class _EncartesState extends State<Encartes> {
-  List _listaEncartes = [];
+class _EncartesPROState extends State<EncartesPRO> {
   List<Produto> listaTodosProdutos = [];
   bool stoped = true;
   Controller controller;
@@ -33,7 +32,7 @@ class _EncartesState extends State<Encartes> {
   }
 
   @override
-  void didUpdateWidget(covariant Encartes oldWidget) {
+  void didUpdateWidget(covariant EncartesPRO oldWidget) {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
     // controller.pegaAirtable();
@@ -84,7 +83,7 @@ class _EncartesState extends State<Encartes> {
                                     Container(
                                       width: width * 0.55,
                                       child: Text(
-                                        "Lista de encartes",
+                                        "Lista de encartes PRO",
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                             height: 0.9,
@@ -153,7 +152,7 @@ class _EncartesState extends State<Encartes> {
                                     Container(
                                       width: width * 0.55,
                                       child: Text(
-                                        "Lista de encartes",
+                                        "Lista de encartes PRO",
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                             height: 0.9,
@@ -178,7 +177,7 @@ class _EncartesState extends State<Encartes> {
                                 Navigator.pushReplacement(
                                   context,
                                   PageRouteBuilder(
-                                    pageBuilder: (context, animation1, animation2) => ProdutosEncarte(controller.listaEncartes, indice - 1, "encartes"),
+                                    pageBuilder: (context, animation1, animation2) => ProdutosEncartePRO(controller.listaEncartes, indice - 1, "encartes"),
                                     transitionDuration: Duration.zero,
                                     reverseTransitionDuration: Duration.zero,
                                   ),
