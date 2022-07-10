@@ -30,6 +30,9 @@ class _EncartesState extends State<Encartes> {
     super.didChangeDependencies();
     controller = Provider.of<Controller>(context);
 
+    controller.pegaAirtable();
+    controller.pegaProdutos();
+
   }
 
   @override
@@ -38,10 +41,11 @@ class _EncartesState extends State<Encartes> {
     super.didUpdateWidget(oldWidget);
     // controller.pegaAirtable();
     if (stoped) {
-      Timer.periodic(Duration(milliseconds: 500), (timer) {
-        listaTodosProdutos = controller.listaProdutos;
-        // print(listaTodosProdutos);
-        if (listaTodosProdutos.isNotEmpty){
+      Timer.periodic(Duration(seconds: 1), (timer) {
+        if (listaTodosProdutos.isEmpty){
+          listaTodosProdutos = controller.listaProdutos;
+          print(listaTodosProdutos.length);
+        } else {
           stoped = false;
         }
       });
@@ -52,8 +56,6 @@ class _EncartesState extends State<Encartes> {
   @override
   Widget build(BuildContext context) {
 
-    controller.pegaAirtable();
-    controller.pegaProdutos();
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;

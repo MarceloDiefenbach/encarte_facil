@@ -31,7 +31,7 @@
 		<string>_dartobservatory._tcp</string>
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Permissão para salvar os encartes na galeria</string>
+	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Permissão para salvar os encartes na galeria</string>
 	<key>UILaunchStoryboardName</key>

@@ -1,6 +1,8 @@
+import 'package:encarte_facil_2/HomeNormal/Home.dart';
 import 'package:encarte_facil_2/Premium%20flow/EncartesPRO.dart';
 import 'package:encarte_facil_2/Premium%20flow/NewEncarteComTemaPRO.dart';
 import 'package:encarte_facil_2/Premium%20flow/SettingsPRO.dart';
+import 'package:encarte_facil_2/Premium%20flow/StoryCreator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Logic/Functions.dart';
@@ -15,7 +17,6 @@ class HomeWidgetPRO extends StatefulWidget {
 
 class _HomeWidgetPROState extends State<HomeWidgetPRO> {
 
-
   bool pro = false;
 
   @override
@@ -25,6 +26,7 @@ class _HomeWidgetPROState extends State<HomeWidgetPRO> {
 
     if (await verificaProMemoria() == "true"){
       //nothing to do
+      print("nothing to do");
     } else {
       setState() {
         pro = true;
@@ -32,7 +34,7 @@ class _HomeWidgetPROState extends State<HomeWidgetPRO> {
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
-          pageBuilder: (context, animation1, animation2) => HomeWidgetPRO(),
+          pageBuilder: (context, animation1, animation2) => HomeWidget(),
           transitionDuration: Duration.zero,
           reverseTransitionDuration: Duration.zero,
         ),
@@ -60,6 +62,11 @@ class _HomeWidgetPROState extends State<HomeWidgetPRO> {
             label: 'Criar encarte',
           ),
           BottomNavigationBarItem(
+            activeIcon: Icon(CupertinoIcons.arrow_up_down_square, color: Color(0xff5DA0EF)),
+            icon: Icon(CupertinoIcons.arrow_up_down_square),
+            label: 'Story',
+          ),
+          BottomNavigationBarItem(
             activeIcon: Icon(CupertinoIcons.settings, color: Color(0xff5DA0EF)),
             icon: Icon(CupertinoIcons.settings),
             label: 'Configurações',
@@ -77,6 +84,8 @@ class _HomeWidgetPROState extends State<HomeWidgetPRO> {
         } else if (index == 1) {
           return NewEncarteComTemaPRO();
         } else if (index == 2){
+          return StoryCreator();
+        } else if (index == 3){
           return SettingsPRO();
         }
       },

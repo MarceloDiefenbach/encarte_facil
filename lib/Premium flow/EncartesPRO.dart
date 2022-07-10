@@ -86,7 +86,7 @@ class _EncartesPROState extends State<EncartesPRO> {
                                         Container(
                                           width: width * 0.55,
                                           child: Text(
-                                            "Lista de encartes PRO",
+                                            "Lista de encartes",
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                                 height: 0.9,
@@ -155,7 +155,7 @@ class _EncartesPROState extends State<EncartesPRO> {
                                         Container(
                                           width: width * 0.55,
                                           child: Text(
-                                            "Lista de encartes PRO",
+                                            "Lista de encartes",
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                                 height: 0.9,

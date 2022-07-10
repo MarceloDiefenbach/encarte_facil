@@ -1,3 +1,5 @@
+import 'package:encarte_facil_2/DesignSystem/DesignTokens.dart';
+import 'package:encarte_facil_2/HomeNormal/QueroSerPRO.dart';
 import 'package:encarte_facil_2/Premium%20flow/InformaCodigoPRO.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +19,13 @@ class _DetalhesPremium extends State<DetalhesPremium> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text("",
+            style: TextStyle(fontWeight: FontWeight.bold, color: colorNeutralLowPure())),
+        elevation: 0,
+        backgroundColor: Colors.grey[300],
+        foregroundColor: colorNeutralLowPure(),
+      ),
       body: Container(
         padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         alignment: Alignment.centerLeft,
@@ -30,7 +39,7 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                   textAlign: TextAlign.start,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: colorNeutralLowPure(),
                       fontSize: 30)),
               Padding(padding: EdgeInsets.fromLTRB(0, 24, 0, 0)),
               Row(
@@ -48,7 +57,7 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
-                          color: Colors.black,
+                          color: colorNeutralLowPure(),
                           fontSize: 16)),
                 ],
               ),
@@ -68,7 +77,7 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
-                          color: Colors.black,
+                          color: colorNeutralLowPure(),
                           fontSize: 16)),
                 ],
               ),
@@ -88,27 +97,7 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
-                          color: Colors.black,
-                          fontSize: 16)),
-                ],
-              ),
-              Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 0)),
-              Row(
-                children: [
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                        color: Colors.blueAccent,
-                        borderRadius: BorderRadius.circular(50)
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.fromLTRB(0, 0, 8, 0)),
-                  Text("Remova os anúncios",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black,
+                          color: colorNeutralLowPure(),
                           fontSize: 16)),
                 ],
               ),
@@ -128,7 +117,7 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
-                          color: Colors.black,
+                          color: colorNeutralLowPure(),
                           fontSize: 16)),
                 ],
               ),
@@ -137,20 +126,20 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                   textAlign: TextAlign.start,
                   style: TextStyle(
                       fontWeight: FontWeight.normal,
-                      color: Colors.black,
+                      color: colorNeutralLowPure(),
                       fontSize: 16)),
               Padding(padding: EdgeInsets.fromLTRB(0, 8, 0, 0)),
               Text("R\$ 20,00",
                   textAlign: TextAlign.start,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: colorNeutralLowPure(),
                       fontSize: 40)),
               Text("por mês",
                   textAlign: TextAlign.start,
                   style: TextStyle(
                       fontWeight: FontWeight.normal,
-                      color: Colors.black,
+                      color: colorNeutralLowPure(),
                       fontSize: 16)),
               Padding(padding: EdgeInsets.fromLTRB(0, 40, 0, 0)),
               Row(
@@ -174,7 +163,7 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                       Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) => InformaCodigoPRO(),
+                          pageBuilder: (context, animation1, animation2) => QueroSerPRO(),
                           transitionDuration: Duration.zero,
                           reverseTransitionDuration: Duration.zero,
                         ),
@@ -194,7 +183,7 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Já sou PRO', style: TextStyle(color: Colors.black)),
+                            Text('Já sou PRO', style: TextStyle(color: colorNeutralLowPure())),
                           ],
                         )
                     ),
@@ -217,7 +206,7 @@ class _DetalhesPremium extends State<DetalhesPremium> {
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         fontWeight: FontWeight.normal,
-                        color: Colors.black,
+                        color: colorNeutralLowPure(),
                         fontSize: 12)),
                 onTap: (){
                   Navigator.of(context).pop();

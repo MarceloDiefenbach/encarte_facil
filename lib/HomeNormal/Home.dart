@@ -21,6 +21,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     super.didChangeDependencies();
 
     if (await verificaProMemoria() == "true"){
+      print("foi pro PRO");
       Navigator.pushReplacement(
       context,
         PageRouteBuilder(

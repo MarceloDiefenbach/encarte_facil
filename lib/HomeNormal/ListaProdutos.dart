@@ -100,6 +100,7 @@ class _ListaProdutosState extends State<ListaProdutos> {
     }
   }
 
+  Timer timer;
 
 
   bool isStopped = true;
@@ -115,7 +116,7 @@ class _ListaProdutosState extends State<ListaProdutos> {
         _atualizaListaProdutos();
         isStopped = false;
       } else {
-        Timer.periodic(Duration(milliseconds: 100), (timer) {
+        timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
           if (isStopped) {
             AirtableGet().then((dados) {
               setState(() {
@@ -133,6 +134,11 @@ class _ListaProdutosState extends State<ListaProdutos> {
         });
       }
     }
+  }
+
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
   }
 
   @override
