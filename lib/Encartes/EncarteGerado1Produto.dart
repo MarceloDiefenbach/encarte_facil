@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../DesignSystem/Components/ProductEncarte.dart';
 
 class EncarteGerado1Produto extends StatefulWidget {
@@ -16,12 +17,29 @@ class EncarteGerado1Produto extends StatefulWidget {
 
   String validade;
 
+  String urlPRO;
+
   EncarteGerado1Produto(this.listaProdutos, this.fundoEncarte, this.temaEncarte, this.validade);
   @override
   _EncarteGerado1ProdutoState createState() => _EncarteGerado1ProdutoState();
 }
 
 class _EncarteGerado1ProdutoState extends State<EncarteGerado1Produto> {
+
+  SharedPreferences prefs;
+  String urlLogo = "false";
+
+  recuperaURLLlogo() async {
+    prefs = await SharedPreferences.getInstance();
+    urlLogo = prefs.getString("urlLogo");
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    recuperaURLLlogo();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +111,7 @@ class _EncarteGerado1ProdutoState extends State<EncarteGerado1Produto> {
                                       fontSize: 12)
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),

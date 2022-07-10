@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:encarte_facil_2/Logic/controller.dart';
-import 'package:encarte_facil_2/Model/CodigoPro.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +16,7 @@ SharedPreferences prefs;
 Future<List> AirtableGet() async {
   List<Produto> listaTodosProdutos = [];
 
-  listaTodosProdutos.clear();
+  // listaTodosProdutos.clear();
 
   http.Response response;
   http.Response response2;
@@ -30,12 +28,12 @@ Future<List> AirtableGet() async {
 
   String offset;
 
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 5; i++) {
 
-    if (i <= 0){
-
+    if (i == 0){
       Uri url = Uri.https("api.airtable.com",
           "v0/appE15cyCmB6d2KVq/Table%201?api_key=keySFSIYnvACQhHAa");
+
 
       response = await http.get(
         Uri.parse(
@@ -52,7 +50,7 @@ Future<List> AirtableGet() async {
       if (retorno["offset"] == offset) {
         return listaTodosProdutos;
       } else {
-        // print("entrou no else ${retorno["offset"]}");
+        print("entrou no else ${retorno["offset"]}");
         offset = retorno["offset"];
       }
 
@@ -72,12 +70,12 @@ Future<List> AirtableGet() async {
               records2[i]["fields"]["segunda"], "", records2[i]["fields"]["imagem"]));
         }
 
-        if (retorno2["offset"] == offset) {
-          return listaTodosProdutos;
-        } else {
-          // print("entrou no else ${retorno["offset"]}");
+        // if (retorno2["offset"] == offset) {
+        //   return listaTodosProdutos;
+        // } else {
+          print("entrou no segundo else ${retorno["offset"]}");
           offset = retorno2["offset"];
-        }
+        // }
 
       } else {
         //nothing to do here
@@ -237,7 +235,6 @@ recuperaURLLlogo() async {
   String urlLogo;
   prefs = await SharedPreferences.getInstance();
   urlLogo = prefs.getString("urlLogo");
-  print(urlLogo);
 }
 
 String urlLogoMercado;
