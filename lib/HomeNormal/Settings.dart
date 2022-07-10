@@ -1,5 +1,6 @@
 import 'package:encarte_facil_2/Premium%20flow/Detalhes%20Premium.dart';
 import 'package:encarte_facil_2/HomeNormal/SugestionForm.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -121,6 +122,9 @@ class _Settings extends State<Settings> {
                   padding: EdgeInsets.fromLTRB(0, 4, 0, 4),
                   child: GestureDetector(
                     onTap: (){
+                      FirebaseAnalytics.instance.logEvent(
+                        name: "setting_encarte_facil_app",
+                      );
                       Navigator.push(
                         context,
                         PageRouteBuilder(
