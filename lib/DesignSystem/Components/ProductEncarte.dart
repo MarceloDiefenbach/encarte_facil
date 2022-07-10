@@ -34,18 +34,16 @@ class _ProductEncarteState extends State<ProductEncarte> {
                           Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                  Text(
-                                    widget.produto["nomeProduto"],
+                                Container(
+                                  width: widget.larguraProduto*0.5,
+                                  child: Text(
+                                    "${widget.produto["nomeProduto"]} ${widget.produto["segundaLinha"]}",
                                     style: TextStyle(
                                       fontSize: widget.larguraProduto*0.04,
-                                      fontWeight: FontWeight.w200,
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                  ),
-                                Text(
-                                  widget.produto["segundaLinha"],
-                                  style: TextStyle(
-                                      fontSize: widget.larguraProduto*0.04,
-                                      fontWeight: FontWeight.w900
+                                    textAlign: TextAlign.right,
+                                    maxLines: null,
                                   ),
                                 ),
                               ]
