@@ -27,7 +27,6 @@ class ListaProdutos extends StatefulWidget {
 class _ListaProdutosState extends State<ListaProdutos> {
 
   String pesquisa = "";
-
   List _listaProdutosDoEncarte = [];
   List<Produto> _listaProdutosAirtable = [];
   Controller controller;
@@ -80,11 +79,13 @@ class _ListaProdutosState extends State<ListaProdutos> {
 
   List<Produto> listaProdutosMostrados = [];
 
-  _atualizaListaProdutos() {
+  _atualizaListaProdutos(bool controle) {
     _listaProdutoFiltro.clear();
     listaProdutosMostrados.clear();
 
-    produtosInterno = controller.listaProdutos;
+    if(controle) {
+      produtosInterno = controller.listaProdutos;
+    }
 
     for (int i=0; i < produtosInterno.length; i++) {
 
@@ -101,6 +102,7 @@ class _ListaProdutosState extends State<ListaProdutos> {
   }
 
   Timer timer;
+  Timer timer2;
 
 
   bool isStopped = true;
@@ -111,34 +113,32 @@ class _ListaProdutosState extends State<ListaProdutos> {
     super.didChangeDependencies();
     controller = Provider.of<Controller>(context);
 
-    if(isStopped){
-      if (controller.listaProdutos.isNotEmpty){
-        _atualizaListaProdutos();
-        isStopped = false;
-      } else {
-        timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+        timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
           if (isStopped) {
             AirtableGet().then((dados) {
               setState(() {
                 _listaProdutosAirtable = dados;
-                _atualizaListaProdutos();
+                _atualizaListaProdutos(true);
+                timer?.cancel();
               });
             });
 
             if (_listaProdutosAirtable.isNotEmpty) {
-              _atualizaListaProdutos();
+              _atualizaListaProdutos(true);
               isStopped = false;
-              timer.cancel();
+              timer?.cancel();
             }
-          } else {}
+          } else {
+            _atualizaListaProdutos(false);
+          }
         });
-      }
-    }
+
   }
 
   void dispose() {
     super.dispose();
     timer?.cancel();
+    timer2?.cancel();
   }
 
   @override
@@ -180,17 +180,8 @@ class _ListaProdutosState extends State<ListaProdutos> {
               physics: ScrollPhysics(),
               child: Column(
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
-                    child: CupertinoSearchTextField(
-                      placeholder: "Pesquise pelo nome do produto",
-                      controller: _textController,
-                      onChanged: (String e) {
-                        pesquisa = e;
-                        print(pesquisa);
-                        _atualizaListaProdutos();
-                      },
-                    ),
+                  Container(
+                    height: 50,
                   ),
                   TextButton(
                       onPressed: () {
@@ -333,7 +324,7 @@ class _ListaProdutosState extends State<ListaProdutos> {
                     onChanged: (String e) {
                       pesquisa = e;
                       print(pesquisa);
-                      _atualizaListaProdutos();
+                      _atualizaListaProdutos(false);
                     },
                   ),
                 ),

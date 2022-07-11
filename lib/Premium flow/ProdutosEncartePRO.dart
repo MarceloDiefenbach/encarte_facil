@@ -7,9 +7,9 @@ import 'package:encarte_facil_2/Encartes/EncarteGerado3Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado4Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado5Produtos.dart';
 import 'package:encarte_facil_2/Encartes/EncarteGerado6Produtos.dart';
+import 'package:encarte_facil_2/HomeNormal/ListaProdutos.dart';
 import 'package:encarte_facil_2/Premium%20flow/EditarEncarteComTemaPRO.dart';
 import 'package:encarte_facil_2/Premium%20flow/HomePRO.dart';
-import 'package:encarte_facil_2/Premium%20flow/ListaProdutosPRO.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -175,7 +175,7 @@ class _ProdutosEncartePROState extends State<ProdutosEncartePRO> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ListaProdutosPRO(
+                            builder: (context) => ListaProdutos(
                                 widget.listaEncartes[widget.posicaoNaList]["nomeEncarte"]
                             )
                         ),
@@ -440,7 +440,7 @@ class _ProdutosEncartePROState extends State<ProdutosEncartePRO> {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                    builder: (context) => ListaProdutosPRO(
+                                                    builder: (context) => ListaProdutos(
                                                         widget.listaEncartes[widget.posicaoNaList]["nomeEncarte"]
                                                     )
                                                 ),
