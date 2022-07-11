@@ -181,7 +181,20 @@ class _ListaProdutosState extends State<ListaProdutos> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    height: 50,
+                    width: width,
+                    color: colorNeutralHighDark(),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(spacingGlobalMargin(), 0, spacingGlobalMargin(), 10),
+                      child: CupertinoSearchTextField(
+                        placeholder: "Pesquise pelo nome do produto",
+                        controller: _textController,
+                        onChanged: (String e) {
+                          pesquisa = e;
+                          print(pesquisa);
+                          _atualizaListaProdutos(false);
+                        },
+                      ),
+                    ),
                   ),
                   TextButton(
                       onPressed: () {
