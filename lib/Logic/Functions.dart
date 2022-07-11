@@ -216,12 +216,16 @@ Future<String> verificaProMemoria() async {
     String codigoCliente = records[i]["fields"]["codigo"];
     salvaURLlogo(url);
 
-    String codigoMemoria = await recuperaCodigoPro();
+    try {
+      String codigoMemoria = await recuperaCodigoPro();
       if (codigoMemoria == codigoCliente) {
 
         recuperaCodigoPro();
         return "true";
       }
+    } on Exception catch (_) {
+      return "false";
+    }
   }
   return "false";
 }

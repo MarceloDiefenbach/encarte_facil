@@ -1,4 +1,5 @@
 import 'package:encarte_facil_2/HomeNormal/Home.dart';
+import 'package:encarte_facil_2/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,7 +27,7 @@ void main() async{
             // When navigating to the "/second" route, build the SecondScreen widget.
             // '/second': (context) => const SecondScreen(),
           },
-          home: HomeWidget(),
+          home: SplashScreen(),
           debugShowCheckedModeBanner: false,
         ),
       )

@@ -19,20 +19,16 @@ class Encartes extends StatefulWidget {
 }
 
 class _EncartesState extends State<Encartes> {
-  List _listaEncartes = [];
   List<Produto> listaTodosProdutos = [];
   bool stoped = true;
   Controller controller;
+  bool controle = true;
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     controller = Provider.of<Controller>(context);
-
-    controller.pegaAirtable();
-    controller.pegaProdutos();
-
   }
 
   @override
@@ -56,6 +52,11 @@ class _EncartesState extends State<Encartes> {
   @override
   Widget build(BuildContext context) {
 
+    if(controle) {
+      controller.pegaAirtable();
+      controller.pegaProdutos();
+      controle = false;
+    }
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;

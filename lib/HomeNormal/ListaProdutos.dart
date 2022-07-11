@@ -238,9 +238,9 @@ class _ListaProdutosState extends State<ListaProdutos> {
                                     ),
                                     child: Container(
                                       width: 120,
-                                      height: 70,
+                                      // height: 70,
                                       child: Padding(
-                                        padding: EdgeInsets.fromLTRB(1, 0, 0, 0),
+                                        padding: EdgeInsets.fromLTRB(1, 8, 0, 9),
                                         child: Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
@@ -269,20 +269,15 @@ class _ListaProdutosState extends State<ListaProdutos> {
                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Padding(
-                                                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                                      Container(
+                                                        width: width*0.63,
                                                         child: Text(
-                                                          produto.nome,
+                                                          "${produto.nome} ${produto.segunda}",
+                                                          maxLines: null,
                                                           style: TextStyle(
                                                               fontWeight: FontWeight.bold,
                                                               fontSize: 14),
                                                         ),
-                                                      ),
-                                                      Text(
-                                                        produto.segunda,
-                                                        style: TextStyle(
-                                                            fontWeight: FontWeight.w300,
-                                                            fontSize: 14),
                                                       ),
                                                     ],
                                                   ),
